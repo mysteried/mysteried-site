@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>文学に埋もれた部屋 – ミステリアリティ</title>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="../../css/base.css" />
+    <style>
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            background: #fff;
+            color: #111;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body class="page-story">
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="../../">ミステリアリティ</a>
+            <nav class="nav">
+                <a href="../../about.html">遊び方</a>
+                <a href="../../news.html">お知らせ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- タイトルと導入 -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">文学に埋もれた部屋</h1>
+            </div>
+        </section>
+
+
+        <div id="notePaper" class="note-paper">
+            <p class="note-line">この部屋から脱出せよ。</p>
+            <p class="note-line">本にヒントがある。</p>
+            <p class="note-line">フランスの1800年。</p>
+            <p class="note-line">世界を変えた一冊。</p>
+        </div>
+
+
+        <!-- 案1 -->
+        <!-- <p style="margin-top:6px; color:#777;">
+            <カメラを起動して、正しいの本にかざしてください。正解なら次へ進むパスワードが表示されます。>
+        </p>
+        <a href="./ar.html?p=p1" class="btn" style="margin-top:16px; display:inline-flex;">ARカメラを起動</a>
+
+        <input id="answerInput" type="text" placeholder="パスワード"
+            style="flex:1; padding:10px; border:1px solid #ddd; border-radius:10px;">
+        <button id="checkBtn" class="btn">次へ進む</button>
+        <p id="resultMsg" class="card-desc" style="margin-top:8px;"></p> -->
+
+        <!-- 案2 -->
+        <div id="ops" role="region" aria-label="操作">
+            <p class="desc">
+                カメラを起動し、正しい本の背表紙にかざしてください。<br />
+                正解のとき、画面にパスワードが表示されます。
+            </p>
+
+            <a href="./ar.html?p=p1" class="btn cam">ARカメラを起動</a>
+
+            <div class="row">
+                <label for="answerInput" class="vh">パスワード</label>
+                <input id="answerInput" type="text" placeholder="パスワード" inputmode="text" autocomplete="off">
+                <button id="checkBtn" class="btn">次へ進む</button>
+            </div>
+
+            <p id="resultMsg" class="result" aria-live="polite"></p>
+        </div>
+
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <small>© 2025 ミステリアリティ</small>
+            <nav class="nav">
+                <a href="../../about.html">遊び方</a>
+                <a href="../../news.html">お知らせ</a>
+                <a href="mailto:info@example.com">お問い合わせ</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        // ====== 判定（MVP：平文比較） ======
+        const ANSWER = 'サンプル'; // 後で reward.js のハッシュ照合に差し替え可
+        const answerInput = document.getElementById('answerInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultMsg = document.getElementById('resultMsg');
+
+        checkBtn.addEventListener('click', () => {
+            const val = (answerInput.value || '').trim();
+            if (!val) { resultMsg.textContent = 'パスワードを入力してください'; resultMsg.style.color = '#d33'; return; }
+            // TODO: 正規化（全角/半角/ひらがな・カタカナ）を追加
+            if (val === ANSWER) {
+                resultMsg.textContent = '正解！脱出成功！';
+                resultMsg.style.color = '#107c10';
+            } else {
+                resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
+                resultMsg.style.color = '#d33';
+            }
+        });
+    </script>
+</body>
+
+</html>
