@@ -294,38 +294,11 @@ footer {
     z-index: 1;
 }
 
-
-/* .hero-story {
-    text-align: center;
-    padding: 60px 0 40px;
-    backdrop-filter: blur(4px);
-}
-
-.hero-story .story-title {
-    font-size: 35px;
-    font-family: "Noto Serif JP", serif;
-    color: rgba(43, 26, 8, 0.85);
-    animation: fadeIn 1.6s ease-out forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-} */
-
-
 #notePaper {
     position: relative;
-    width: min(400px, 92vw);
+    width: min(600px, 92vw);
     /* 幅を「400pxを上限に、画面幅の92%までで縮む」。 */
-    margin: 24px auto;
+    margin: 100px auto;
     /* 上下24pxの余白、左右はautoで中央寄せ */
     aspect-ratio: 1 / 1;
     /* 紙画像の縦横比に合わせる */
@@ -348,7 +321,7 @@ footer {
     padding: 32px 24px;
     /*紙の端から文字までの余白、上下左右のバランスを整える */
     font-family: "YuMincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
-    font-size: 20px;
+    font-size: 40px;
     font-weight: 400;
     /* これは文字の太さ */
     line-height: 1.9;
@@ -372,97 +345,49 @@ footer {
 }
 
 
-
-
-/* ===== story-00 操作UI（中央配置・最小スコープ） ===== */
-#ops {
-    width: min(560px, 95vw);
-    margin: 20px auto 0;
-    text-align: center;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    /* 紙は直角／操作UIは角丸で役割分担 */
-    padding: 16px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .05);
-}
-
-#ops .desc {
-    margin: 0 0 12px;
-    color: #777;
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-#ops .btn {
-    display: inline-flex;
+/* ===== story-UI footer ===== */
+#ops-footer {
+    position: fixed;
+    /* スクロールしても同じ位置に固定 */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 18px;
+    /* 内側の余白 */
+    display: flex;
+    /* 要素を横並びにしている */
     align-items: center;
+    /* 高さ方向で中央揃え */
     justify-content: center;
-    gap: 8px;
+    /* 横方向でも中央揃え */
+    gap: 10px;
+    /* 各パーツの感覚を10px開けている */
+    backdrop-filter: blur(14px) brightness(0.9) saturate(160%);
+    /* 背景（＝木の机画像）に対して「ブラー」「明るさ」「彩度」のエフェクトをかける。 */
+    background: rgba(255, 255, 255, 0.25);
+    /* 背景そのものにも25%の白をのせて、半透明のすりガラス層を作る。 */
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    /* 上方向に落ちる影（0 -6px）。背景との境界が自然になり、UIが“机の上に浮かんでる”ように見える。 */
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+#ops-footer input {
+    flex: 1 1 220px;
+    min-width: 180px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+#ops-footer .btn {
     padding: 10px 14px;
-    border-radius: 10px;
+    border-radius: 8px;
     font-weight: 600;
+    border: 1px solid #111;
     background: #111;
     color: #fff;
-    border: 1px solid #111;
-    cursor: pointer;
-    text-decoration: none;
 }
-
-#ops .btn:hover {
-    opacity: .92;
-}
-
-#ops .row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12px;
-    flex-wrap: wrap;
-}
-
-#ops input[type="text"] {
-    flex: 1 1 220px;
-    min-width: 200px;
-    max-width: 320px;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 16px;
-    outline: none;
-}
-
-#ops input[type="text"]:focus {
-    border-color: #b7c7ff;
-    box-shadow: 0 0 0 3px rgba(31, 111, 235, .12);
-}
-
-#ops .result {
-    margin: 8px 0 0;
-    min-height: 1.25em;
-    /* レイアウトジャンプ防止 */
-    font-size: 14px;
-}
-
-#ops .result.ok {
-    color: #107c10;
-}
-
-#ops .result.error {
-    color: #d33;
-}
-
-/* アクセシビリティ用（画面外ラベル） */
-#ops .vh {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap;
-}
-
 
 
 /* モバイル最適化 */

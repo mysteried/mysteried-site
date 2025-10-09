@@ -8,19 +8,7 @@
     <title>文学に埋もれた部屋 – ミステリアリティ</title>
     <link rel="icon" href="../../favicon.ico" />
     <link rel="stylesheet" href="../../css/base.css" />
-    <style>
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-weight: 600;
-            background: #fff;
-            color: #111;
-            border: 1px solid #ddd;
-        }
-    </style>
+
 </head>
 
 <body class="page-story">
@@ -52,48 +40,21 @@
 
 
         <!-- 案1 -->
-        <!-- <p style="margin-top:6px; color:#777;">
-            <カメラを起動して、正しいの本にかざしてください。正解なら次へ進むパスワードが表示されます。>
-        </p>
-        <a href="./ar.html?p=p1" class="btn" style="margin-top:16px; display:inline-flex;">ARカメラを起動</a>
-
-        <input id="answerInput" type="text" placeholder="パスワード"
-            style="flex:1; padding:10px; border:1px solid #ddd; border-radius:10px;">
-        <button id="checkBtn" class="btn">次へ進む</button>
-        <p id="resultMsg" class="card-desc" style="margin-top:8px;"></p> -->
-
-        <!-- 案2 -->
-        <div id="ops" role="region" aria-label="操作">
-            <p class="desc">
-                カメラを起動し、正しい本の背表紙にかざしてください。<br />
-                正解のとき、画面にパスワードが表示されます。
-            </p>
-
-            <a href="./ar.html?p=p1" class="btn cam">ARカメラを起動</a>
-
-            <div class="row">
-                <label for="answerInput" class="vh">パスワード</label>
-                <input id="answerInput" type="text" placeholder="パスワード" inputmode="text" autocomplete="off">
-                <button id="checkBtn" class="btn">次へ進む</button>
-            </div>
-
-            <p id="resultMsg" class="result" aria-live="polite"></p>
-        </div>
 
 
     </main>
 
-    <!-- footerを一度なしにしてみる -->
-    <!-- <footer class="site-footer">
-        <div class="container footer-inner">
-            <small>© 2025 ミステリアリティ</small>
-            <nav class="nav">
-                <a href="../../about.html">遊び方</a>
-                <a href="../../news.html">お知らせ</a>
-                <a href="mailto:info@example.com">お問い合わせ</a>
-            </nav>
-        </div>
-    </footer> -->
+    <footer id="ops-footer">
+        <p style="color:black;">
+            <カメラを起動して、正しいの本にかざしてください。正解なら次へ進むパスワードが表示されます。>
+        </p>
+        <a href="./ar.html?p=p1" class="btn">ARカメラを起動</a>
+
+        <input id="answerInput" type="text" placeholder="パスワード"
+            style="flex:1; padding:10px; border:1px solid #ddd; border-radius:10px;">
+        <button id="checkBtn" class="btn">次へ進む</button>
+        <p id="resultMsg" class="card-desc" style="margin-top:8px;"></p>
+    </footer>
 
     <script>
         // ====== 判定（MVP：平文比較） ======
@@ -115,29 +76,12 @@
             }
         });
         // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
-        // window.addEventListener("load", () => {
-        //     const overlay = document.getElementById("intro-overlay");
-        //     const params = new URLSearchParams(window.location.search);
-        //     const introEnabled = params.get("intro");
-
-        //     if (introEnabled === "1") {
-        //         setTimeout(() => {
-        //             overlay.style.display = "none";
-        //         }, 4000);
-        //     } else {
-        //         overlay.style.display = "none";
-        //     }
-        // });
-
-        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする ======
         window.addEventListener("load", () => {
             const overlay = document.getElementById("intro-overlay");
             const params = new URLSearchParams(window.location.search);
             const introEnabled = params.get("intro");
-            const introPlayed = localStorage.getItem("introPlayed_story00");
 
-            if (introEnabled === "1" && !introPlayed) {
-                localStorage.setItem("introPlayed_story00", "true");
+            if (introEnabled === "1") {
                 setTimeout(() => {
                     overlay.style.display = "none";
                 }, 4000);
@@ -145,6 +89,23 @@
                 overlay.style.display = "none";
             }
         });
+
+        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　🔥本番はこれ　テストのため上にしている ======
+        // window.addEventListener("load", () => {
+        //     const overlay = document.getElementById("intro-overlay");
+        //     const params = new URLSearchParams(window.location.search);
+        //     const introEnabled = params.get("intro");
+        //     const introPlayed = localStorage.getItem("introPlayed_story00");
+
+        //     if (introEnabled === "1" && !introPlayed) {
+        //         localStorage.setItem("introPlayed_story00", "true");
+        //         setTimeout(() => {
+        //             overlay.style.display = "none";
+        //         }, 4000);
+        //     } else {
+        //         overlay.style.display = "none";
+        //     }
+        // });
     </script>
 </body>
 
