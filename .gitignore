@@ -1,0 +1,29 @@
+
+
+# macOS 系キャッシュ
+.DS_Store
+
+# Node.js 系
+node_modules/
+npm-debug.log
+
+# Python 仮想環境など（もし使うなら）
+venv/
+__pycache__/
+
+# VSCode 設定
+.vscode/
+
+# ビルド出力・一時ファイル
+dist/
+build/
+*.log
+*.tmp
+
+# OS / Editor 系バックアップ
+*.swp
+*.bak
+*.orig
+
+# 個人情報系
+.env
