@@ -1,151 +1,485 @@
+<!-- 上に貼り付けるスタイル　これでもいいかも 一旦ゼロ秒フリーズで-->
+<!-- 解説付き -->
 <!doctype html>
 <html lang="ja">
-
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>ARカメラ – 文学に埋もれた部屋</title>
-    <link rel="icon" href="../../favicon.ico" />
-    <link rel="stylesheet" href="../../css/base.css" />
+    <title>WebAR MVP – Image Target</title>
+    <!-- A-Frame 1.3.0 first; if jsDelivr fails, fall back to unpkg -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <!-- MindAR (A-Frame flavor) must load after A-Frame -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
     <style>
+        html,
         body {
-            background: #000;
             margin: 0;
-            overflow: hidden;
+            padding: 0;
+            height: 100%;
+            background: #000;
         }
 
-        .bar {
+        .ui {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 52px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 12px;
-            background: rgba(0, 0, 0, 0.45);
-            color: #fff;
+            inset: 0 auto auto 0;
             z-index: 10;
-            backdrop-filter: blur(6px);
         }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border-radius: 10px;
-            background: #fff;
-            color: #111;
-            border: 1px solid #ddd;
-            font-weight: 600;
+            appearance: none;
+            border: none;
             cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
         }
 
-        .btn.secondary {
-            background: rgba(255, 255, 255, 0.15);
+        .start {
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 28px;
+            background: white;
+            color: #111;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .3);
+        }
+
+        .gate {
+            top: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, .9);
+        }
+
+        .badge {
+            position: fixed;
+            right: 12px;
+            top: 12px;
             color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
+            font: 12px/1.2 monospace;
+            opacity: .8
         }
 
-        .toast {
+        .hint {
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 16px;
-            background: #111;
+            top: 12px;
+            background: rgba(0, 0, 0, .6);
             color: #fff;
             padding: 8px 12px;
-            border-radius: 999px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .hidden {
             display: none;
+        }
+
+        /* --- Mobile-first polish --- */
+        html,
+        body {
+            overscroll-behavior: none;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+        }
+
+        a-scene {
+            position: fixed;
+            inset: 0;
+        }
+
+        .btn {
+            min-width: 44px;
+            min-height: 44px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+        }
+
+        .start {
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+        }
+
+        .gate {
+            top: calc(env(safe-area-inset-top, 0px) + 12px);
+        }
+
+        .hint {
+            max-width: 92vw;
+            padding: 10px 14px;
+            font-size: clamp(12px, 3.3vw, 14px);
+            z-index: 12;
+            /* canvas(2) より大、overlay(20) より小に */
+        }
+
+        .badge {
+            right: 12px;
+            top: calc(env(safe-area-inset-top, 0px) + 12px);
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+
+            .start {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Ensure the camera video sits behind the WebGL canvas and fills the screen */
+        #scene video {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Make sure the A-Frame canvas is transparent so the video is visible */
+        #scene canvas.a-canvas {
+            background: transparent !important;
+            z-index: 2;
+        }
+
+        /* Overlay shown while video is temporarily hidden */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 20;
+            /* above canvas and video, below badge (10) unless needed */
+            padding: 16px;
+        }
+
+        /* Ensure overlay stays hidden until targetFound */
+        .overlay.hidden {
+            display: none !important;
+        }
+
+        .overlay-panel {
+            width: min(92vw, 520px);
+            background: rgba(20, 20, 20, 0.92);
+            color: #fff;
+            border-radius: 14px;
+            padding: 18px 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+            backdrop-filter: blur(6px);
+        }
+
+        .overlay-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            letter-spacing: .02em;
+        }
+
+        .overlay-message {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            white-space: pre-wrap;
+        }
+
+        .overlay-reward {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            padding: 10px 12px;
+            border-radius: 10px;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        .overlay-btn {
+            background: #fff;
+            color: #111;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            min-width: 120px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+        }
+
+        /* Keep UI above everything */
+        .ui {
             z-index: 10;
         }
     </style>
-
-    <!-- MindAR + A-Frame -->
-    <script src="https://unpkg.com/aframe@1.5.0/dist/aframe.min.js"></script>
-    <script src="https://unpkg.com/mind-ar/dist/mindar-image-aframe.prod.js"></script>
 </head>
 
 <body>
-    <!-- 固定ヘッダー -->
-    <div class="bar">
-        <a href="./stage.html" class="btn secondary">戻る</a>
-        <div id="title">読み込み中...</div>
-        <button id="hintBtn" class="btn secondary">ヒント</button>
+    <!-- Simple geofence gate (optional). Replace LAT/LNG/RADIUS_M as needed. -->
+    <div class="ui badge">WebAR MVP</div>
+    <div id="hint" class="hint">ターゲットにカメラを向けてください</div>
+    <button id="torchBtn" class="ui btn gate"
+        style="top: calc(env(safe-area-inset-top, 0px) + 56px); left: 12px;">ライトON</button>
+    <!-- Freeze overlay (shows hint / reward while the live video is hidden) -->
+    <div id="freezeOverlay" class="overlay hidden">
+        <div class="overlay-panel">
+            <div id="overlayTitle" class="overlay-title">ヒント</div>
+            <div id="overlayMessage" class="overlay-message">次へのヒントを表示します</div>
+            <div id="overlayReward" class="overlay-reward hidden">報酬コード: <span id="overlayCode">XXXX-0000</span></div>
+            <div class="overlay-actions">
+                <button id="resumeBtn" class="btn overlay-btn">戻る</button>
+            </div>
+        </div>
     </div>
 
-    <!-- MindARシーン -->
-    <div id="host" style="position:fixed; inset:0;"></div>
-    <div id="toast" class="toast">ターゲットを映してください</div>
+    <!-- a-sceneはA-Frameのルート用要素　ARの土台部分をここで記述している この中にlightやカメラをセットして設定していく⇨子要素のこと-->
+    <!-- mindar-imageがAR画像認識を有効化するための設定,imageTargetSrc⇨ここでtargets.mindを指定/filter系　検出の揺れを調整,数値が小さいほど反応は早いがノイジーになる/autostart true シーン生成と同時に検出を始める -->
+    <!-- embedded　<a-scene> をページ全体フルスクリーンにせず、埋め込み表示にする。　color-spaceと繋がっているように見えるが全く別の設定、htmlはスペースをいれるだけなのでこうなる -->
+    <!-- color-space　色の扱いをsRGB基準にする（最近の標準的な色空間） -->
+    <!-- rendererはwebGLキャンバスの設定（つまり映像やdivのパーツはスルーしていくれる）/3dオブジェクトの色味やライティング設定 "colorManagement: true, physicallyCorrectLights: true,/ギザギザをなめらかに antialias: true,/キャンバス背景を透明に（オブジェクトは対象外） alpha: true" -->
+    <!-- webVRをオフにする（ゴーグルなど）　vr-mode-ui="enabled: false" -->
+    <!-- デバイスの傾きセンサー許可のuiを出さない　device-orientation-permission-ui="enabled: false" -->
+    <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
+    <a-scene
+        mindar-image="imageTargetSrc: ./assets/targets/targets.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        embedded color-space="sRGB"
+        renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
+        vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
+
+        <!-- assetsはここに書いた画像、音、3Dモデルなどを事前にロードしてキャッシュする　これにより、シーン内では軽く遅延なく操作ができる　読み込み待ちをなくすことができる -->
+        <a-assets>
+            <!-- コメントアウトしているが　a-assets-itemを使ってkey.glbっていう3Dモデルのファイルパスを読み行もうとしている -->
+            <!-- <a-asset-item id="keyModel" src="./key.glb"></a-asset-item> -->
+        </a-assets>
+
+        <!-- メッシュにだけ効果のあるライティングの設定 ambientだと1が基準だから0.9は若干弱い、directionalだと0.9は結構強い太陽光レベル　1.1.0は方向性を示す -->
+        <!-- ちなみにこういう書き方もできる　<a-light type="directional" intensity="0.9" position="1 1 0"></a-light> -->
+        <!-- このライトはscene全体の3Dオブジェクトに効果する　つまり、子要素を持たなくても、このsceneの中にあるオブジェクトには光があたる -->
+        <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+        <a-entity light="type: directional; intensity: 0.9" position="1 1 0"></a-entity>
+
+        <!-- mindar-image-targetはMindARでアンカーを決めるものでここでは.mindファイルの0番目が検出された際に有効になるアンカーであり、子要素はこのアンカーを基準に配置などがされていく -->
+        <!-- これによりターゲットごとに演出を変えることができる　その際にidはanchor1,anchor2,3,・・・などユニーク化は必要 -->
+        <a-entity mindar-image-target="targetIndex: 0" id="anchor">
+            <!-- ターゲット0を見つけたときに以下の挙動をしていく -->
+            <!-- positionは単独で使われると基準（アンカーから）Y方向に0.35m上に配置、って機能になる -->
+            <a-entity position="0 0.35 0">
+                <!-- 幅0.6高さ0.2メートルの板/shader: flat ライティングの効果を受けず色が一定で読みやすい/transparent: true; opacity: 0.85半透明/depthTest: false 深度判定せずに描画順になる🔥あまり理解できていない/side: double: 両面表示。裏から見ても板が見える -->
+                <a-plane width="0.6" height="0.2"
+                    material="shader: flat; color: #111; transparent: true; opacity: 0.85; depthTest: false; side: double"></a-plane>
+                <!-- widthは文字全体幅の目安、z方向に2cmだけ手前に -->
+                <a-entity text="value: 次のヒントを獲得！; color: #fff; align: center; width: 2.5"
+                    position="0 0 0.02"></a-entity>
+            </a-entity>
+
+            <!-- 内径6cm,外径12cm,アンカーから2cm上/animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear 回転アニメーションで4秒間でY軸回りを一回転を等速で回り続ける -->
+            <a-ring position="0 0.02 0" radius-inner="0.06" radius-outer="0.12"
+                material="shader: flat; color: #ffd166; depthTest: false; side: double"
+                animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear"></a-ring>
+
+            <a-box id="debugBox" position="0 0.15 0" depth="0.02" width="0.3" height="0.1"
+                material="shader: flat; color: #39FF14; depthTest: false; side: double; transparent: true; opacity: 0.8"></a-box>
+
+
+            <!-- If you have a GLB key icon: -->
+            <!-- <a-entity gltf-model="#keyModel" position="0 0 0" scale="0.15 0.15 0.15"
+                 animation-mixer></a-entity> -->
+        </a-entity>
+
+        <!-- A-Frame の カメラコンポーネント,「ここからシーンを覗く」視点を作る そのため座標は000がいい/look-controls="enabled: false"デフォルトだとスマホの傾きでカメラが動いてしまいARが破綻する/near="0.01" far="2000"カメラが描画できる最小と最大の距離 この範囲外は描画不可 -->
+        <a-camera position="0 0 0" look-controls="enabled: false" near="0.01" far="2000"></a-camera>
+    </a-scene>
 
     <script>
-        // ====== 謎設定（PUZZLESオブジェクト） ======
-        const PUZZLES = {
-            p1: {
-                title: '謎1：背表紙の違和感',
-                mindSrc: './assets/targets/stage01_v1.mind',
-                targetIndex: 0,
-                hints: [
-                    '背表紙の「書体」が一箇所だけ時代が違う。',
-                    '古い活字（明朝/金属活字っぽさ）を探せ。'
-                ]
+        // documentこれはブラウザで表示されているhtmlドキュメント全体を表す/ .addEventListener('DOMContentLoaded', ...) ⇨'DOMContentLoaded※HTML構造を読み込んだタイミングで、{}の中の関数を実行していく
+        document.addEventListener('DOMContentLoaded', () => {
+            // html内からid=hintを取り出して、変数hintへ代入　　これにより、jsからhint.textContent = "新しいメッセージ" のように変更できる。
+            // constは再代入できない変数宣言　あとでUIを操作するための準備
+            // HTML内の id="scene" の要素を、このJS内では sceneEl という変数で参照できるようにしている
+            const hint = document.getElementById('hint');
+            const sceneEl = document.getElementById('scene');
+            const torchBtn = document.getElementById('torchBtn');
+
+            const overlayEl = document.getElementById('freezeOverlay');
+            const overlayTitle = document.getElementById('overlayTitle');
+            const overlayMessage = document.getElementById('overlayMessage');
+            const overlayReward = document.getElementById('overlayReward');
+            const overlayCode = document.getElementById('overlayCode');
+            const resumeBtn = document.getElementById('resumeBtn');
+
+            // letも変数の宣言　再代入可能な変数でpythonと同様な感じ　setTimeout() を開始すると「ID」が返ってくるので、それを保持して後で clearTimeout() で止められる。
+            // カメラを止めるために一度タイマーをセットしたが、現状では使用していないため消してもまあ問題ない
+            let resumeTimer = null;
+
+            // ページ内の全てのvideo要素を探して、非表示にする　オーバーレイを出すときにカメラが邪魔をしないように一旦消している
+            // funcition は　defと同じ  doucmentはページ全体をしみし.querySelectorAll('video') = CSSセレクタで要素を全部取
+            // forEach = 配列やリストを1つずつ処理するループ。　　v.style.display = 'none'は各 <video> 要素に対して、CSSの display プロパティを none にする
+            // アロー関数　v => v * 2　は、vを受けてv*2を返すイメージ
+            function hideLiveVideo() {
+                document.querySelectorAll('video').forEach(v => v.style.display = 'none');
             }
-        };
+            // これは上の逆で、カメラ映像を復帰させている　forEach(v => v.style.display = '');　この部分で、cssのdisplayプロパティを削除しているイメージ
+            function showLiveVideo() {
+                document.querySelectorAll('video').forEach(v => v.style.display = '');
+            }
+            // title,message,codeをまとめてオブジェクトで渡せるようにしている　= {} は「何も渡されなかったときは空オブジェクト」とする保険。
+            function showOverlay({ title = 'ヒント', message = '', code = '' } = {}) {
+                // タイトル部分を書き換える　ここによりtitleに中身がはいる　JSは、要素が存在しなければ null になる　
+                if (overlayTitle) overlayTitle.textContent = title;
+                // messageが空なら空文字
+                if (overlayMessage) overlayMessage.textContent = message || '';
+                // code が空なら .hidden クラスをつけて非表示、code があれば .hidden を外して表示。　JSの「短絡評価」テクニックであり、overlayEl が存在するなら remove() を実行。
+                if (overlayReward) overlayReward.classList.toggle('hidden', !code);
+                // コードをセット
+                if (overlayCode && code) overlayCode.textContent = code;
+                // オーバーレイ全体を表示
+                overlayEl && overlayEl.classList.remove('hidden');
+            }
+            // オーバーレイ全体を隠す
+            function hideOverlay() {
+                overlayEl && overlayEl.classList.add('hidden');
+            }
+            // カメラを止める、オーバレイを出す、8秒後にその逆をする
+            // ただし、未使用でどこでも呼び出していないので着火しない
+            function freezeFor(ms = 8000, payload = {}) {
+                hideLiveVideo();
+                showOverlay(payload);
+                clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(() => {
+                    hideOverlay();
+                    showLiveVideo();
+                    if (hint) hint.textContent = 'カメラ再開。ターゲットにかざしてください';
+                }, ms);
+            }
 
-        // ====== クエリパラメータからID取得 ======
-        const params = new URLSearchParams(location.search);
-        const pid = params.get('p') || 'p1';
-        const conf = PUZZLES[pid] || PUZZLES.p1;
 
-        document.getElementById('title').textContent = conf.title;
 
-        // ====== a-scene を動的生成 ======
-        const host = document.getElementById('host');
-        host.innerHTML = `
-      <a-scene
-        mindar-image="imageTargetSrc: ${conf.mindSrc}; filterMinCF:0.0001; filterBeta:0.01"
-        embedded
-        color-space="sRGB"
-        renderer="colorManagement: true, physicallyCorrectLights: true"
-        vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false"
-        style="position:absolute; inset:0;"
-      >
-        <a-assets></a-assets>
-        <a-entity mindar-image-target="targetIndex: ${conf.targetIndex}">
-          <a-plane position="0 0 0" rotation="-90 0 0" width="0.8" height="0.45" opacity="0.0"></a-plane>
-        </a-entity>
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-      </a-scene>
-    `;
+            if (resumeBtn) {
+                resumeBtn.addEventListener('click', () => {
+                    hideOverlay(); // 単純にオーバーレイを閉じるだけ
+                    if (hint) hint.textContent = 'カメラ再開。ターゲットにかざしてください';
+                });
+            }
 
-        // ====== イベント処理 ======
-        const sceneEl = host.querySelector('a-scene');
-        const toast = document.getElementById('toast');
-        const hintBtn = document.getElementById('hintBtn');
+            // これはエラー回避の安全策、シーンがないのにイベントを仕込まないための保険
+            if (!sceneEl) return;
 
-        function showToast(msg) {
-            toast.textContent = msg;
-            toast.style.display = 'block';
-            clearTimeout(showToast._t);
-            showToast._t = setTimeout(() => toast.style.display = 'none', 1600);
-        }
+            // MindARのターゲットエンティティ（<a-entity mindar-image-target="..." id="anchor">）を取得。
+            const anchorEl = document.getElementById('anchor');
+            // ここから先は「ターゲットが見えた/消えた」イベントを扱うフェーズ。
+            if (anchorEl) {
+                // ターゲットを見つけたら着火
+                anchorEl.addEventListener('targetFound', () => {
+                    // これはデバック用
+                    console.log('[MindAR] targetFound');
+                    if (hint) hint.textContent = 'ターゲット検出！ヒントを表示します…';
+                    // 🔥検出したらそのままオーバーレイを表示（タイマーやビデオ停止はしない）
+                    showOverlay({
+                        title: '次へのヒント',
+                        message: '境内左手の灯籠の裏面に注目してみよう。\n刻印の数字が鍵になりそうだ。',
+                        code: 'REWARD-0416'
+                    });
+                });
+                anchorEl.addEventListener('targetLost', () => {
+                    console.log('[MindAR] targetLost');
+                    if (hint) hint.textContent = '見失いました。もう一度ターゲットにかざしてください。';
+                });
+            }
 
-        sceneEl.addEventListener('arReady', () => showToast('カメラ準備OK'));
-        sceneEl.addEventListener('targetFound', () => showToast('検知！近づけてみよう'));
-        sceneEl.addEventListener('targetLost', () => showToast('見失いました'));
 
-        // ====== 段階ヒント ======
-        let step = 0;
-        hintBtn.addEventListener('click', () => {
-            const hint = conf.hints[Math.min(step, conf.hints.length - 1)];
-            alert(`ヒント ${step + 1}：${hint}`);
-            if (step < conf.hints.length - 1) step++;
+            sceneEl.addEventListener('arReady', () => {
+                console.log('[MindAR] arReady');
+                hint.textContent = 'カメラ起動OK。ターゲットにかざしてください（明るい場所推奨）';
+            });
+
+            sceneEl.addEventListener('arError', (e) => {
+                console.error('[MindAR] arError', e);
+                alert('AR初期化に失敗しました。通信状態・権限・HTTPSを確認し、再読み込みしてください。');
+            });
+
+            // これは完全にデバック用コード A-Frameが最初のフレーム描画を始めたときに発火して、コンソールにログを出すだけ
+            sceneEl.addEventListener('renderstart', () => {
+                console.log('[A-Frame] renderstart');
+            });
+
+            // arReady が発火した時（カメラ起動OKの合図）、実際に <video> 要素を探して整え、映像を画面全体の背景に固定する、
+            sceneEl.addEventListener('arReady', () => {
+                // document.querySelector → CSSセレクタで要素を1つ取得して、'#scene video' → idがsceneの要素内にある<video>を探す、|| document.querySelector('video') → なければ、ページ全体から <video> を探す。
+                const vid = document.querySelector('#scene video') || document.querySelector('video');
+                if (vid) {
+                    // モバイルSafariやChromeで、動画を「インライン再生（その場で再生）」させるための設定,これがないと「勝手に全画面モード」にされてしまう スマホでwebARする時は必須のおまじない
+                    vid.setAttribute('playsinline', '');
+                    vid.setAttribute('webkit-playsinline', '');
+                    vid.muted = true; // 音声はなし
+                    // 以下は色々な映像の設定、inset0とかは上下左右ピッタりに敷き詰める　的な
+                    vid.style.position = 'fixed';
+                    vid.style.inset = '0';
+                    vid.style.width = '100vw';
+                    vid.style.height = '100vh';
+                    vid.style.objectFit = 'cover';
+                    vid.style.zIndex = 1;
+                    // デバック出力
+                    console.log('[Debug] Video element present:', !!vid);
+                }
+            });
+
+            // letは変更ができる変数、torchOn → 今ライトがONかOFFかを記録しておくためのフラグ（初期状態はOFF）。
+            let torchOn = false;
+            // getVideoTrack() は「MindARのvideo要素から、カメラ映像を管理するトラックを取り出す」関数。そしてその映像の「裏にあるカメラハードウェア」までアクセスして制御できる。
+            function getVideoTrack() {
+                try {
+                    // MindARのカメラシステムを安全に取得している。
+                    const sys = sceneEl.systems && sceneEl.systems['mindar-image-system'];
+                    const video = (sys && (sys.video || sys.activeVideo)) || document.querySelector('video');
+                    const stream = video && video.srcObject;
+                    // getVideoTracksは元から存在するメソッドで矛盾しているわけではない
+                    const tracks = stream ? stream.getVideoTracks() : [];
+                    return tracks[0] || null;
+                } catch (_) { return null; }
+            }
+
+            // 以下がフラッシュのコード　詳細は省略！！
+            if (torchBtn) {
+                torchBtn.addEventListener('click', async () => {
+                    const track = getVideoTrack();
+                    if (!track) {
+                        alert('カメラのビデオトラックが見つかりません。起動後にもう一度お試しください。');
+                        return;
+                    }
+                    const caps = track.getCapabilities ? track.getCapabilities() : {};
+                    if (!caps.torch) {
+                        alert('この端末/ブラウザはライト制御（torch）に対応していません。');
+                        return;
+                    }
+                    try {
+                        torchOn = !torchOn;
+                        await track.applyConstraints({ advanced: [{ torch: torchOn }] });
+                        torchBtn.textContent = torchOn ? 'ライトOFF' : 'ライトON';
+                    } catch (e) {
+                        console.error('Torch applyConstraints failed:', e);
+                        alert('ライトの制御に失敗しました: ' + (e && e.message ? e.message : e));
+                    }
+                });
+            }
         });
     </script>
+
+    <!--
+  ▼ 使い方（最小）
+  1) この index.html と同じ階層に、MindARのターゲットファイル `targets.mind` を置く。
+     * MindARの公式ターゲットジェネレーター（GUI/CLI）で、神額や看板の写真を登録して生成。
+     * 写真は高解像度・正面・模様リッチ、実寸（cm）も設定すると安定。
+  2) ローカルで配信（HTTPS推奨）。開発中は `python3 -m http.server 8000` でもOK（iOSのカメラはHTTPS必須。実機はngrokやVercel推奨）。
+  3) 「カメラを開始」を押して、ターゲット（看板/神額）にかざす。
+  4) 必要なら GATE.lat/lng/radiusM を実地の緯度経度に変更して、任意の到着ゲートを使う。
+
+  ▼ 調整ポイント
+  - オブジェクトの位置：<a-entity id="anchor"> 内の position="x y z" を調整（例：真上= y を +方向に）。
+  - 3Dモデル：glTF (GLB) を a-assets に追加し、gltf-model で読み込み。2MB以内推奨。
+  - パフォーマンス：画像が検出しづらいときは、距離を少し取り、正面から、明るい環境で試す。
+  - デプロイ：Vercel/Netlify/GitHub Pages 等でHTTPS配信。
+  -->
 </body>
 
 </html>

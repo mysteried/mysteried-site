@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>ARカメラ – 文学に埋もれた部屋</title>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="../../css/base.css" />
+    <style>
+        body {
+            background: #000;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 12px;
+            background: rgba(0, 0, 0, 0.45);
+            color: #fff;
+            z-index: 10;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: #fff;
+            color: #111;
+            border: 1px solid #ddd;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 16px;
+            background: #111;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 999px;
+            display: none;
+            z-index: 10;
+        }
+    </style>
+
+    <!-- MindAR + A-Frame -->
+    <script src="https://unpkg.com/aframe@1.5.0/dist/aframe.min.js"></script>
+    <script src="https://unpkg.com/mind-ar/dist/mindar-image-aframe.prod.js"></script>
+</head>
+
+<body>
+    <!-- 固定ヘッダー -->
+    <div class="bar">
+        <a href="./stage.html" class="btn secondary">戻る</a>
+        <div id="title">読み込み中...</div>
+        <button id="hintBtn" class="btn secondary">ヒント</button>
+    </div>
+
+    <!-- MindARシーン -->
+    <div id="host" style="position:fixed; inset:0;"></div>
+    <div id="toast" class="toast">ターゲットを映してください</div>
+
+    <script>
+        // ====== 謎設定（PUZZLESオブジェクト） ======
+        const PUZZLES = {
+            p1: {
+                title: '謎1：背表紙の違和感',
+                mindSrc: './assets/targets/stage01_v1.mind',
+                targetIndex: 0,
+                hints: [
+                    '背表紙の「書体」が一箇所だけ時代が違う。',
+                    '古い活字（明朝/金属活字っぽさ）を探せ。'
+                ]
+            }
+        };
+
+        // ====== クエリパラメータからID取得 ======
+        const params = new URLSearchParams(location.search);
+        const pid = params.get('p') || 'p1';
+        const conf = PUZZLES[pid] || PUZZLES.p1;
+
+        document.getElementById('title').textContent = conf.title;
+
+        // ====== a-scene を動的生成 ======
+        const host = document.getElementById('host');
+        host.innerHTML = `
+      <a-scene
+        mindar-image="imageTargetSrc: ${conf.mindSrc}; filterMinCF:0.0001; filterBeta:0.01"
+        embedded
+        color-space="sRGB"
+        renderer="colorManagement: true, physicallyCorrectLights: true"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+        style="position:absolute; inset:0;"
+      >
+        <a-assets></a-assets>
+        <a-entity mindar-image-target="targetIndex: ${conf.targetIndex}">
+          <a-plane position="0 0 0" rotation="-90 0 0" width="0.8" height="0.45" opacity="0.0"></a-plane>
+        </a-entity>
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      </a-scene>
+    `;
+
+        // ====== イベント処理 ======
+        const sceneEl = host.querySelector('a-scene');
+        const toast = document.getElementById('toast');
+        const hintBtn = document.getElementById('hintBtn');
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.style.display = 'none', 1600);
+        }
+
+        sceneEl.addEventListener('arReady', () => showToast('カメラ準備OK'));
+        sceneEl.addEventListener('targetFound', () => showToast('検知！近づけてみよう'));
+        sceneEl.addEventListener('targetLost', () => showToast('見失いました'));
+
+        // ====== 段階ヒント ======
+        let step = 0;
+        hintBtn.addEventListener('click', () => {
+            const hint = conf.hints[Math.min(step, conf.hints.length - 1)];
+            alert(`ヒント ${step + 1}：${hint}`);
+            if (step < conf.hints.length - 1) step++;
+        });
+    </script>
+</body>
+
+</html>
