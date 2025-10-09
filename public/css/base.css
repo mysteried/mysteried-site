@@ -249,7 +249,10 @@ body {
 }
 
 
-
+/* これをいれることでヘッターを隠している */
+body.page-story .site-header {
+    display: none;
+}
 
 
 /* ===== 背景：全ストーリー共通・木の机 ===== */
