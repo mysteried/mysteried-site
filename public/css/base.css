@@ -260,6 +260,8 @@ body.page-story {
     background-repeat: no-repeat;
     background-attachment: scroll;
     /* iOS Safari 対応 */
+    min-height: 100vh;
+    /* ← ここが超重要！ */
 }
 
 /* わずかなビネットで紙とUIを浮かせる */
@@ -274,6 +276,16 @@ body.page-story::before {
     z-index: 0;
 }
 
+body.page-story::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.02);
+    /* ごく薄い影 */
+    pointer-events: none;
+    z-index: 0;
+}
+
 /* コンテンツを上に重ねる */
 header,
 main,
@@ -281,38 +293,6 @@ footer {
     position: relative;
     z-index: 1;
 }
-
-/* .hero-story {
-    padding: 48px 0 24px;
-    text-align: center;
-    background: none;
-} */
-
-/* .hero-story .story-title {
-    font-size: 28px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: #2b1a08;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-    margin-bottom: 4px;
-} */
-
-
-
-/* .hero-story .story-title {
-    font-family: "Shippori Mincho", "YuMincho", serif;
-    font-weight: 600;
-    font-size: 28px;
-    color: #2b1a08;
-    letter-spacing: 0.1em;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    padding-bottom: 6px;
-} */
-
-
-
 
 
 /* .hero-story {
@@ -505,7 +485,7 @@ footer {
 
 
 
-
+/* アクセス時のアニメーション */
 
 #intro-overlay {
     position: fixed;
