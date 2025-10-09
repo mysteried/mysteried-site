@@ -24,6 +24,10 @@
 </head>
 
 <body class="page-story">
+    <div id="intro-overlay">
+        <h1 class="intro-title">文学に埋もれた部屋</h1>
+    </div>
+
     <!-- Header -->
     <header class="site-header">
         <div class="container header-inner">
@@ -37,18 +41,20 @@
 
     <main>
         <!-- タイトルと導入 -->
-        <section class="hero">
+        <!-- <section class="hero hero-story">
             <div class="container">
-                <h1 class="hero-title">文学に埋もれた部屋</h1>
+                <h1 class="hero-title story-title">文学に埋もれた部屋</h1>
             </div>
-        </section>
-
+        </section> -->
 
         <div id="notePaper" class="note-paper">
-            <p class="note-line">この部屋から脱出せよ。</p>
-            <p class="note-line">本にヒントがある。</p>
-            <p class="note-line">フランスの1800年。</p>
-            <p class="note-line">世界を変えた一冊。</p>
+            <div class="note-bg"></div>
+            <div class="note-text">
+                <p class="note-line">この部屋から脱出せよ。</p>
+                <p class="note-line">本にヒントがある。</p>
+                <p class="note-line">フランスの1800年。</p>
+                <p class="note-line">世界を変えた一冊。</p>
+            </div>
         </div>
 
 
@@ -84,7 +90,8 @@
 
     </main>
 
-    <footer class="site-footer">
+    <!-- footerを一度なしにしてみる -->
+    <!-- <footer class="site-footer">
         <div class="container footer-inner">
             <small>© 2025 ミステリアリティ</small>
             <nav class="nav">
@@ -93,7 +100,7 @@
                 <a href="mailto:info@example.com">お問い合わせ</a>
             </nav>
         </div>
-    </footer>
+    </footer> -->
 
     <script>
         // ====== 判定（MVP：平文比較） ======
@@ -112,6 +119,20 @@
             } else {
                 resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
                 resultMsg.style.color = '#d33';
+            }
+        });
+        // ====== タイトル演出（intro=1 のときのみ） ======
+        window.addEventListener("load", () => {
+            const overlay = document.getElementById("intro-overlay");
+            const params = new URLSearchParams(window.location.search);
+            const introEnabled = params.get("intro");
+
+            if (introEnabled === "1") {
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                }, 4000);
+            } else {
+                overlay.style.display = "none";
             }
         });
     </script>
