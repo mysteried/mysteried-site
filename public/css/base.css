@@ -294,6 +294,9 @@ footer {
     z-index: 1;
 }
 
+
+
+/* 紙の上のデザイン */
 #notePaper {
     position: relative;
     width: min(600px, 92vw);
@@ -345,6 +348,8 @@ footer {
 }
 
 
+
+
 /* ===== story-UI footer ===== */
 #ops-footer {
     position: fixed;
@@ -356,6 +361,8 @@ footer {
     /* 内側の余白 */
     display: flex;
     /* 要素を横並びにしている */
+    flex-direction: column;
+    /* ← 上下レイアウトに変更 */
     align-items: center;
     /* 高さ方向で中央揃え */
     justify-content: center;
@@ -372,46 +379,83 @@ footer {
     z-index: 10;
 }
 
-#ops-footer input {
-    flex: 1 1 220px;
-    min-width: 180px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+/* 説明文 */
+#ops-footer .ops-desc {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.6;
 }
 
+/* 入力・ボタンの横並び行 */
+#ops-footer .ops-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* 共通：高さ揃えに使う変数 */
+#ops-footer {
+    --ops-h: 42px;
+    /* 全要素の高さを統一（調整可） */
+}
+
+/* 入力欄 */
+#ops-footer input {
+    flex: 0 0 220px;
+    /* 入力欄の横幅を固定（短く） */
+    height: var(--ops-h);
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    padding: 0 10px;
+    /* 縦のpaddingは高さに含まれるので0でOK */
+    font-size: 14px;
+}
+
+/* ボタン共通 */
 #ops-footer .btn {
-    padding: 10px 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--ops-h);
+    padding: 0 16px;
     border-radius: 8px;
     font-weight: 600;
     border: 1px solid #111;
     background: #111;
     color: #fff;
+    font-size: 14px;
+}
+
+/* モバイル対応：縦積みレイアウト */
+@media (max-width: 480px) {
+    #ops-footer .ops-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #ops-footer input,
+    #ops-footer .btn {
+        width: 100%;
+        flex: none;
+    }
 }
 
 
-/* モバイル最適化 */
-@media (max-width: 420px) {
-    #ops .btn.cam {
-        width: 100%;
-        margin-top: 8px;
-    }
 
-    #ops .row {
-        justify-content: stretch;
-    }
-
-    #ops #checkBtn {
-        width: 100%;
-    }
-}
 
 
 
 
 
 /* アクセス時のアニメーション */
-
 #intro-overlay {
     position: fixed;
     inset: 0;

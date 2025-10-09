@@ -45,15 +45,18 @@
     </main>
 
     <footer id="ops-footer">
-        <p style="color:black;">
-            <カメラを起動して、正しいの本にかざしてください。正解なら次へ進むパスワードが表示されます。>
+        <p class="ops-desc">
+            カメラを起動して、正しい本にかざしてください。<br>
+            正解なら次へ進むパスワードが表示されます。
         </p>
-        <a href="./ar.html?p=p1" class="btn">ARカメラを起動</a>
 
-        <input id="answerInput" type="text" placeholder="パスワード"
-            style="flex:1; padding:10px; border:1px solid #ddd; border-radius:10px;">
-        <button id="checkBtn" class="btn">次へ進む</button>
-        <p id="resultMsg" class="card-desc" style="margin-top:8px;"></p>
+        <div class="ops-row">
+            <a href="./ar.html?p=p1" class="btn cam">ARカメラ</a>
+            <input id="answerInput" type="text" placeholder="パスワード">
+            <button id="checkBtn" class="btn next">次へ進む</button>
+        </div>
+
+        <p id="resultMsg" class="card-desc"></p>
     </footer>
 
     <script>
@@ -76,29 +79,12 @@
             }
         });
         // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
-        window.addEventListener("load", () => {
-            const overlay = document.getElementById("intro-overlay");
-            const params = new URLSearchParams(window.location.search);
-            const introEnabled = params.get("intro");
-
-            if (introEnabled === "1") {
-                setTimeout(() => {
-                    overlay.style.display = "none";
-                }, 4000);
-            } else {
-                overlay.style.display = "none";
-            }
-        });
-
-        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　🔥本番はこれ　テストのため上にしている ======
         // window.addEventListener("load", () => {
         //     const overlay = document.getElementById("intro-overlay");
         //     const params = new URLSearchParams(window.location.search);
         //     const introEnabled = params.get("intro");
-        //     const introPlayed = localStorage.getItem("introPlayed_story00");
 
-        //     if (introEnabled === "1" && !introPlayed) {
-        //         localStorage.setItem("introPlayed_story00", "true");
+        //     if (introEnabled === "1") {
         //         setTimeout(() => {
         //             overlay.style.display = "none";
         //         }, 4000);
@@ -106,6 +92,23 @@
         //         overlay.style.display = "none";
         //     }
         // });
+
+        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　🔥本番はこれ　テストのため上にしている ======
+        window.addEventListener("load", () => {
+            const overlay = document.getElementById("intro-overlay");
+            const params = new URLSearchParams(window.location.search);
+            const introEnabled = params.get("intro");
+            const introPlayed = localStorage.getItem("introPlayed_story00");
+
+            if (introEnabled === "1" && !introPlayed) {
+                localStorage.setItem("introPlayed_story00", "true");
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                }, 4000);
+            } else {
+                overlay.style.display = "none";
+            }
+        });
     </script>
 </body>
 
