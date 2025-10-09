@@ -121,13 +121,29 @@
                 resultMsg.style.color = '#d33';
             }
         });
-        // ====== タイトル演出（intro=1 のときのみ） ======
+        // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
+        // window.addEventListener("load", () => {
+        //     const overlay = document.getElementById("intro-overlay");
+        //     const params = new URLSearchParams(window.location.search);
+        //     const introEnabled = params.get("intro");
+
+        //     if (introEnabled === "1") {
+        //         setTimeout(() => {
+        //             overlay.style.display = "none";
+        //         }, 4000);
+        //     } else {
+        //         overlay.style.display = "none";
+        //     }
+        // });
+        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする ======
         window.addEventListener("load", () => {
             const overlay = document.getElementById("intro-overlay");
             const params = new URLSearchParams(window.location.search);
             const introEnabled = params.get("intro");
+            const introPlayed = localStorage.getItem("introPlayed_story00");
 
-            if (introEnabled === "1") {
+            if (introEnabled === "1" && !introPlayed) {
+                localStorage.setItem("introPlayed_story00", "true");
                 setTimeout(() => {
                     overlay.style.display = "none";
                 }, 4000);
