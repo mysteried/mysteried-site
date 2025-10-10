@@ -269,51 +269,15 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ../../assets/targets/targets.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ../../assets/targets/targets-2.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
 
-        <!-- assetsはここに書いた画像、音、3Dモデルなどを事前にロードしてキャッシュする　これにより、シーン内では軽く遅延なく操作ができる　読み込み待ちをなくすことができる -->
-        <a-assets>
-            <!-- コメントアウトしているが　a-assets-itemを使ってkey.glbっていう3Dモデルのファイルパスを読み行もうとしている -->
-            <!-- <a-asset-item id="keyModel" src="./key.glb"></a-asset-item> -->
-        </a-assets>
-
-        <!-- メッシュにだけ効果のあるライティングの設定 ambientだと1が基準だから0.9は若干弱い、directionalだと0.9は結構強い太陽光レベル　1.1.0は方向性を示す -->
-        <!-- ちなみにこういう書き方もできる　<a-light type="directional" intensity="0.9" position="1 1 0"></a-light> -->
-        <!-- このライトはscene全体の3Dオブジェクトに効果する　つまり、子要素を持たなくても、このsceneの中にあるオブジェクトには光があたる -->
-        <a-entity light="type: ambient; intensity: 0.9"></a-entity>
-        <a-entity light="type: directional; intensity: 0.9" position="1 1 0"></a-entity>
-
         <!-- mindar-image-targetはMindARでアンカーを決めるものでここでは.mindファイルの0番目が検出された際に有効になるアンカーであり、子要素はこのアンカーを基準に配置などがされていく -->
         <!-- これによりターゲットごとに演出を変えることができる　その際にidはanchor1,anchor2,3,・・・などユニーク化は必要 -->
         <a-entity mindar-image-target="targetIndex: 0" id="anchor">
-            <!-- ターゲット0を見つけたときに以下の挙動をしていく -->
-            <!-- positionは単独で使われると基準（アンカーから）Y方向に0.35m上に配置、って機能になる -->
-            <a-entity position="0 0.35 0">
-                <!-- 幅0.6高さ0.2メートルの板/shader: flat ライティングの効果を受けず色が一定で読みやすい/transparent: true; opacity: 0.85半透明/depthTest: false 深度判定せずに描画順になる🔥あまり理解できていない/side: double: 両面表示。裏から見ても板が見える -->
-                <a-plane width="0.6" height="0.2"
-                    material="shader: flat; color: #111; transparent: true; opacity: 0.85; depthTest: false; side: double"></a-plane>
-                <!-- widthは文字全体幅の目安、z方向に2cmだけ手前に -->
-                <a-entity text="value: 次のヒントを獲得！; color: #fff; align: center; width: 2.5"
-                    position="0 0 0.02"></a-entity>
-            </a-entity>
-
-            <!--今は表示しない、参考に残しておくだけ 内径6cm,外径12cm,アンカーから2cm上/animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear 回転アニメーションで4秒間でY軸回りを一回転を等速で回り続ける -->
-            <!-- <a-ring position="0 0.02 0" radius-inner="0.06" radius-outer="0.12"
-                material="shader: flat; color: #ffd166; depthTest: false; side: double"
-                animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear"></a-ring>
-
-            <a-box id="debugBox" position="0 0.15 0" depth="0.02" width="0.3" height="0.1"
-                material="shader: flat; color: #39FF14; depthTest: false; side: double; transparent: true; opacity: 0.8"></a-box> -->
-
-
-            <!-- If you have a GLB key icon: -->
-            <!-- <a-entity gltf-model="#keyModel" position="0 0 0" scale="0.15 0.15 0.15"
-                 animation-mixer></a-entity> -->
         </a-entity>
-
         <!-- A-Frame の カメラコンポーネント,「ここからシーンを覗く」視点を作る そのため座標は000がいい/look-controls="enabled: false"デフォルトだとスマホの傾きでカメラが動いてしまいARが破綻する/near="0.01" far="2000"カメラが描画できる最小と最大の距離 この範囲外は描画不可 -->
         <a-camera position="0 0 0" look-controls="enabled: false" near="0.01" far="2000"></a-camera>
     </a-scene>
@@ -368,18 +332,17 @@
             function hideOverlay() {
                 overlayEl && overlayEl.classList.add('hidden');
             }
-            // カメラを止める、オーバレイを出す、8秒後にその逆をする
-            // ただし、未使用でどこでも呼び出していないので着火しない
-            function freezeFor(ms = 8000, payload = {}) {
-                hideLiveVideo();
-                showOverlay(payload);
-                clearTimeout(resumeTimer);
-                resumeTimer = setTimeout(() => {
-                    hideOverlay();
-                    showLiveVideo();
-                    if (hint) hint.textContent = 'カメラ再開。ターゲットにかざしてください';
-                }, ms);
-            }
+            // カメラを止める、オーバレイを出す、8秒後にその逆をする　ただし、未使用でどこでも呼び出していないので着火しない
+            // function freezeFor(ms = 8000, payload = {}) {
+            //     hideLiveVideo();
+            //     showOverlay(payload);
+            //     clearTimeout(resumeTimer);
+            //     resumeTimer = setTimeout(() => {
+            //         hideOverlay();
+            //         showLiveVideo();
+            //         if (hint) hint.textContent = 'カメラ再開。ターゲットにかざしてください';
+            //     }, ms);
+            // }
 
 
 
