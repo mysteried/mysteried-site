@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- 🔥 -->
     <title>文学に埋もれた部屋 – ミステリアリティ</title>
     <link rel="icon" href="../../../../favicon.ico" />
     <link rel="stylesheet" href="../../../../css/base.css" />
@@ -13,10 +14,10 @@
 
 <body class="page-story">
     <div id="intro-overlay">
+        <!-- 🔥 これはアニメーションで表示される部分-->
         <h1 class="intro-title">文学に埋もれた部屋</h1>
     </div>
 
-    <!-- Header -->
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="../../../../">ミステリアリティ</a>
@@ -31,23 +32,19 @@
         <div id="notePaper" class="note-paper">
             <div class="note-bg"></div>
             <div class="note-text">
+                <!-- 🔥 -->
                 <p class="note-line">この部屋から脱出せよ。</p>
                 <p class="note-line">本にヒントがある。</p>
                 <p class="note-line">フランスの1800年。</p>
                 <p class="note-line">世界を変えた一冊。</p>
             </div>
         </div>
-
-
-        <!-- 案1 -->
-
-
     </main>
 
     <footer id="ops-footer">
-        <!-- 以下の文章はストーリーごとに設定する🔥 -->
         <div class="ops-desc-row">
             <a href="../../../../index.html" class="btn nav-btn">🏠</a>
+            <!-- 🔥 -->
             <p class="ops-desc">
                 カメラを起動して、正しい本にかざしてください。<br>
                 正解なら次へ進むパスワードが表示されます。
@@ -65,8 +62,8 @@
     </footer>
 
     <script>
-        // ====== 判定（MVP：平文比較） ======
-        const ANSWER = 'サンプル'; // 後で reward.js のハッシュ照合に差し替え可
+        // 🔥　後で reward.js のハッシュ照合に差し替え可
+        const ANSWER = 'サンプル';
         const answerInput = document.getElementById('answerInput');
         const checkBtn = document.getElementById('checkBtn');
         const resultMsg = document.getElementById('resultMsg');
@@ -98,7 +95,7 @@
             }
         });
 
-        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　🔥本番はこれ　テストのため上にしている ======
+        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　本番はこれ　テストのため上にしている ======
         // window.addEventListener("load", () => {
         //     const overlay = document.getElementById("intro-overlay");
         //     const params = new URLSearchParams(window.location.search);

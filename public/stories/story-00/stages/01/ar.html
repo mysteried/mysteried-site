@@ -267,6 +267,7 @@
     <!-- webVRをオフにする（ゴーグルなど）　vr-mode-ui="enabled: false" -->
     <!-- デバイスの傾きセンサー許可のuiを出さない　device-orientation-permission-ui="enabled: false" -->
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
+    <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
         mindar-image="imageTargetSrc: ../../assets/targets/targets.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
@@ -299,13 +300,13 @@
                     position="0 0 0.02"></a-entity>
             </a-entity>
 
-            <!-- 内径6cm,外径12cm,アンカーから2cm上/animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear 回転アニメーションで4秒間でY軸回りを一回転を等速で回り続ける -->
-            <a-ring position="0 0.02 0" radius-inner="0.06" radius-outer="0.12"
+            <!--今は表示しない、参考に残しておくだけ 内径6cm,外径12cm,アンカーから2cm上/animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear 回転アニメーションで4秒間でY軸回りを一回転を等速で回り続ける -->
+            <!-- <a-ring position="0 0.02 0" radius-inner="0.06" radius-outer="0.12"
                 material="shader: flat; color: #ffd166; depthTest: false; side: double"
                 animation="property: rotation; to: 0 0 360; loop: true; dur: 4000; easing: linear"></a-ring>
 
             <a-box id="debugBox" position="0 0.15 0" depth="0.02" width="0.3" height="0.1"
-                material="shader: flat; color: #39FF14; depthTest: false; side: double; transparent: true; opacity: 0.8"></a-box>
+                material="shader: flat; color: #39FF14; depthTest: false; side: double; transparent: true; opacity: 0.8"></a-box> -->
 
 
             <!-- If you have a GLB key icon: -->
@@ -401,7 +402,7 @@
                     // これはデバック用
                     console.log('[MindAR] targetFound');
                     if (hint) hint.textContent = 'ターゲット検出！ヒントを表示します…';
-                    // 🔥検出したらそのままオーバーレイを表示（タイマーやビデオ停止はしない）
+                    // 🔥ここは毎回変更をする
                     showOverlay({
                         title: '次へのヒント',
                         message: '境内左手の灯籠の裏面に注目してみよう。\n刻印の数字が鍵になりそうだ。',
