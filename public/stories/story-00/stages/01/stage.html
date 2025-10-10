@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>文学に埋もれた部屋 – ミステリアリティ</title>
-    <link rel="icon" href="../../favicon.ico" />
-    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="icon" href="../../../../favicon.ico" />
+    <link rel="stylesheet" href="../../../../css/base.css" />
 
 </head>
 
@@ -19,10 +19,10 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-inner">
-            <a class="brand" href="../../">ミステリアリティ</a>
+            <a class="brand" href="../../../../">ミステリアリティ</a>
             <nav class="nav">
-                <a href="../../about.html">遊び方</a>
-                <a href="../../news.html">お知らせ</a>
+                <a href="../../../../about.html">遊び方</a>
+                <a href="../../../../news.html">お知らせ</a>
             </nav>
         </div>
     </header>
@@ -47,12 +47,12 @@
     <footer id="ops-footer">
         <!-- 以下の文章はストーリーごとに設定する🔥 -->
         <div class="ops-desc-row">
-            <a href="../../index.html" class="btn nav-btn">🏠</a>
+            <a href="../../../../index.html" class="btn nav-btn">🏠</a>
             <p class="ops-desc">
                 カメラを起動して、正しい本にかざしてください。<br>
                 正解なら次へ進むパスワードが表示されます。
             </p>
-            <a href="../../about.html" class="btn nav-btn">❓</a>
+            <a href="../../../../about.html" class="btn nav-btn">❓</a>
         </div>
 
         <div class="ops-row">
@@ -84,29 +84,12 @@
             }
         });
         // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
-        // window.addEventListener("load", () => {
-        //     const overlay = document.getElementById("intro-overlay");
-        //     const params = new URLSearchParams(window.location.search);
-        //     const introEnabled = params.get("intro");
-
-        //     if (introEnabled === "1") {
-        //         setTimeout(() => {
-        //             overlay.style.display = "none";
-        //         }, 4000);
-        //     } else {
-        //         overlay.style.display = "none";
-        //     }
-        // });
-
-        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　🔥本番はこれ　テストのため上にしている ======
         window.addEventListener("load", () => {
             const overlay = document.getElementById("intro-overlay");
             const params = new URLSearchParams(window.location.search);
             const introEnabled = params.get("intro");
-            const introPlayed = localStorage.getItem("introPlayed_story00");
 
-            if (introEnabled === "1" && !introPlayed) {
-                localStorage.setItem("introPlayed_story00", "true");
+            if (introEnabled === "1") {
                 setTimeout(() => {
                     overlay.style.display = "none";
                 }, 4000);
@@ -114,6 +97,23 @@
                 overlay.style.display = "none";
             }
         });
+
+        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　🔥本番はこれ　テストのため上にしている ======
+        // window.addEventListener("load", () => {
+        //     const overlay = document.getElementById("intro-overlay");
+        //     const params = new URLSearchParams(window.location.search);
+        //     const introEnabled = params.get("intro");
+        //     const introPlayed = localStorage.getItem("introPlayed_story00");
+
+        //     if (introEnabled === "1" && !introPlayed) {
+        //         localStorage.setItem("introPlayed_story00", "true");
+        //         setTimeout(() => {
+        //             overlay.style.display = "none";
+        //         }, 4000);
+        //     } else {
+        //         overlay.style.display = "none";
+        //     }
+        // });
     </script>
 </body>
 
