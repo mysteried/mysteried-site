@@ -116,6 +116,29 @@
             top: calc(env(safe-area-inset-top, 0px) + 12px);
         }
 
+        /* 左上に縦積みで固定配置（セーフエリア対応） */
+        .gate-stack {
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 0px) + 72px);
+            left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        /* 見た目はこれまでの gate と同等 */
+        .gate-stack .btn {
+            background: rgba(255, 255, 255, .9);
+            color: #111;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
+            min-width: 44px;
+            min-height: 44px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+        }
+
         @media (max-width: 480px) {
             .btn {
                 padding: 12px 16px;
@@ -219,8 +242,11 @@
     <!-- Simple geofence gate (optional). Replace LAT/LNG/RADIUS_M as needed. -->
     <div class="ui badge">WebAR MVP</div>
     <div id="hint" class="hint">ターゲットにカメラを向けてください</div>
-    <button id="torchBtn" class="ui btn gate"
-        style="top: calc(env(safe-area-inset-top, 0px) + 56px); left: 12px;">ライトON</button>
+    <!-- これで2つを縦に並べて配置 -->
+    <div class="ui gate-stack">
+        <button id="torchBtn" class="btn">ライトON</button>
+        <button id="backBtn" class="btn">戻る</button>
+    </div>
     <!-- Freeze overlay (shows hint / reward while the live video is hidden) -->
     <div id="freezeOverlay" class="overlay hidden">
         <div class="overlay-panel">
@@ -300,6 +326,7 @@
             const hint = document.getElementById('hint');
             const sceneEl = document.getElementById('scene');
             const torchBtn = document.getElementById('torchBtn');
+            const backBtn = document.getElementById('backBtn');
 
             const overlayEl = document.getElementById('freezeOverlay');
             const overlayTitle = document.getElementById('overlayTitle');
@@ -437,6 +464,16 @@
                     const tracks = stream ? stream.getVideoTracks() : [];
                     return tracks[0] || null;
                 } catch (_) { return null; }
+            }
+
+            // 同階層のstage.htmlに戻る
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    // 同階層の stage.html へ戻る
+                    window.location.href = './stage.html';
+                    // もしヒストリで戻したいだけなら↓でもOK
+                    // history.back();
+                });
             }
 
             // 以下がフラッシュのコード　詳細は省略！！
