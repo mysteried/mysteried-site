@@ -110,6 +110,72 @@ body {
     color: var(--muted);
 }
 
+.page-home .hero {
+    position: relative;
+    padding: clamp(96px, 22vw, 180px) 0;
+    color: #fff;
+    background: linear-gradient(130deg, rgba(11, 22, 43, 0.82) 0%, rgba(30, 64, 175, 0.58) 70%, rgba(30, 64, 175, 0.35) 100%), url("../assets/images/sample-03.jpg") center/cover no-repeat;
+    overflow: hidden;
+}
+
+.page-home .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 16, 30, 0.35);
+}
+
+.page-home .hero .container {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.page-home .hero-copy {
+    max-width: min(520px, 100%);
+    padding: clamp(24px, 4vw, 32px) clamp(24px, 6vw, 40px);
+    border-radius: 20px;
+    background: rgba(10, 16, 30, 0.55);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.page-home .hero-title {
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+.page-home .hero-title--primary {
+    font-size: clamp(32px, 5.8vw, 48px);
+    font-weight: 700;
+}
+
+.page-home .hero-title--secondary {
+    margin-top: clamp(18px, 4vw, 28px);
+    font-size: clamp(20px, 3.4vw, 26px);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.page-home .hero-lead {
+    margin: clamp(16px, 3vw, 22px) 0 0;
+    font-size: clamp(16px, 2.8vw, 18px);
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.03em;
+}
+
+@media (max-width: 600px) {
+    .page-home .hero {
+        padding: 72px 0 88px;
+    }
+
+    .page-home .hero-copy {
+        padding: 24px;
+        border-radius: 16px;
+    }
+}
+
 /* ===== Section Titles ===== */
 .section-title {
     margin: 28px 0 12px;
@@ -194,6 +260,8 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-top: auto;
+    /* ← これで最下部に張り付く */
 }
 
 .chip {
@@ -206,12 +274,6 @@ body {
     border: 1px solid var(--chip-bd);
     padding: 4px 8px;
     border-radius: 999px;
-}
-
-.card-cta {
-    margin-top: auto;
-    color: var(--brand);
-    font-weight: 600;
 }
 
 /* ===== Footer ===== */
