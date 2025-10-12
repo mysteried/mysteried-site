@@ -12,7 +12,7 @@
 
 </head>
 
-<body class="page-story">
+<body class="page-story detective">
     <div id="intro-overlay">
         <!-- 🔥 これはアニメーションで表示される部分-->
         <h1 class="intro-title">文学に埋もれた部屋</h1>
@@ -29,6 +29,10 @@
     </header>
 
     <main>
+
+        <!-- 探偵シリーズ：ここに追加 -->
+        <section id="chat" class="chat"></section>
+
         <div id="notePaper" class="note-paper">
             <div class="note-bg"></div>
             <div class="note-text">
@@ -90,6 +94,52 @@
                 resultMsg.style.color = '#d33';
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+        // === 探偵シリーズ用の会話挿入 ===
+        const chat = document.getElementById('chat');
+        const dialogue = [
+            { who: "masu", text: "また例のサイトが更新されたようだね。" },
+            { who: "hina", text: "マスオさん！やりましょうよ！" },
+            { who: "masu", text: "おいおい、ヒナタくん……まあ、いいか。" }
+        ];
+
+        function createMsg(who, text) {
+            const div = document.createElement('div');
+            div.className = `msg ${who}`;
+            div.innerHTML = `
+                <div class="avatar"><img src="../../../../assets/images/${who}.png" alt="${who}"></div>
+                <div class="bubble"><span class="name">${who === 'hina' ? 'ヒナタ' : 'マスオ'}</span>${text}</div>
+            `;
+            return div;
+        }
+
+        dialogue.forEach((d, i) => {
+            const el = createMsg(d.who, d.text);
+            chat.appendChild(el);
+            // 1つずつ順番にフェードイン
+            setTimeout(() => el.classList.add('reveal'), 120 * i);
+        });
+
+
+
+
+
+
+
+
+
+
+
 
         // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
         window.addEventListener("load", () => {
