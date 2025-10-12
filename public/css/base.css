@@ -194,8 +194,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: auto;
-    /* ← これで最下部に張り付く */
 }
 
 .chip {
@@ -208,6 +206,12 @@ body {
     border: 1px solid var(--chip-bd);
     padding: 4px 8px;
     border-radius: 999px;
+}
+
+.card-cta {
+    margin-top: auto;
+    color: var(--brand);
+    font-weight: 600;
 }
 
 /* ===== Footer ===== */
