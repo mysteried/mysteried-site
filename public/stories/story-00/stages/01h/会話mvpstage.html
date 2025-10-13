@@ -38,7 +38,8 @@
             max-width: 780px;
             margin: 24px auto 120px;
             padding: 0 16px;
-            padding-top: 500px;
+            padding-top: 40vh;
+            /* 会話の最初をwindowの40%の位置から始める */
             display: flex;
             flex-direction: column;
             /* 会話間のスペース */
@@ -173,7 +174,7 @@
         .chat::after {
             content: "";
             display: block;
-            height: 20vh;
+            height: 30vh;
             /* 調整可：40〜60vhくらいで好みに合わせて これがしたのスペース*/
         }
 
@@ -265,9 +266,9 @@
 
         // type:'note' で note-paper を差し込み
         const dialogue = [
-            { who: "masu", face: "normal", text: "また例のサイトが更新されて新しい謎が\n配信されているよ。" },
-            { who: "hina", face: "smile", text: "マスオさん！またやりましょうよ！どうせ暇でしょ！" },
-            { who: "masu", face: "sweat", text: "おいおい、ヒナタくん……まあ、いいか。どんな謎か見せてくれるかい？" },
+            { who: "masu", face: "normal", text: "また例のサイトが\n更新されて新しい謎が\n配信\nされているよ。" },
+            { who: "hina", face: "smile", text: "マスオさん！\nまたやりましょうよ！どうせ暇でしょ！" },
+            { who: "masu", face: "sweat", text: "おいおい、ヒナタくん……\nまあ、いいか。どんな謎か見せてくれるかい？" },
             { type: "note" }, // ← ここで note-paper が会話に挟まる
             { who: "hina", face: "normal", text: "“フランスの1800年。世界を変えた一冊。”…本のことを指してそうですね。" },
             { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
