@@ -67,6 +67,12 @@
             z-index: 2;
         }
 
+        .msg .bubble {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+
+
         /* キャラ画像のサイズなど */
         .msg .avatar {
             flex: 0 0 120px;
@@ -95,6 +101,8 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
             background: #fff;
             margin: 0 8px;
+            white-space: pre-wrap;
+            /* ← \n を有効にする */
         }
 
         /* 左（マスオ） */
@@ -112,7 +120,7 @@
             content: "";
             position: absolute;
             left: -6px;
-            bottom: 8px;
+            bottom: 25px;
             width: 12px;
             height: 12px;
             background: #fff;
@@ -137,7 +145,7 @@
             content: "";
             position: absolute;
             right: -6px;
-            bottom: 8px;
+            bottom: 25px;
             width: 12px;
             height: 12px;
             background: #111;
@@ -257,7 +265,7 @@
 
         // type:'note' で note-paper を差し込み
         const dialogue = [
-            { who: "masu", face: "normal", text: "また例のサイトが更新されて新しい謎が配信されているよ。" },
+            { who: "masu", face: "normal", text: "また例のサイトが更新されて新しい謎が\n配信されているよ。" },
             { who: "hina", face: "smile", text: "マスオさん！またやりましょうよ！どうせ暇でしょ！" },
             { who: "masu", face: "sweat", text: "おいおい、ヒナタくん……まあ、いいか。どんな謎か見せてくれるかい？" },
             { type: "note" }, // ← ここで note-paper が会話に挟まる
