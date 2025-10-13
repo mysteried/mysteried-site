@@ -165,8 +165,20 @@
         .chat::after {
             content: "";
             display: block;
-            height: 10vh;
+            height: 20vh;
             /* 調整可：40〜60vhくらいで好みに合わせて これがしたのスペース*/
+        }
+
+
+        .msg {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .msg.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* 小さめ端末調整 */
@@ -299,17 +311,18 @@
 
         /* ========= 3) スクロールに合わせて 1〜2個ずつ “自然に” 出す ========= */
         const mainRoot = document.querySelector('main'); // スクロールする要素を基準に監視
-        const io = new IntersectionObserver((entries, obs) => {
+        const io = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
-                    e.target.classList.add('reveal');
-                    obs.unobserve(e.target); // 一度表示したら監視解除（チラつき防止）
+                    e.target.classList.add('reveal');   // 見えたらフェードイン
+                } else {
+                    e.target.classList.remove('reveal'); // 外れたらフェードアウト
                 }
             });
         }, {
-            root: mainRoot,           // ★ ここが重要：ビューポートではなく main を基準にする
-            threshold: 0.25,          // 要素の 25% が見えたら発火
-            rootMargin: '0px 0px -10% 0px' // 少し早めに出す
+            root: mainRoot,
+            threshold: 0.25,
+            rootMargin: '-20% 0px -30% 0px'
         });
 
         // .msg を順番に監視開始
