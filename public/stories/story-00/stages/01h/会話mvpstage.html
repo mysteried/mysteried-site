@@ -289,16 +289,21 @@
         dialogue.forEach(d => chat.appendChild(createMsg(d)));
 
         /* ========= 3) スクロールに合わせて 1〜2個ずつ “自然に” 出す ========= */
-        const io = new IntersectionObserver(entries => {
+        const mainRoot = document.querySelector('main'); // スクロールする要素を基準に監視
+        const io = new IntersectionObserver((entries, obs) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     e.target.classList.add('reveal');
-                    // 一度出たら常に可視のまま（戻ってもチラつかない）
-                    io.unobserve(e.target);
+                    obs.unobserve(e.target); // 一度表示したら監視解除（チラつき防止）
                 }
             });
-        }, { root: null, threshold: 0.2 });
+        }, {
+            root: mainRoot,           // ★ ここが重要：ビューポートではなく main を基準にする
+            threshold: 0.25,          // 要素の 25% が見えたら発火
+            rootMargin: '0px 0px -10% 0px' // 少し早めに出す
+        });
 
+        // .msg を順番に監視開始
         Array.from(chat.children).forEach(el => io.observe(el));
 
         /* ========= 4) 既存の判定＆遷移（通常版と全く同じ） ========= */
