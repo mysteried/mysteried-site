@@ -42,13 +42,13 @@
             display: flex;
             flex-direction: column;
             /* 会話間のスペース */
-            gap: 90px;
+            gap: 110px;
         }
 
         .msg {
             display: flex;
             align-items: flex-end;
-            gap: 10px;
+            gap: 24px;
             opacity: 0;
             transform: translateY(6px);
             transition: opacity .35s ease, transform .35s ease;
@@ -61,8 +61,8 @@
         }
 
         .msg.active .bubble {
-            transform: scale(1.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: scale(1.10);
+            transition: transform 0.8s ease, box-shadow 0.8s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             z-index: 2;
         }
@@ -159,6 +159,14 @@
 
         .chat .note-paper .note-bg {
             box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+        }
+
+        /* 最下部にも余白を作り、最後の吹き出しが中央帯までスクロールできるようにする */
+        .chat::after {
+            content: "";
+            display: block;
+            height: 10vh;
+            /* 調整可：40〜60vhくらいで好みに合わせて これがしたのスペース*/
         }
 
         /* 小さめ端末調整 */
@@ -318,8 +326,8 @@
             });
         }, {
             root: mainRoot,
-            threshold: 1.0, // 要素の100％が見えたら「中央付近」とみなす
-            rootMargin: "-40% 0px -40% 0px", // 上下40%を除外して中央だけを判定
+            threshold: 0.3, // 要素の100％が見えたら「中央付近」とみなす
+            rootMargin: "-40% 0px -40% 0px", // 上下40%を除外して中央だけを判定 rootMargin: "<上> <右> <下> <左>"、結果として、**真ん中の20％くらいの帯が“中央ゾーン”**になる
         });
 
         Array.from(chat.children).forEach(el => centerObserver.observe(el));
