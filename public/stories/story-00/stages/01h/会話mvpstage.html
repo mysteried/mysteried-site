@@ -38,10 +38,11 @@
             max-width: 780px;
             margin: 24px auto 120px;
             padding: 0 16px;
-            padding-top: 200px;
+            padding-top: 500px;
             display: flex;
             flex-direction: column;
-            gap: 36px;
+            /* 会話間のスペース */
+            gap: 90px;
         }
 
         .msg {
@@ -59,10 +60,18 @@
             transform: none;
         }
 
+        .msg.active .bubble {
+            transform: scale(1.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+        }
+
+        /* キャラ画像のサイズなど */
         .msg .avatar {
-            flex: 0 0 72px;
-            width: 72px;
-            height: 72px;
+            flex: 0 0 120px;
+            width: 120px;
+            height: 120px;
             border-radius: 12px;
             margin: 0 8px;
             overflow: hidden;
@@ -81,7 +90,7 @@
             padding: 10px 12px;
             border-radius: 14px;
             line-height: 1.7;
-            font-size: 15px;
+            font-size: 30px;
             position: relative;
             box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
             background: #fff;
@@ -137,13 +146,6 @@
             transform: rotate(-45deg);
         }
 
-        /* 登場人物名（任意） */
-        .name {
-            display: inline-block;
-            font-size: 12px;
-            opacity: .65;
-            margin-bottom: 4px;
-        }
 
         /* ===== note-paper を会話の途中に挿入する用 ===== */
         .chat .note-paper {
@@ -270,14 +272,8 @@
 
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            // 名前（小さく）
-            const name = document.createElement('div');
-            name.className = 'name';
-            name.textContent = role === 'hina' ? 'ヒナタ' : 'マスオ';
             const text = document.createElement('div');
             text.textContent = item.text;
-
-            bubble.appendChild(name);
             bubble.appendChild(text);
 
             // 左右の配置
@@ -310,6 +306,23 @@
 
         // .msg を順番に監視開始
         Array.from(chat.children).forEach(el => io.observe(el));
+
+        // ========= 3.5) スクロール中に中央の吹き出しを強調 =========
+        const centerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, {
+            root: mainRoot,
+            threshold: 1.0, // 要素の100％が見えたら「中央付近」とみなす
+            rootMargin: "-40% 0px -40% 0px", // 上下40%を除外して中央だけを判定
+        });
+
+        Array.from(chat.children).forEach(el => centerObserver.observe(el));
 
         /* ========= 4) 既存の判定＆遷移（通常版と全く同じ） ========= */
         const ANSWER = 'サンプル'; // 後で reward.js のハッシュ照合に差し替え可
