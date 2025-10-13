@@ -38,9 +38,10 @@
             max-width: 780px;
             margin: 24px auto 120px;
             padding: 0 16px;
+            padding-top: 200px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 36px;
         }
 
         .msg {
@@ -59,10 +60,11 @@
         }
 
         .msg .avatar {
-            flex: 0 0 40px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            flex: 0 0 72px;
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            margin: 0 8px;
             overflow: hidden;
             box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
             background: #fff;
@@ -83,11 +85,13 @@
             position: relative;
             box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
             background: #fff;
+            margin: 0 8px;
         }
 
         /* 左（マスオ） */
         .msg.masu {
             flex-direction: row;
+            margin-bottom: 24px;
         }
 
         .msg.masu .bubble {
@@ -111,6 +115,7 @@
         /* 右（ヒナタ） */
         .msg.hina {
             flex-direction: row-reverse;
+            margin-bottom: 24px;
         }
 
         .msg.hina .bubble {
