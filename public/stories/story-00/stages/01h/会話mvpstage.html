@@ -12,6 +12,27 @@
 
     <!-- 探偵シリーズ・ページ専用の薄い追記 -->
     <style>
+        body.page-story {
+            background-image: url("../../../../assets/images/wooddesk2.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* 背景固定 */
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        body.page-story main {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+
         /* ===== 会話レイアウト ===== */
         .chat {
             max-width: 780px;
