@@ -52,44 +52,153 @@
             <a href="../../../../about.html" class="btn nav-btn">❓</a>
         </div>
 
-        <div class="ops-row">
+        <!-- ARモード用行（表示デフォルト） -->
+        <div class="ops-row ops-ar" data-mode="ar">
             <a href="./ar.html?p=p1" class="btn cam">ARカメラ</a>
             <input id="answerInput" type="text" placeholder="パスワード">
-            <button id="checkBtn" class="btn next">次へ進む</button>
+            <button id="checkBtnAr" class="btn next">次へ進む</button>
         </div>
-
+        <!-- 位置情報モード用行（初期は display:none） -->
+        <div class="ops-row ops-geo" data-mode="geo" style="display:none">
+            <button id="geoBtn" class="btn cam">位置を確認</button>
+            <p id="geoResult" class="card-desc" style="min-width: 180px; margin: 0;">未確認</p>
+            <button id="checkBtnGeo" class="btn next">次へ進む</button>
+        </div>
         <p id="resultMsg" class="card-desc"></p>
     </footer>
 
     <script>
         // 🔥　後で reward.js のハッシュ照合に差し替え可
         const ANSWER = 'サンプル';
+        // === 開発者が切り替える用（'ar' | 'geo'） ===
+        const MODE = 'geo'; // ← 'ar or geo' にすると位置情報モードに
         const answerInput = document.getElementById('answerInput');
-        const checkBtn = document.getElementById('checkBtn');
+        const checkBtnAr = document.getElementById('checkBtnAr');
+        const checkBtnGeo = document.getElementById('checkBtnGeo');
+        const geoBtn = document.getElementById('geoBtn');
+        const geoResult = document.getElementById('geoResult');
         const resultMsg = document.getElementById('resultMsg');
+
+        // 表示モードの切り替え
+        const rowAr = document.querySelector('.ops-row.ops-ar');
+        const rowGeo = document.querySelector('.ops-row.ops-geo');
+        if (MODE === 'geo') {
+            rowAr && (rowAr.style.display = 'none');
+            rowGeo && (rowGeo.style.display = '');
+        } else {
+            rowAr && (rowAr.style.display = '');
+            rowGeo && (rowGeo.style.display = 'none');
+        }
 
         // 🔥 次のurlの設定をここでする
         const NEXT_STAGE_URL = '../02/stage.html?intro=1';
 
-        checkBtn.addEventListener('click', () => {
-            const val = (answerInput.value || '').trim();
-            if (!val) {
-                resultMsg.textContent = 'パスワードを入力してください';
-                resultMsg.style.color = '#d33';
+        // ARモードの「次へ進む」ボタン
+        if (MODE === 'ar' && checkBtnAr) {
+            checkBtnAr.addEventListener('click', () => {
+                const val = (answerInput.value || '').trim();
+                if (!val) {
+                    resultMsg.textContent = 'パスワードを入力してください';
+                    resultMsg.style.color = '#d33';
+                    return;
+                }
+                if (val === ANSWER) {
+                    resultMsg.textContent = '正解！次の謎へ進みます…';
+                    resultMsg.style.color = '#107c10';
+                    setTimeout(() => { window.location.href = NEXT_STAGE_URL; }, 600);
+                } else {
+                    resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
+                    resultMsg.style.color = '#d33';
+                }
+            });
+        }
+
+        // ===== 位置情報モード用（MVP簡略） =====
+        const TARGET = {
+            id: "story00_stage01",
+            lat: 35.84566,      // TODO: 目標の緯度（ステージごとに調整）
+            lng: 139.64706,     // TODO: 目標の経度（ステージごとに調整）
+            radius_m: 200       // TODO: 許容半径（m）
+        };
+        let geoOK = false;
+
+        function meters(n) { return `${Math.round(n)}m`; }
+        function distanceMeters(a, b) {
+            const R = 6371000, toRad = d => d * Math.PI / 180;
+            const dLat = toRad(b.lat - a.lat), dLng = toRad(b.lng - a.lng);
+            const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
+            const s = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+            return 2 * R * Math.asin(Math.sqrt(s));
+        }
+        function readMock() {
+            const q = new URLSearchParams(location.search);
+            const m = q.get('mock');
+            if (!m) return null;
+            const [lat, lng] = m.split(',').map(Number);
+            if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng, accuracy: 5 };
+            return null;
+        }
+        async function checkGeoOnce() {
+            geoOK = false;
+            if (geoResult) { geoResult.style.color = ''; geoResult.textContent = '測位中…'; }
+
+            const mock = readMock();
+            if (mock) {
+                handlePos({ coords: { latitude: mock.lat, longitude: mock.lng, accuracy: mock.accuracy } }, true);
                 return;
             }
-            if (val === ANSWER) {
-                resultMsg.textContent = '正解！次の謎へ進みます…';
-                resultMsg.style.color = '#107c10';
-                // 少しだけフィードバックを見せてから遷移
-                setTimeout(() => {
-                    window.location.href = NEXT_STAGE_URL;
-                }, 600);
-            } else {
-                resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
-                resultMsg.style.color = '#d33';
+            if (!('geolocation' in navigator)) {
+                if (geoResult) { geoResult.style.color = '#c62828'; geoResult.textContent = '位置情報に非対応です。'; }
+                return;
             }
-        });
+            try {
+                const p = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 5000
+                    });
+                });
+                handlePos(p, false);
+            } catch (err) {
+                const msg = err.code === 1
+                    ? '位置情報の許可が必要です'
+                    : (err.code === 2 ? '取得に失敗しました' : 'タイムアウトしました');
+                if (geoResult) { geoResult.style.color = '#c62828'; geoResult.textContent = msg; }
+            }
+        }
+        function handlePos(p, isMock) {
+            const { latitude, longitude, accuracy } = p.coords;
+            const d = distanceMeters(
+                { lat: latitude, lng: longitude },
+                { lat: TARGET.lat, lng: TARGET.lng }
+            );
+            const inRange = d <= TARGET.radius_m;
+            geoOK = inRange;
+            if (!geoResult) return;
+            if (inRange) {
+                geoResult.style.color = '#107c10';
+                geoResult.textContent = `OK（距離 ${meters(d)} / 精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
+            } else {
+                geoResult.style.color = '#c62828';
+                geoResult.textContent = `目標まで 約${meters(d)}（精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
+            }
+        }
+        if (MODE === 'geo') {
+            geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
+            checkBtnGeo && checkBtnGeo.addEventListener('click', () => {
+                if (geoOK) {
+                    // 位置OKなら遷移
+                    window.location.href = NEXT_STAGE_URL;
+                } else {
+                    // 未確認/遠い場合はメッセージ
+                    if (geoResult) {
+                        geoResult.style.color = '#c62828';
+                        geoResult.textContent = 'まだ条件を満たしていません（まず「位置を確認」）';
+                    }
+                }
+            });
+        }
 
         // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
         window.addEventListener("load", () => {
