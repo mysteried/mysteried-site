@@ -1,0 +1,195 @@
+/* ===== 探偵シリーズ（会話UI）用：chat.css ===== */
+/* base.css とは独立して動く。stage.html に組み込むときに <link> で読み込むだけでOK */
+
+/* 背景は固定。main だけスクロールさせる */
+body.page-story {
+    background-image: url("../assets/images/wooddesk2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* 背景固定 */
+    min-height: 100vh;
+    overflow: hidden;
+    /* 背景は固定、前景(main)だけスクロール */
+}
+
+body.page-story main {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== 会話レイアウト ===== */
+.chat {
+    max-width: 780px;
+    margin: 24px auto 120px;
+    padding: 0 16px;
+    padding-top: 40vh;
+    /* 最初のメッセージが画面40%位置から始まる */
+    display: flex;
+    flex-direction: column;
+    gap: 110px;
+    /* メッセージ間の距離（演出に効く） */
+}
+
+/* フェードイン/アウト（IntersectionObserver で .reveal を付け外し） */
+.msg {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.msg.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 中央帯に入ったメッセージを強調（.active は JS で付与） */
+.msg .bubble {
+    transform: scale(1);
+    transform-origin: center center;
+    /* 既定。左右ごとの指定で上書き */
+    transition: transform 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+    will-change: transform;
+}
+
+.msg.active .bubble {
+    transform: scale(1.10);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+}
+
+.msg.masu .bubble {
+    transform-origin: left center;
+}
+
+.msg.hina .bubble {
+    transform-origin: right center;
+}
+
+/* アバター（角丸の正方形） */
+.msg .avatar {
+    flex: 0 0 120px;
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    margin: 0 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+    background: #fff;
+}
+
+.msg .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 吹き出し */
+.bubble {
+    max-width: min(72%, 560px);
+    padding: 10px 12px;
+    border-radius: 14px;
+    line-height: 1.7;
+    font-size: 25px;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+    background: #fff;
+    margin: 0 8px;
+    white-space: pre-wrap;
+    /* \n を改行として表示 */
+}
+
+/* 左（マスオ） */
+.msg.masu {
+    flex-direction: row;
+    margin-bottom: 24px;
+}
+
+.msg.masu .bubble {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, .08);
+}
+
+.msg.masu .bubble::after {
+    content: "";
+    position: absolute;
+    left: -6px;
+    bottom: 25px;
+    /* ← テール(しっぽ)の高さ。上げ下げはここを調整 */
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-left: 1px solid rgba(0, 0, 0, .08);
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    transform: rotate(45deg);
+}
+
+/* 右（ヒナタ） */
+.msg.hina {
+    flex-direction: row-reverse;
+    margin-bottom: 24px;
+}
+
+.msg.hina .bubble {
+    background: #111;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .15);
+}
+
+.msg.hina .bubble::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    bottom: 25px;
+    /* ← テール(しっぽ)の高さ。上げ下げはここを調整 */
+    width: 12px;
+    height: 12px;
+    background: #111;
+    border-right: 1px solid rgba(255, 255, 255, .15);
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    transform: rotate(-45deg);
+}
+
+/* note-paper を会話の途中に挿入する場合の微調整 */
+.chat .note-paper {
+    width: min(560px, 92vw);
+    margin: 12px auto 20px;
+}
+
+.chat .note-text {
+    font-size: clamp(18px, 3.3vw, 22px);
+}
+
+.chat .note-paper .note-bg {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+}
+
+/* 末尾の余白：最後の吹き出しが中央帯まで入れるため */
+.chat::after {
+    content: "";
+    display: block;
+    height: 30vh;
+    /* 40〜60vhに好みで調整 */
+}
+
+/* スマホ調整 */
+@media (max-width: 480px) {
+    .msg .avatar {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+    }
+
+    .bubble {
+        max-width: 78%;
+        font-size: 14px;
+    }
+}
