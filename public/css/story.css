@@ -173,20 +173,6 @@ footer {
     font-size: 14px;
 }
 
-/* モバイル対応 */
-@media (max-width:480px) {
-    #ops-footer .ops-row {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    #ops-footer input,
-    #ops-footer .btn {
-        width: 100%;
-        flex: none;
-    }
-}
-
 /* ===== アクセス時のイントロ演出 ===== */
 #intro-overlay {
     position: fixed;
@@ -208,5 +194,21 @@ footer {
     to {
         opacity: 0;
         visibility: hidden;
+    }
+}
+
+
+
+/* モバイル対応 */
+@media (max-width:480px) {
+    #ops-footer .ops-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #ops-footer input,
+    #ops-footer .btn {
+        width: 100%;
+        flex: none;
     }
 }
