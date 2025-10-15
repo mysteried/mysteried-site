@@ -15,6 +15,10 @@ export const STAGE = {
     introDuration: 2500,
     introOnceKey: "introPlayed_story00",
 
+    // 次へ進むのメッセージをここでも管理できる
+    geoSuccessText: "到着だ！この先に向かおう…",
+    geoSuccessDelayMs: 800,
+
     // ===== 会話UI（variant: "chat" の時だけ使用）=====
     chat: {
         avatars: {

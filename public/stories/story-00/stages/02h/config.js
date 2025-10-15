@@ -4,9 +4,9 @@ export const STAGE = {
     id: "story00_stage02",
     title: "石になった町長",
     mode: "ar",                 // "ar" or "geo"
-    variant: "plain",            // "plain" or "chat"
+    variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
-    nextUrl: "../03/stage.html?intro=1",
+    nextUrl: "../03h/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     target: { lat: 35.85706, lng: 139.61060, radius_m: 200 },

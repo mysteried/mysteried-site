@@ -213,7 +213,7 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ../../assets/targets/targets-2.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ../../assets/targets/targets-1.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
@@ -284,7 +284,7 @@
                     // 🔥ここは毎回変更をする
                     showOverlay({
                         title: '次へのヒント',
-                        message: 'どうして町長がこんな目に・・・\nそれより私は一体何を・・・',
+                        message: 'そうだ、思い出したぞ・・・',
                         code: 'サンプル'
                     });
                 });

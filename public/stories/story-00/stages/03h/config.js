@@ -1,12 +1,12 @@
 // 各ステージ固有の設定だけを編集してください
 export const STAGE = {
     // ===== 基本 =====
-    id: "story00_stage02",
-    title: "石になった町長",
+    id: "story00_stage03",
+    title: "あの建物へ・・・",
     mode: "ar",                 // "ar" or "geo"
-    variant: "plain",            // "plain" or "chat"
+    variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
-    nextUrl: "../03/stage.html?intro=1",
+    nextUrl: "../01h/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     target: { lat: 35.85706, lng: 139.61060, radius_m: 200 },
