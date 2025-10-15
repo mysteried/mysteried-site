@@ -21,12 +21,25 @@ export const STAGE = {
             // 画像パスは /public からの相対…ではなく、stage.html から見た相対でもOK
             // ここでは stage.html からの相対で書いています
             masu: {
-                normal: "../../../../assets/images/avatars/masuo_normal.png",
-                sweat: "../../../../assets/images/avatars/masuo_sweat.webp"
+                normal: "../../../../assets/images/avatars/masuo_normal.webp",       // 通常
+                grumpy: "../../../../assets/images/avatars/masuo_grumpy.webp",       // ムスッと
+                smile: "../../../../assets/images/avatars/masuo_smile.webp",         // 笑顔（控えめ）
+                surprised: "../../../../assets/images/avatars/masuo_surprised.webp", // 驚き
+                confused: "../../../../assets/images/avatars/masuo_confused.webp",   // 困り顔
+                sweat: "../../../../assets/images/avatars/masuo_sweat.webp",     // 焦り顔
+                thinking: "../../../../assets/images/avatars/masuo_thinking.webp",   // 推理・考え込み
+                angry: "../../../../assets/images/avatars/masuo_angry.webp"         // 怒る
             },
             hina: {
-                normal: "../../../../assets/images/avatars/hinata_normal.png",
-                smile: "../../../../assets/images/avatars/hinata_smile.webp"
+                normal: "../../../../assets/images/avatars/hinata_normal.webp",       // 通常
+                excited: "../../../../assets/images/avatars/hinata_excited.webp",     // ワクワク
+                smile: "../../../../assets/images/avatars/hinata_smile.webp",         // 笑顔
+                surprised: "../../../../assets/images/avatars/hinata_surprised.webp", // 驚き
+                confused: "../../../../assets/images/avatars/hinata_confused.webp",   // 困り顔
+                sweat: "../../../../assets/images/avatars/hinata_nervous.webp",     // 焦り顔
+                thinking: "../../../../assets/images/avatars/hinata_thinking.webp",   // 推理・考え込み
+                angry: "../../../../assets/images/avatars/hinata_angry.webp",         // 怒る
+                grumpy: "../../../../assets/images/avatars/hinata_grumpy.webp"    // ムスッと
             }
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
