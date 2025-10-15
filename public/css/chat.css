@@ -3,15 +3,8 @@
 
 /* 背景は固定。main だけスクロールさせる */
 body.page-story {
-    background-image: url("../assets/images/wooddesk2.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     background-attachment: fixed;
-    /* 背景固定 */
-    min-height: 100vh;
     overflow: hidden;
-    /* 背景は固定、前景(main)だけスクロール */
 }
 
 body.page-story main {
@@ -166,10 +159,6 @@ body.page-story main {
 
 .chat {
     font-size: clamp(18px, 3.3vw, 22px);
-}
-
-.chat .note-paper .note-bg {
-    box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
 }
 
 /* 末尾の余白：最後の吹き出しが中央帯まで入れるため */
