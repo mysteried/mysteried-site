@@ -12,18 +12,9 @@ export function mountChatUI(STAGE) {
         noteTemplate.innerHTML = notePaper.outerHTML;
         notePaper.style.display = 'none';
     } else {
-        // 最小テンプレ（万一 notePaper が無い場合）
-        noteTemplate = document.createElement('template');
-        noteTemplate.innerHTML = `
-      <div id="notePaper" class="note-paper">
-        <div class="note-bg"></div>
-        <div class="note-text">
-          <p class="note-line">この部屋から脱出せよ。</p>
-          <p class="note-line">本にヒントがある。</p>
-          <p class="note-line">フランスの1800年。</p>
-          <p class="note-line">世界を変えた一冊。</p>
-        </div>
-      </div>`;
+        // フォールバック描画は使わない（誤表示防止）
+        noteTemplate = null;
+        console.warn('[chat-ui] #notePaper not found. Note rendering will be skipped for this stage.');
     }
 
     // コンテナ生成
@@ -45,46 +36,22 @@ export function mountChatUI(STAGE) {
         if (item.type === 'note') {
             wrap.className = 'msg note';
 
-            // テンプレートから安全に深い複製を作る（Safari 対策として deep clone）
-            let node;
+            // テンプレートがあるときだけ描画（なければ安全にスキップ）
             if (noteTemplate && noteTemplate.content) {
-                // 深い複製を作成
                 const frag = noteTemplate.content.cloneNode(true);
-                // クローン内の #notePaper を取得（無ければ firstElementChild を採用）
-                node = frag.querySelector('#notePaper') || frag.firstElementChild;
-                if (!node) {
-                    // 念のためのフォールバック
-                    node = document.createElement('div');
-                    node.className = 'note-paper';
-                    node.innerHTML = `
-                      <div class="note-bg"></div>
-                      <div class="note-text">
-                        <p class="note-line">この部屋から脱出せよ。</p>
-                        <p class="note-line">本にヒントがある。</p>
-                        <p class="note-line">フランスの1800年。</p>
-                        <p class="note-line">世界を変えた一冊。</p>
-                      </div>`;
+                let node = frag.querySelector('#notePaper') || frag.firstElementChild;
+
+                if (node) {
+                    if (node.id === 'notePaper') node.id = '';
+                    node.style.display = '';
+                    wrap.appendChild(node);
+                    return wrap;
                 }
-            } else {
-                // content が無い環境向けフォールバック
-                node = document.createElement('div');
-                node.className = 'note-paper';
-                node.innerHTML = `
-                  <div class="note-bg"></div>
-                  <div class="note-text">
-                    <p class="note-line">この部屋から脱出せよ。</p>
-                    <p class="note-line">本にヒントがある。</p>
-                    <p class="note-line">フランスの1800年。</p>
-                    <p class="note-line">世界を変えた一冊。</p>
-                  </div>`;
             }
 
-            // 重複IDを避けるため、クローン側の id は外しておく
-            if (node.id === 'notePaper') node.id = '';
-            // 念のため表示を保証
-            node.style.display = '';
-
-            wrap.appendChild(node);
+            // ここに来たらテンプレが無い／取得できなかったので非表示で置換
+            console.warn('[chat-ui] Note template missing; skipped rendering note block.');
+            wrap.style.display = 'none';
             return wrap;
         }
 
