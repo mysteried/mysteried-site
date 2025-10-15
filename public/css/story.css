@@ -34,6 +34,13 @@ body.page-story::after {
     z-index: 0;
 }
 
+/* ==== コンテンツがフッターに隠れないよう余白を確保 ==== */
+.page-story main {
+    padding-bottom: 160px;
+    /* PC も安全に余白を確保 */
+}
+
+
 /* コンテンツは上に重ねる */
 header,
 main,
@@ -199,16 +206,108 @@ footer {
 
 
 
-/* モバイル対応 */
-@media (max-width:480px) {
+/* ==== スマホ最適化（高さ・余白をコンパクトに／セーフエリア対応） ==== */
+@media (max-width: 480px) {
+
+    /* フッターの左右もセーフエリアを考慮（はみ出し防止） */
+    #ops-footer {
+        padding: 10px calc(env(safe-area-inset-right, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 10px) calc(env(safe-area-inset-left, 0px) + 12px);
+    }
+
+    /* 説明文を小さめに・行間も少し詰める */
+    #ops-footer .ops-desc {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    /* 行の余白を詰める（縦積み時に間延びしない） */
+    #ops-footer .ops-desc-row {
+        margin-bottom: 4px;
+    }
+
     #ops-footer .ops-row {
         flex-direction: column;
+        /* 既存と同じ方針 */
         gap: 8px;
     }
 
-    #ops-footer input,
-    #ops-footer .btn {
+    /* スマホではさらに余白を増やして紙が確実に見切れないように */
+    .page-story main {
+        padding-bottom: 220px;
+    }
+
+    /* 入力はフル幅のまま */
+    #ops-footer input {
         width: 100%;
         flex: none;
+        height: var(--ops-h);
+        font-size: 15px;
     }
+
+    /* ボタンは広がらせず中央寄せ＋最小幅だけ確保 */
+    #ops-footer .btn {
+        width: auto;
+        min-width: 140px;
+        /* お好みで 120–160px に調整可 */
+        align-self: center;
+        /* 縦積み時に中央寄せ */
+        height: var(--ops-h);
+        font-size: 15px;
+        padding-inline: 16px;
+        flex: none;
+    }
+
+    /* 位置結果のテキストも伸びすぎないように */
+    #ops-footer #geoResult {
+        width: auto;
+        max-width: 100%;
+        text-align: center;
+        align-self: center;
+    }
+
+    /* --- 位置判定行（3要素を1行で収める）--- */
+    #ops-footer .ops-row.ops-geo {
+        flex-direction: row;
+        /* 横並び */
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        /* 折り返さない */
+        gap: 8px;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    /* ボタンは小さめ最小幅 + 収縮OK にする */
+    #ops-footer .ops-row.ops-geo .btn {
+        flex: 0 1 auto;
+        /* shrink=1 で行幅が足りない時に縮む */
+        min-width: 96px;
+        /* 120→96 に下げる（日本語でも読める最小） */
+        padding-inline: 12px;
+        /* 少しタイトに */
+        font-size: 14px;
+    }
+
+    /* 中央の結果テキストは可変・省略記号で詰める */
+    #ops-footer .ops-row.ops-geo #geoResult {
+        flex: 1 1 0;
+        /* 余り幅をここに配分 */
+        min-width: 0;
+        /* これが無いと縮まない！ */
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0 6px;
+    }
+
+    /* 結果表示テキストを中央寄せ */
+    #ops-footer #geoResult {
+        margin: 0;
+        padding: 0 8px;
+        font-size: 14px;
+    }
+
+
 }
