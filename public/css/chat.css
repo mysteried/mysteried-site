@@ -152,6 +152,7 @@ body.page-story main {
 }
 
 /* note-paper を会話の途中に挿入する場合の微調整 */
+/* 「会話の途中に、紙の謎が自然に登場する」ための微調整ブロック */
 .chat .note-paper {
     width: min(560px, 92vw);
     margin: 12px auto 20px;
