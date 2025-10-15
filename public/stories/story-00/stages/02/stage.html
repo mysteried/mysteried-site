@@ -1,42 +1,30 @@
 <!doctype html>
 <html lang="ja">
 
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <!-- 🔥 -->
-    <title>文学に埋もれた部屋 – ミステリアリティ</title>
+    <title>ステージ – ミステリアリティ</title>
     <link rel="icon" href="../../../../favicon.ico" />
     <link rel="stylesheet" href="../../../../css/base.css" />
+    <link rel="stylesheet" href="../../../../css/story.css" />
+    <link rel="stylesheet" href="../../../../css/chat.css" />
 
 </head>
 
 <body class="page-story">
     <div id="intro-overlay">
-        <!-- 🔥 これはアニメーションで表示される部分-->
-        <h1 class="intro-title">第二のなぞ</h1>
+        <h1 class="intro-title"></h1>
     </div>
-
-    <header class="site-header">
-        <div class="container header-inner">
-            <a class="brand" href="../../../../">ミステリアリティ</a>
-            <nav class="nav">
-                <a href="../../../../about.html">遊び方</a>
-                <a href="../../../../news.html">お知らせ</a>
-            </nav>
-        </div>
-    </header>
 
     <main>
         <div id="notePaper" class="note-paper">
             <div class="note-bg"></div>
             <div class="note-text">
-                <!-- 🔥 -->
-                <p class="note-line">幼少期に遊んだ記憶</p>
-                <!-- <p class="note-line">本にヒントがある。</p>
-                <p class="note-line">フランスの1800年。</p>
-                <p class="note-line">世界を変えた一冊。</p> -->
+                <p class="note-line">セカンドステージ</p>
+                <p class="note-line">東、南、西、北、中、無、美、園・・・
+                </p>
+                <p class="note-line">ではない駅だ。</p>
             </div>
         </div>
     </main>
@@ -44,85 +32,27 @@
     <footer id="ops-footer">
         <div class="ops-desc-row">
             <a href="../../../../index.html" class="btn nav-btn">🏠</a>
-            <!-- 🔥 -->
             <p class="ops-desc">
-                カメラを起動して、正しい本にかざしてください。<br>
-                正解なら次へ進むパスワードが表示されます。
+                メモに残された駅はどこでしょう？その駅に向かえ<br>
             </p>
             <a href="../../../../about.html" class="btn nav-btn">❓</a>
         </div>
 
-        <div class="ops-row">
+        <div class="ops-row ops-ar" data-mode="ar">
             <a href="./ar.html?p=p1" class="btn cam">ARカメラ</a>
             <input id="answerInput" type="text" placeholder="パスワード">
-            <button id="checkBtn" class="btn next">次へ進む</button>
+            <button id="checkBtnAr" class="btn next">次へ進む</button>
         </div>
 
+        <div class="ops-row ops-geo" data-mode="geo" style="display:none">
+            <button id="geoBtn" class="btn cam">位置を確認</button>
+            <p id="geoResult" class="card-desc" style="min-width:180px; margin:0;">未確認</p>
+            <button id="checkBtnGeo" class="btn next">次へ進む</button>
+        </div>
         <p id="resultMsg" class="card-desc"></p>
     </footer>
 
-    <script>
-        // 🔥　後で reward.js のハッシュ照合に差し替え可
-        const ANSWER = 'たかしまや';
-        const answerInput = document.getElementById('answerInput');
-        const checkBtn = document.getElementById('checkBtn');
-        const resultMsg = document.getElementById('resultMsg');
-
-        // 🔥 次のurlの設定をここでする
-        const NEXT_STAGE_URL = '../02/stage.html?intro=1';
-
-        checkBtn.addEventListener('click', () => {
-            const val = (answerInput.value || '').trim();
-            if (!val) {
-                resultMsg.textContent = 'パスワードを入力してください';
-                resultMsg.style.color = '#d33';
-                return;
-            }
-            if (val === ANSWER) {
-                resultMsg.textContent = '正解！次の謎へ進みます…';
-                resultMsg.style.color = '#107c10';
-                // 少しだけフィードバックを見せてから遷移
-                setTimeout(() => {
-                    window.location.href = NEXT_STAGE_URL;
-                }, 600);
-            } else {
-                resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
-                resultMsg.style.color = '#d33';
-            }
-        });
-
-        // ====== タイトル演出（intro=1 のときのみ）　これはindex.htmlからアクセスするたびに流れる ======
-        window.addEventListener("load", () => {
-            const overlay = document.getElementById("intro-overlay");
-            const params = new URLSearchParams(window.location.search);
-            const introEnabled = params.get("intro");
-
-            if (introEnabled === "1") {
-                setTimeout(() => {
-                    overlay.style.display = "none";
-                }, 4000);
-            } else {
-                overlay.style.display = "none";
-            }
-        });
-
-        // ====== タイトル演出（intro=1 のときのみ）これはストレージにアクセス記録をため、一度だけ流れるようにする　本番はこれ　テストのため上にしている ======
-        // window.addEventListener("load", () => {
-        //     const overlay = document.getElementById("intro-overlay");
-        //     const params = new URLSearchParams(window.location.search);
-        //     const introEnabled = params.get("intro");
-        //     const introPlayed = localStorage.getItem("introPlayed_story00");
-
-        //     if (introEnabled === "1" && !introPlayed) {
-        //         localStorage.setItem("introPlayed_story00", "true");
-        //         setTimeout(() => {
-        //             overlay.style.display = "none";
-        //         }, 4000);
-        //     } else {
-        //         overlay.style.display = "none";
-        //     }
-        // });
-    </script>
+    <script type="module" src="../../../../js/stage-engine.js"></script>
 </body>
 
 </html>
