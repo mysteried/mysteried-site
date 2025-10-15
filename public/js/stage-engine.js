@@ -35,6 +35,10 @@ const geoResult = document.getElementById("geoResult");
 const resultMsg = document.getElementById("resultMsg");
 const notePaperEl = document.getElementById("notePaper");
 
+// ===== geo正解時の挙動 =====
+const GEO_SUCCESS_TEXT = STAGE.geoSuccessText || '到着！次の謎へ進みます…';
+const GEO_SUCCESS_DELAY = STAGE.geoSuccessDelayMs ?? 600;
+
 // ====== モード切り替え（AR / GEO）======
 const rowAr = document.querySelector('.ops-row.ops-ar');
 const rowGeo = document.querySelector('.ops-row.ops-geo');
@@ -118,10 +122,20 @@ if (STAGE.mode === 'geo') {
     geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
     checkBtnGeo && checkBtnGeo.addEventListener('click', () => {
         if (geoOK) {
-            window.location.href = STAGE.nextUrl;
+            if (resultMsg) {
+                resultMsg.textContent = GEO_SUCCESS_TEXT;
+                resultMsg.style.color = '#107c10';
+            }
+            setTimeout(() => {
+                window.location.href = STAGE.nextUrl;
+            }, GEO_SUCCESS_DELAY);
         } else {
-            geoResult.textContent = 'まだ条件を満たしていません（まず「位置を確認」）';
-            geoResult.style.color = '#c62828';
+            // できるだけ同じ表示領域を使うなら resultMsg 側に出すのもアリ
+            // （今のまま geoResult に出してもOK）
+            if (geoResult) {
+                geoResult.textContent = 'まだ条件を満たしていません（まず「位置を確認」）';
+                geoResult.style.color = '#c62828';
+            }
         }
     });
 }
