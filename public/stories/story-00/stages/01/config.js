@@ -4,7 +4,7 @@ export const STAGE = {
     id: "story00_stage01",
     title: "文学に埋もれた部屋",
     mode: "ar",                 // "ar" or "geo"
-    variant: "chat",            // "plain" or "chat"
+    variant: "plain",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
 

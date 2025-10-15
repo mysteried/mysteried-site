@@ -296,7 +296,7 @@ footer {
 
 
 /* 紙の上のデザイン */
-#notePaper {
+.note-paper {
     position: relative;
     width: min(600px, 92vw);
     /* 幅を「400pxを上限に、画面幅の92%までで縮む」。 */
@@ -306,7 +306,7 @@ footer {
     /* 紙画像の縦横比に合わせる */
 }
 
-#notePaper .note-bg {
+.note-paper .note-bg {
     position: absolute;
     inset: 0;
     background: url("../assets/images/note_texture.jpeg") center/cover no-repeat;
@@ -317,7 +317,7 @@ footer {
     z-index: 0;
 }
 
-#notePaper .note-text {
+.note-paper .note-text {
     position: relative;
     z-index: 1;
     padding: 32px 24px;
@@ -335,7 +335,7 @@ footer {
     /* ← ゆるい斜体で筆跡っぽく　文字を8度傾けている */
 }
 
-#notePaper .note-line {
+.note-paper .note-line {
     filter: contrast(1.05);
     /* 数値が高いほど「インクの濃淡」が強調される。 */
     text-shadow:

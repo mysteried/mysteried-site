@@ -37,6 +37,7 @@ export function mountChatUI(STAGE) {
             wrap.className = 'msg note';
 
             // テンプレートがあるときだけ描画（なければ安全にスキップ）
+            // idではなくクラス名でスタイリングするように変更
             if (noteTemplate && noteTemplate.content) {
                 const frag = noteTemplate.content.cloneNode(true);
                 let node = frag.querySelector('#notePaper') || frag.firstElementChild;
@@ -44,6 +45,7 @@ export function mountChatUI(STAGE) {
                 if (node) {
                     if (node.id === 'notePaper') node.id = '';
                     node.style.display = '';
+                    // styled via .note-paper class (not by #id)
                     wrap.appendChild(node);
                     return wrap;
                 }
