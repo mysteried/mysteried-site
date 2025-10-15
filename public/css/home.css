@@ -1,0 +1,117 @@
+/* ===== Hero ===== */
+.hero {
+    padding: 24px 0 8px;
+}
+
+.hero-title {
+    margin: 0 0 6px;
+    font-size: clamp(20px, 3.2vw, 28px);
+}
+
+.hero-lead {
+    margin: 0;
+    color: var(--muted);
+}
+
+/* ===== Cards ===== */
+.card {
+    display: flex;
+    align-items: stretch;
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-media {
+    position: relative;
+    flex: 0 0 42%;
+    min-width: 240px;
+    background: #ddd;
+}
+
+.card-media img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/* NEWバッジ（cardに is-new が付いた時のみ表示） */
+.card.is-new .badge-new {
+    display: inline-flex;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 8px;
+    border-radius: 999px;
+}
+
+.badge-new {
+    display: none;
+    color: #fff;
+    background: #ff4d4f;
+    box-shadow: 0 6px 20px rgba(255, 77, 79, .35);
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-title {
+    font-size: clamp(18px, 2.6vw, 22px);
+    font-weight: 700;
+    letter-spacing: .01em;
+}
+
+.card-desc {
+    margin: 0;
+    color: var(--muted);
+}
+
+/* メタ（タグ群）をカード下部に吸着 */
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #2b2b2b;
+    background: var(--chip-bg);
+    border: 1px solid var(--chip-bd);
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+
+/* ===== Responsive（ホームのカードだけ） ===== */
+@media (max-width:820px) {
+    .card {
+        flex-direction: column;
+    }
+
+    .card-media {
+        flex-basis: auto;
+        min-width: 100%;
+    }
+}
