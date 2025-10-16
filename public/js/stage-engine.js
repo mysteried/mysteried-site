@@ -204,13 +204,19 @@ if (STAGE.mode === 'geo') {
     });
 }
 
-// ====== 戻るボタン（1つ前のステージへ戻る） ======
+// ====== 戻るボタン（1つ前のステージへ戻る：variant維持） ======
 backBtn && backBtn.addEventListener('click', () => {
     try {
         // currentDir: .../stories/<story>/stages/<stage>
         const parts = currentDir.split('/');
         const stageSlug = parts[parts.length - 1]; // e.g. "01", "01h", "02", "02h"
-        const stageNum = parseInt(stageSlug, 10); // 先頭の2桁を数値化（"01h"→1）
+
+        // 末尾の 'h' を variant として保持（あれば 'h', なければ ''）
+        const hasH = /h$/.test(stageSlug);
+        const variantSuffix = hasH ? 'h' : '';
+
+        // 先頭の2桁を数値化（"01h"→1）
+        const stageNum = parseInt(stageSlug, 10);
         if (!Number.isFinite(stageNum)) throw new Error('stage number parse failed');
 
         if (stageNum <= 1) {
@@ -220,9 +226,11 @@ backBtn && backBtn.addEventListener('click', () => {
         }
 
         const prevNum = String(stageNum - 1).padStart(2, '0');
+        const prevSlug = `${prevNum}${variantSuffix}`; // variantを維持して戻る（例: 02h -> 01h）
+
         // stages 直下のパスを作る
         const stagesRoot = parts.slice(0, -1).join('/');
-        const prevUrl = `${stagesRoot}/${prevNum}/stage.html`;
+        const prevUrl = `${stagesRoot}/${prevSlug}/stage.html`;
         window.location.href = prevUrl;
     } catch (_) {
         // フォールバック（念のため）
