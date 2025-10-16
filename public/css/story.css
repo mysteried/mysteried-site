@@ -446,3 +446,60 @@ footer {
         font-size: 14px;
     }
 }
+
+@media (max-width: 480px) {
+
+    /* 5ボタンを1列に収めるためのコンパクト設定 */
+    #ops-footer {
+        --ops-h: 38px;
+    }
+
+    /* 3段目：アイコン(左)・戻る・AR/位置・アイコン(右)・次へ の5分割 */
+    #ops-footer .ops-actions-row {
+        display: grid;
+        grid-template-columns: 44px 1fr 1fr 44px 1fr;
+        /* アイコンは固定幅、他は自動 */
+        gap: 6px;
+        /* 余白を詰める */
+        align-items: stretch;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* ボタンの内側余白と文字サイズをコンパクト化 */
+    #ops-footer .ops-actions-row .btn {
+        min-width: 0;
+        /* これが重要：はみ出し防止 */
+        height: var(--ops-h);
+        padding: 0 8px;
+        /* 余白を詰める */
+        font-size: 13px;
+        /* テキストを少し小さく */
+        line-height: 1;
+        /* 縦中央を安定させる */
+        white-space: nowrap;
+        /* 折り返し防止 */
+    }
+
+    /* アイコンは中央・固定幅で少しだけ大きめ */
+    #ops-footer .ops-actions-row .btn.icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        font-size: 18px;
+    }
+
+    /* “次へ進む” が長い場合も収まるよう少しタイトに */
+    #ops-footer .ops-actions-row .btn.next {
+        letter-spacing: 0.02em;
+        padding-inline: 8px;
+    }
+
+    /* 安全マージン（セーフエリア）も維持 */
+    #ops-footer {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    }
+}
