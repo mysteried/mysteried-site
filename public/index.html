@@ -52,6 +52,7 @@
         .modal-dialog h3 {
             margin: 0 0 8px;
             font-size: 22px;
+            text-align: center;
         }
 
         .modal-desc {
@@ -64,6 +65,16 @@
             gap: 12px;
             justify-content: center;
             margin: 6px 0 10px;
+        }
+
+        .btn-image img {
+            border-radius: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-image:hover img {
+            transform: scale(1.03);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
         }
 
         .modal-actions .btn {
@@ -220,10 +231,18 @@
             <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modeTitle">
                 <button class="modal-close" aria-label="閉じる" data-close="true">×</button>
                 <h3 id="modeTitle">どちらでプレイしますか？</h3>
-                <p class="modal-desc">同じ謎を、演出ちがいで楽しめます。</p>
+                <p class="modal-desc">
+                    同じ謎を、演出ちがいで楽しめます。<br>
+                    通常版はシンプルな謎解きです。<br>
+                    物語版は探偵マスオと助手ヒナタとともになぞを解きます。
+                </p>
                 <div class="modal-actions">
-                    <a id="btnPlain" class="btn btn-plain" href="#">通常で遊ぶ</a>
-                    <a id="btnStory" class="btn btn-story" href="#">物語で遊ぶ</a>
+                    <a id="btnPlain" href="#" class="btn-image">
+                        <img src="./assets/images/mode-normal.webp" alt="通常で遊ぶ" width="220" height="auto">
+                    </a>
+                    <a id="btnStory" href="#" class="btn-image">
+                        <img src="./assets/images/mode-story.webp" alt="物語で遊ぶ" width="220" height="auto">
+                    </a>
                 </div>
                 <!-- 記憶モードは変更する動線が確保できないから一時的にアウト -->
                 <!-- <label class="remember">
