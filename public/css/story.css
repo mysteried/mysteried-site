@@ -88,25 +88,21 @@ footer {
 }
 
 /* ===== story-UI footer（操作フッター） ===== */
-#ops-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 8px 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    backdrop-filter: blur(14px) brightness(0.9) saturate(160%);
-    background: rgba(255, 255, 255, 0.25);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.15);
-    z-index: 10;
 
-    --ops-h: 32px;
-    /* 全要素の高さを統一（調整可） */
+/* nav-btn and nav-btn:hover styles are kept */
+#ops-footer .nav-btn {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: #222;
+    font-size: 18px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: .2s ease;
+}
+
+#ops-footer .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
 }
 
 /* 説明文 */
@@ -127,49 +123,67 @@ footer {
     margin-bottom: 6px;
 }
 
-#ops-footer .nav-btn {
-    background: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: #222;
-    font-size: 18px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    transition: .2s ease;
+
+/* === 3段フッター用レイアウト === */
+#ops-footer {
+    --ops-h: 42px;
+    /* 入力＆ボタン高さの基準 */
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: 12px 14px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    /* 3段 */
+    gap: 10px;
+    backdrop-filter: blur(14px) brightness(0.9) saturate(160%);
+    background: rgba(255, 255, 255, .25);
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.15);
 }
 
-#ops-footer .nav-btn:hover {
-    background: rgba(255, 255, 255, 0.5);
-    transform: translateY(-1px);
-}
-
-/* 入力・ボタン行 */
-#ops-footer .ops-row {
+#ops-footer .ops-desc-row,
+#ops-footer .ops-field-row,
+#ops-footer .ops-actions-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px;
+    gap: 12px;
     width: 100%;
-    max-width: 600px;
+    max-width: 780px;
+    margin: 0 auto;
 }
 
-/* 入力欄 */
+#ops-footer .ops-desc-row .ops-desc {
+    margin: 0;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 14px;
+    flex: 1;
+}
+
+/* 入力/計測フィールド（中央寄せ、横幅は控えめ） */
+#ops-footer .ops-field-row>* {
+    flex: 0 1 520px;
+    display: flex;
+    justify-content: center;
+}
+
 #ops-footer input {
-    flex: 0 0 220px;
     height: var(--ops-h);
     border-radius: 8px;
     border: 1px solid #ccc;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, .6);
     backdrop-filter: blur(6px);
     padding: 0 10px;
     font-size: 14px;
+    width: min(360px, 80vw);
 }
 
-/* ボタン共通 */
-#ops-footer .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+/* アクション行：横並び・可変 */
+#ops-footer .ops-actions-row .btn {
     height: var(--ops-h);
     padding: 0 16px;
     border-radius: 8px;
@@ -179,6 +193,31 @@ footer {
     color: #fff;
     font-size: 14px;
 }
+
+#ops-footer .ops-actions-row .btn.icon {
+    min-width: 44px;
+    padding: 0 12px;
+}
+
+/* モバイル：縦積み回避しつつ詰める */
+@media (max-width: 480px) {
+    #ops-footer {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    #ops-footer .ops-actions-row {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: space-between;
+    }
+
+    #ops-footer .ops-actions-row .btn.next {
+        flex: 1 0 100%;
+    }
+}
+
+
 
 /* ===== アクセス時のイントロ演出 ===== */
 #intro-overlay {
@@ -245,17 +284,6 @@ footer {
         line-height: 1.5;
     }
 
-    /* 行の余白を詰める（縦積み時に間延びしない） */
-    #ops-footer .ops-desc-row {
-        margin-bottom: 4px;
-    }
-
-    #ops-footer .ops-row {
-        flex-direction: column;
-        /* 既存と同じ方針 */
-        gap: 8px;
-    }
-
     /* スマホではさらに余白を増やして紙が確実に見切れないように */
     .page-story main {
         padding-bottom: 220px;
@@ -288,43 +316,6 @@ footer {
         max-width: 100%;
         text-align: center;
         align-self: center;
-    }
-
-    /* --- 位置判定行（3要素を1行で収める）--- */
-    #ops-footer .ops-row.ops-geo {
-        flex-direction: row;
-        /* 横並び */
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: nowrap;
-        /* 折り返さない */
-        gap: 8px;
-        width: 100%;
-        max-width: 600px;
-    }
-
-    /* ボタンは小さめ最小幅 + 収縮OK にする */
-    #ops-footer .ops-row.ops-geo .btn {
-        flex: 0 1 auto;
-        /* shrink=1 で行幅が足りない時に縮む */
-        min-width: 96px;
-        /* 120→96 に下げる（日本語でも読める最小） */
-        padding-inline: 12px;
-        /* 少しタイトに */
-        font-size: 14px;
-    }
-
-    /* 中央の結果テキストは可変・省略記号で詰める */
-    #ops-footer .ops-row.ops-geo #geoResult {
-        flex: 1 1 0;
-        /* 余り幅をここに配分 */
-        min-width: 0;
-        /* これが無いと縮まない！ */
-        text-align: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 0 6px;
     }
 
     /* 結果表示テキストを中央寄せ */

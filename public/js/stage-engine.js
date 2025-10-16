@@ -28,32 +28,37 @@ if (titleEl && STAGE.title) {
 
 // ===== DOMキャッシュ =====
 const answerInput = document.getElementById("answerInput");
-const checkBtnAr = document.getElementById("checkBtnAr");
-const checkBtnGeo = document.getElementById("checkBtnGeo");
+const nextBtn = document.getElementById("nextBtn");
 const geoBtn = document.getElementById("geoBtn");
+const arLink = document.getElementById("arLink");
+const backBtn = document.getElementById("backBtn");
 const geoResult = document.getElementById("geoResult");
 const resultMsg = document.getElementById("resultMsg");
 const notePaperEl = document.getElementById("notePaper");
 
-// ===== geo正解時の挙動 =====
-const GEO_SUCCESS_TEXT = STAGE.geoSuccessText || '到着！次の謎へ進みます…';
-const GEO_SUCCESS_DELAY = STAGE.geoSuccessDelayMs ?? 600;
+// フィールド表示の入れ替え用
+const fieldAr = document.querySelector('.field-ar');
+const fieldGeo = document.querySelector('.field-geo');
 
 // ====== モード切り替え（AR / GEO）======
-const rowAr = document.querySelector('.ops-row.ops-ar');
-const rowGeo = document.querySelector('.ops-row.ops-geo');
 if (STAGE.mode === 'geo') {
-    rowAr && (rowAr.style.display = 'none');
-    rowGeo && (rowGeo.style.display = '');
+    fieldAr && (fieldAr.style.display = 'none');
+    fieldGeo && (fieldGeo.style.display = '');
+
+    arLink && (arLink.style.display = 'none');
+    geoBtn && (geoBtn.style.display = '');
 } else {
-    rowAr && (rowAr.style.display = '');
-    rowGeo && (rowGeo.style.display = 'none');
+    fieldAr && (fieldAr.style.display = '');
+    fieldGeo && (fieldGeo.style.display = 'none');
+
+    arLink && (arLink.style.display = '');
+    geoBtn && (geoBtn.style.display = 'none');
 }
 
 // ====== AR モードの答え判定 ======
-if (STAGE.mode === 'ar' && checkBtnAr) {
-    checkBtnAr.addEventListener('click', () => {
-        const val = (answerInput.value || '').trim();
+if (STAGE.mode === 'ar' && nextBtn) {
+    nextBtn.addEventListener('click', () => {
+        const val = (answerInput?.value || '').trim();
         if (!val) {
             resultMsg.textContent = 'パスワードを入力してください';
             resultMsg.style.color = '#d33';
@@ -120,18 +125,15 @@ function handlePos(p, isMock) {
 }
 if (STAGE.mode === 'geo') {
     geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
-    checkBtnGeo && checkBtnGeo.addEventListener('click', () => {
+
+    nextBtn && nextBtn.addEventListener('click', () => {
         if (geoOK) {
             if (resultMsg) {
                 resultMsg.textContent = GEO_SUCCESS_TEXT;
                 resultMsg.style.color = '#107c10';
             }
-            setTimeout(() => {
-                window.location.href = STAGE.nextUrl;
-            }, GEO_SUCCESS_DELAY);
+            setTimeout(() => { window.location.href = STAGE.nextUrl; }, GEO_SUCCESS_DELAY);
         } else {
-            // できるだけ同じ表示領域を使うなら resultMsg 側に出すのもアリ
-            // （今のまま geoResult に出してもOK）
             if (geoResult) {
                 geoResult.textContent = 'まだ条件を満たしていません（まず「位置を確認」）';
                 geoResult.style.color = '#c62828';
@@ -139,6 +141,12 @@ if (STAGE.mode === 'geo') {
         }
     });
 }
+
+// ====== 戻るボタン ======
+backBtn && backBtn.addEventListener('click', () => {
+    if (history.length > 1) history.back();
+    else window.location.href = '../../../../index.html';
+});
 
 // ====== variant 切り替え（plain/chat）======
 if (STAGE.variant === 'chat') {
