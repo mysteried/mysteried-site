@@ -151,8 +151,7 @@ function handlePos(p, isMock) {
         geoResult.style.color = '#c62828';
         const msg = `目標まで 約${meters(d)}（精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
         geoResult.textContent = msg;
-        // 一時的に上段にも案内を出し、時間経過で元の司令文へ自動復帰
-        setMsg(msg, 'info', 4000);
+        // setMsg(msg, 'info', 4000); // 範囲外のときは .ops-desc を変更しない
     }
 }
 if (STAGE.mode === 'geo') {

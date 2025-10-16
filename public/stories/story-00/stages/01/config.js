@@ -3,7 +3,7 @@ export const STAGE = {
     // ===== 基本 =====
     id: "story00_stage01",
     title: "辿り着いた先",
-    mode: "geo",                 // "ar" or "geo"
+    mode: "ar",                 // "ar" or "geo"
     variant: "plain",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
@@ -14,10 +14,6 @@ export const STAGE = {
     // ===== タイトル演出 =====
     introDuration: 2500,
     introOnceKey: "introPlayed_story00",
-
-    // 次へ進むのメッセージをここでも管理できる
-    geoSuccessText: "到着だ！この先に向かおう…",
-    geoSuccessDelayMs: 800,
 
     // ===== 会話UI（variant: "chat" の時だけ使用）=====
     chat: {
