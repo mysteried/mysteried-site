@@ -3,19 +3,18 @@
     --error: #c0392b;
 }
 
-/* 上段メッセージの色分け */
-#ops-footer .ops-desc.is-error {
+/* 上段メッセージの色分け（ops-desc に付く状態クラス） */
+#ops-footer .ops-desc-row .ops-desc.is-error {
     color: var(--error);
 }
 
-#ops-footer .ops-desc.is-success {
+#ops-footer .ops-desc-row .ops-desc.is-success {
     color: var(--ok);
 }
 
-#ops-footer .ops-desc.is-info {
+#ops-footer .ops-desc-row .ops-desc.is-info {
     color: #111;
 }
-
 
 
 /* ===== ストーリー：ヘッダー非表示（紙と演出に集中） ===== */
