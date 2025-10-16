@@ -1,3 +1,23 @@
+:root {
+    --ok: #107c10;
+    --error: #c0392b;
+}
+
+/* 上段メッセージの色分け */
+#ops-footer .ops-desc.is-error {
+    color: var(--error);
+}
+
+#ops-footer .ops-desc.is-success {
+    color: var(--ok);
+}
+
+#ops-footer .ops-desc.is-info {
+    color: #111;
+}
+
+
+
 /* ===== ストーリー：ヘッダー非表示（紙と演出に集中） ===== */
 body.page-story .site-header {
     display: none;
