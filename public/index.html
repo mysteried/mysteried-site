@@ -112,7 +112,7 @@
         }
 
         body.page-home {
-            background: url('./assets/images/back-sample.jpg') no-repeat center center fixed;
+            background: url('./assets/images/sample-03.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -135,10 +135,26 @@
 
         .hero-inner {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            /* was 1: raise above ::after fade */
             max-width: 880px;
             margin: 0 auto;
             animation: heroFadeIn 1.8s ease-out;
+        }
+
+        /* Soft fade from the hero into the page */
+        .hero::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 180px;
+            /* fade length */
+            z-index: 1;
+            /* above overlay, below text */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
+            pointer-events: none;
         }
 
         .hero-title {
@@ -166,6 +182,56 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Seamless transition: overlap next section slightly under the hero */
+        .stack.seamless {
+            position: relative;
+            margin-top: -72px;
+            /* pull section upward into the fade */
+            padding-top: 72px;
+            /* keep internal spacing */
+        }
+
+        /* optional soft top shadow so the cards feel anchored */
+        .stack.seamless::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 18px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, .06), rgba(0, 0, 0, 0));
+            pointer-events: none;
+        }
+
+        /* Scroll-reveal for cards */
+        .reveal {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        /* stagger using nth-child for card list */
+        .stack .card.reveal {
+            transition-delay: .04s;
+        }
+
+        .stack .card.reveal:nth-of-type(2) {
+            transition-delay: .12s;
+        }
+
+        .stack .card.reveal:nth-of-type(3) {
+            transition-delay: .20s;
+        }
+
+        .stack .card.reveal:nth-of-type(4) {
+            transition-delay: .28s;
         }
     </style>
 </head>
@@ -198,11 +264,11 @@
         </section>
 
         <!-- All list -->
-        <section class="container stack">
+        <section class="container stack seamless">
             <h2 class="section-title">エピソード</h2>
 
             <!-- カード（NEWは is-new を付ける）?intro=1でここからのアクセスでOPアニメーションを着火させる　　 -->
-            <a class="card is-new open-modal" href="#" data-title="文学に埋もれた部屋"
+            <a class="card is-new open-modal reveal" href="#" data-title="文学に埋もれた部屋"
                 data-normal="./stories/story-00/stages/01/stage.html?intro=1"
                 data-story="./stories/story-00/stages/01h/stage.html?intro=1">
                 <div class="card-media">
@@ -226,7 +292,7 @@
             </a>
 
             <!-- カード（NEWは is-new を付ける） -->
-            <a class="card is-new" href="./stories/story-00/stages/01h/stage.html?intro=1">
+            <a class="card is-new reveal" href="./stories/story-00/stages/01h/stage.html?intro=1">
                 <div class="card-media">
                     <img src="./assets/images/sample-02.jpg" alt="茎と魚は何故消えたのか？ のサムネイル" loading="lazy" />
                     <span class="badge badge-new">NEW</span>
@@ -245,7 +311,7 @@
                 </div>
             </a>
 
-            <a class="card" href="./stories/story-02/">
+            <a class="card reveal" href="./stories/story-02/">
                 <div class="card-media">
                     <img src="./assets/images/sample-03.jpg" alt="幼い時の記憶　懐かしの遊具 のサムネイル" loading="lazy" />
                 </div>
@@ -263,7 +329,7 @@
                 </div>
             </a>
 
-            <a class="card" href="./stories/story-03/">
+            <a class="card reveal" href="./stories/story-03/">
                 <div class="card-media">
                     <img src="./assets/images/sample-04.jpg" alt="戦艦島 のサムネイル" loading="lazy" />
                 </div>
@@ -366,6 +432,18 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeModal();
             });
+
+            // Scroll reveal for cards
+            const reveals = document.querySelectorAll('.card.reveal');
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            reveals.forEach(el => io.observe(el));
         })();
     </script>
 </body>
