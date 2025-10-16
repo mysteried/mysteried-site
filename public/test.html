@@ -1,0 +1,133 @@
+<!-- ボタン例（カード内など） -->
+<button class="open-modal" data-story="story-00" data-start="/stories/story-00/stages/01/stage.html">
+    遊ぶ
+</button>
+
+<!-- モーダル本体 -->
+<div id="modeModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modeTitle">
+        <button class="modal-close" aria-label="閉じる" data-close>×</button>
+        <h3 id="modeTitle">どちらでプレイしますか？</h3>
+        <p class="modal-lead">同じ謎を、演出ちがいで楽しめます。</p>
+        <div class="modal-actions">
+            <a id="linkPlain" class="btn">通常で遊ぶ</a>
+            <a id="linkStory" class="btn btn-primary">物語で遊ぶ</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* --- ざっくり見た目 --- */
+    .modal {
+        position: fixed;
+        inset: 0;
+        display: none
+    }
+
+    .modal[aria-hidden="false"] {
+        display: block
+    }
+
+    .modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, .4)
+    }
+
+    .modal-dialog {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: 14px;
+        padding: 20px;
+        min-width: 280px;
+        max-width: 92vw;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .25)
+    }
+
+    .modal-close {
+        position: absolute;
+        right: 10px;
+        top: 8px;
+        border: 0;
+        background: transparent;
+        font-size: 20px;
+        cursor: pointer
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 16px
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: #eee
+    }
+
+    .btn-primary {
+        background: #111;
+        color: #fff
+    }
+</style>
+
+<script>
+    (function () {
+        const modal = document.getElementById('modeModal');
+        const linkPlain = document.getElementById('linkPlain');
+        const linkStory = document.getElementById('linkStory');
+        let restoreScrollY = 0;
+
+        // 開く（カード内ボタンに .open-modal を付け、data-start に基点URL）
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.open-modal');
+            if (!btn) return;
+            e.preventDefault();
+            const base = btn.dataset.start;      // 例: /stories/story-00/stages/01/stage.html
+            // ボタンに応じてリンクを差し替え
+            linkPlain.href = base + '?mode=plain';
+            linkStory.href = base + '?mode=story';
+
+            // スクロールロック
+            restoreScrollY = window.scrollY;
+            document.body.style.top = `-${restoreScrollY}px`;
+            document.body.style.position = 'fixed';
+            modal.setAttribute('aria-hidden', 'false');
+
+            // 最初のフォーカス
+            linkStory.focus();
+        });
+
+        // 閉じる
+        function closeModal() {
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.position = '';
+            document.body.style.top = '';
+            window.scrollTo(0, restoreScrollY);
+        }
+        modal.addEventListener('click', (e) => {
+            if (e.target.dataset.close !== undefined) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (modal.getAttribute('aria-hidden') === 'false' && e.key === 'Escape') closeModal();
+        });
+
+        // 簡易フォーカストラップ
+        modal.addEventListener('keydown', (e) => {
+            if (modal.getAttribute('aria-hidden') === 'true') return;
+            if (e.key !== 'Tab') return;
+            const focusables = modal.querySelectorAll('a,button');
+            if (!focusables.length) return;
+            const first = focusables[0], last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+            else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+        });
+    })();
+</script>
