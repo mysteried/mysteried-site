@@ -3,13 +3,13 @@ export const STAGE = {
     // ===== 基本 =====
     id: "story00_stage01",
     title: "辿り着いた先",
-    mode: "ar",                 // "ar" or "geo"
+    mode: "geo",                 // "ar" or "geo"
     variant: "plain",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 35.83706, lng: 139.64095, radius_m: 200 },
+    target: { lat: 35.84706, lng: 139.64095, radius_m: 200 },
 
     // ===== タイトル演出 =====
     introDuration: 2500,

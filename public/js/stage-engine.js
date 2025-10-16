@@ -159,8 +159,8 @@ if (STAGE.mode === 'geo') {
 
     nextBtn && nextBtn.addEventListener('click', () => {
         if (geoOK) {
-            setMsg(GEO_SUCCESS_TEXT, 'success');
-            setTimeout(() => { window.location.href = STAGE.nextUrl; }, GEO_SUCCESS_DELAY);
+            setMsg('到着！次の謎へ進みます…', 'success');
+            setTimeout(() => { window.location.href = STAGE.nextUrl; }, 800);
         } else {
             setMsg('まだ条件を満たしていません（まず「位置を確認」）', 'error');
         }
