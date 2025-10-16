@@ -156,16 +156,59 @@
         }
 
         .site-header {
-            position: relative;
+            position: fixed;
+            /* 固定ヘッダー */
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            /* 56–64px の範囲で調整可 */
+            display: flex;
+            align-items: center;
             z-index: 10;
-            /* ensure header sits above the fixed overlay & remains sharp */
+            /* ヒーローの上に */
+            background: rgba(255, 255, 255, 0.02);
+            /* 初期はほぼ透明 */
+            border-bottom: 1px solid transparent;
+            /* 初期は境界なし */
+            transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
         }
 
+        /* スクロール後だけ薄いガラス感を付与 */
+        .site-header.scrolled {
+            background: rgba(255, 255, 255, 0.65);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        /* コンテンツはオーバーレイの上で表示 */
         main,
         .site-footer {
             position: relative;
             z-index: 2;
-            /* content stays above overlay but below header */
+        }
+
+        /* ヘッダー下の隠れ防止（固定ヘッダーの高さ分余白）*/
+        body.page-home {
+            padding-top: 64px;
+        }
+
+        /* ナビゲーションのアクティブ表示（微細な下線） */
+        .nav a.active {
+            position: relative;
+        }
+
+        .nav a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -6px;
+            height: 2px;
+            background: currentColor;
+            opacity: .85;
         }
 
         .hero-inner {
@@ -442,6 +485,35 @@
             // ESC to close
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeModal();
+            });
+
+            // --- Header scroll glass & active nav ---
+            const headerEl = document.querySelector('.site-header');
+            const onScrollHeader = () => {
+                if (!headerEl) return;
+                if ((window.scrollY || window.pageYOffset || 0) > 2) {
+                    headerEl.classList.add('scrolled');
+                } else {
+                    headerEl.classList.remove('scrolled');
+                }
+            };
+            onScrollHeader();
+            window.addEventListener('scroll', onScrollHeader, { passive: true });
+
+            // Active nav (簡易版): 現在のパスに一致するリンクに .active
+            const navLinks = document.querySelectorAll('.site-header .nav a');
+            const path = location.pathname.replace(/\/index\.html$/, '/');
+            navLinks.forEach(a => {
+                try {
+                    const href = a.getAttribute('href');
+                    if (!href) return;
+                    // 相対パスでの簡易一致
+                    if (href === '.' || href === './') {
+                        if (path.endsWith('/')) return; // brandは別扱い
+                    } else if (path.endsWith(href)) {
+                        a.classList.add('active');
+                    }
+                } catch (_) { /* noop */ }
             });
 
             // --- Hero scroll-out animation (title -> left, lead -> right) ---
