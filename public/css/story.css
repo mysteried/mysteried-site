@@ -231,10 +231,12 @@ footer {
 }
 
 /* === PC幅：3段目の5ボタンを完全等幅に === */
-@media (min-width: 641px) {
+/* === PC〜タブレット：ボタンが潰れない最小幅を確保しつつ自動段落ち === */
+@media (min-width: 481px) {
     #ops-footer .ops-actions-row {
+        /* 横幅に応じて 5→4→3→2 列…に自動で調整 */
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         gap: 10px;
         align-items: stretch;
         width: 100%;
@@ -242,22 +244,27 @@ footer {
         margin: 0 auto;
     }
 
+    /* ボタン自体のサイズは少し可変にして潰れを防ぐ */
     #ops-footer .ops-actions-row .btn {
         width: 100%;
         height: var(--ops-h);
         border-radius: 8px;
         font-weight: 600;
-        font-size: 14px;
+        font-size: clamp(12px, 1.6vw, 14px);
         border: 1px solid #111;
         background: #111;
         color: #fff;
-        padding: 0 12px;
+        padding: 0 clamp(8px, 1.2vw, 12px);
         text-align: center;
     }
 
+    /* アイコンボタンも中央揃え＆最小幅をボタンと同じ扱いに */
     #ops-footer .ops-actions-row .btn.icon {
-        padding: 0 8px;
-        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(18px, 2.2vw, 20px);
+        padding: 0;
     }
 }
 
