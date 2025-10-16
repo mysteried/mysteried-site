@@ -146,9 +146,17 @@ footer {
 
 #ops-footer .ops-desc-row .ops-desc {
     text-align: center;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
+    font-size: 18px;
+    /* ← サイズUP（14px → 18px） */
+    line-height: 1.8;
+    font-weight: 600;
+    /* ← 太字 */
+    color: #111;
+    /* ← コントラスト強め */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    /* ← 軽い影で浮かせる */
+    letter-spacing: 0.05em;
+    /* ← 少し文字間を広げて読みやすく */
 }
 
 /* 2段目（入力 or 測定結果） */
@@ -196,17 +204,74 @@ footer {
     flex: 0 0 44px;
     min-width: 44px;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    /* optional: adjust icon size balance */
 }
 
 #ops-footer .ops-actions-row .btn.cam {
     flex: 1 1 35%;
 }
 
+
 #ops-footer .ops-actions-row .btn.next {
     flex: 1 1 35%;
 }
 
-/* モバイル最適化 */
+/* --- Click affordance: make all footer controls show pointer --- */
+#ops-footer .btn,
+#ops-footer button {
+    cursor: pointer;
+}
+
+/* Disabled state */
+#ops-footer button[disabled],
+#ops-footer .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: .65;
+}
+
+
+/* === PC幅：3段目の5ボタンを完全等幅に === */
+@media (min-width: 641px) {
+    #ops-footer .ops-actions-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        align-items: stretch;
+        width: 100%;
+        max-width: 780px;
+        margin: 0 auto;
+    }
+
+    #ops-footer .ops-actions-row .btn.cam,
+    #ops-footer .ops-actions-row .btn.next {
+        flex: initial;
+        grid-column: auto;
+    }
+
+    #ops-footer .ops-actions-row .btn {
+        width: 100%;
+        height: var(--ops-h);
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        border: 1px solid #111;
+        background: #111;
+        color: #fff;
+        padding: 0 12px;
+        text-align: center;
+    }
+
+    #ops-footer .ops-actions-row .btn.icon {
+        padding: 0 8px;
+        min-width: 0;
+    }
+}
+
+/* === モバイル幅は従来通り（縦積み＋「次へ進む」は全幅） === */
 @media (max-width: 480px) {
     #ops-footer {
         padding: 10px 12px;
@@ -214,9 +279,16 @@ footer {
     }
 
     #ops-footer .ops-actions-row {
+        display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         gap: 8px;
+    }
+
+    #ops-footer .ops-actions-row .btn {
+        width: auto;
+        min-width: 140px;
+        flex: none;
     }
 
     #ops-footer .ops-actions-row .btn.next {
@@ -287,7 +359,7 @@ footer {
 
     /* 説明文を小さめに・行間も少し詰める */
     #ops-footer .ops-desc {
-        font-size: 12px;
+        font-size: 15px;
         line-height: 1.5;
     }
 
