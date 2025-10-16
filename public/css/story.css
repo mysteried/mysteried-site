@@ -308,6 +308,48 @@ footer {
     opacity: .65;
 }
 
+/* ===== ヒントポップアップ ===== */
+.page-story .hint-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    z-index: 1000;
+}
+
+.page-story .hint-overlay[hidden] {
+    display: none;
+}
+
+.page-story .hint-dialog {
+    background: #fffef5;
+    border: 2px solid #443226;
+    border-radius: 8px;
+    max-width: min(28rem, 90vw);
+    width: 100%;
+    padding: 1.5rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.page-story .hint-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+.page-story .hint-body {
+    margin: 0 0 1.25rem;
+    line-height: 1.6;
+}
+
+.page-story .hint-dialog .btn.close {
+    min-width: 6rem;
+}
+
 /* === PC幅：3段目の5ボタンを完全等幅に === */
 /* === PC〜タブレット：ボタンが潰れない最小幅を確保しつつ自動段落ち === */
 @media (min-width: 481px) {

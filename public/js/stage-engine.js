@@ -65,6 +65,9 @@ const arLink = document.getElementById("arLink");
 const backBtn = document.getElementById("backBtn");
 const geoResult = document.getElementById("geoResult");
 const notePaperEl = document.getElementById("notePaper");
+const hintBtn = document.getElementById("hintBtn");
+const hintOverlay = document.getElementById("hintOverlay");
+const hintCloseBtn = document.getElementById("hintCloseBtn");
 
 // フィールド表示の入れ替え用
 const fieldAr = document.querySelector('.field-ar');
@@ -83,6 +86,40 @@ if (STAGE.mode === 'geo') {
 
     arLink && (arLink.style.display = '');
     geoBtn && (geoBtn.style.display = 'none');
+}
+
+// ====== ヒントポップアップ ======
+let lastHintTrigger = null;
+if (hintOverlay && hintBtn && hintCloseBtn) {
+    const openHint = () => {
+        lastHintTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        hintOverlay.hidden = false;
+        hintCloseBtn.focus();
+    };
+
+    const closeHint = () => {
+        hintOverlay.hidden = true;
+        if (lastHintTrigger) {
+            lastHintTrigger.focus();
+        }
+    };
+
+    const handleOverlayClick = (event) => {
+        if (event.target === hintOverlay) {
+            closeHint();
+        }
+    };
+
+    const handleKeydown = (event) => {
+        if (event.key === 'Escape' && !hintOverlay.hidden) {
+            closeHint();
+        }
+    };
+
+    hintBtn.addEventListener('click', openHint);
+    hintCloseBtn.addEventListener('click', closeHint);
+    hintOverlay.addEventListener('click', handleOverlayClick);
+    document.addEventListener('keydown', handleKeydown);
 }
 
 // ====== AR モードの答え判定 ======
