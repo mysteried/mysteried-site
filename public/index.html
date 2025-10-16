@@ -8,6 +8,98 @@
     <link rel="icon" href="./favicon.ico" />
     <link rel="stylesheet" href="./css/base.css" />
     <link rel="stylesheet" href="./css/home.css" />
+    <style>
+        /* --- Modal (mode selector) --- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+        }
+
+        .modal[aria-hidden="false"] {
+            display: block;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+        }
+
+        .modal-dialog {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+            width: min(92vw, 560px);
+            padding: 22px 22px 18px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            border: 0;
+            background: transparent;
+            font-size: 24px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .modal-dialog h3 {
+            margin: 0 0 8px;
+            font-size: 22px;
+        }
+
+        .modal-desc {
+            margin: 0 0 18px;
+            color: #555;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 6px 0 10px;
+        }
+
+        .modal-actions .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .btn-plain {
+            background: #f2f4f8;
+            border: 1px solid #d7dbe4;
+            color: #1a2a3a
+        }
+
+        .btn-story {
+            background: #111;
+            color: #fff
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            color: #555;
+            font-size: 14px
+        }
+
+        @media (hover:hover) {
+            .modal-backdrop:hover {
+                cursor: pointer
+            }
+        }
+    </style>
 </head>
 
 <body class="page-home">
@@ -42,7 +134,9 @@
             <h2 class="section-title">エピソード</h2>
 
             <!-- カード（NEWは is-new を付ける）?intro=1でここからのアクセスでOPアニメーションを着火させる　　 -->
-            <a class="card is-new" href="./stories/story-00/stages/01/stage.html?intro=1">
+            <a class="card is-new open-modal" href="#" data-title="文学に埋もれた部屋"
+                data-normal="./stories/story-00/stages/01/stage.html?intro=1"
+                data-story="./stories/story-00/stages/01h/stage.html?intro=1">
                 <div class="card-media">
                     <img src="./assets/images/sample-01.jpg" alt="茎と魚は何故消えたのか？ のサムネイル" loading="lazy" />
                     <span class="badge badge-new">NEW</span>
@@ -120,6 +214,23 @@
             </a>
 
         </section>
+        <!-- Mode select modal -->
+        <div id="modeModal" class="modal" aria-hidden="true">
+            <div class="modal-backdrop" data-close="true"></div>
+            <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modeTitle">
+                <button class="modal-close" aria-label="閉じる" data-close="true">×</button>
+                <h3 id="modeTitle">どちらでプレイしますか？</h3>
+                <p class="modal-desc">同じ謎を、演出ちがいで楽しめます。</p>
+                <div class="modal-actions">
+                    <a id="btnPlain" class="btn btn-plain" href="#">通常で遊ぶ</a>
+                    <a id="btnStory" class="btn btn-story" href="#">物語で遊ぶ</a>
+                </div>
+                <!-- 記憶モードは変更する動線が確保できないから一時的にアウト -->
+                <!-- <label class="remember">
+                    <input type="checkbox" id="rememberMode"> 今後この選択を記憶する
+                </label> -->
+            </div>
+        </div>
     </main>
 
     <footer class="site-footer">
@@ -132,6 +243,55 @@
             </nav>
         </div>
     </footer>
+    <script>
+        (() => {
+            const modal = document.getElementById('modeModal');
+            const btnPlain = document.getElementById('btnPlain');
+            const btnStory = document.getElementById('btnStory');
+            const remember = document.getElementById('rememberMode');
+            const titleEl = document.getElementById('modeTitle');
+
+            function openModal(normalUrl, storyUrl) {
+                titleEl.textContent = 'どちらでプレイしますか？';
+                btnPlain.href = normalUrl;
+                btnStory.href = storyUrl;
+                modal.setAttribute('aria-hidden', 'false');
+            }
+            function closeModal() {
+                modal.setAttribute('aria-hidden', 'true');
+            }
+
+            // Delegate clicks from any .open-modal
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('.open-modal');
+                if (trigger) {
+                    e.preventDefault();
+                    const preferred = localStorage.getItem('playMode'); // 'plain' | 'story'
+                    const normal = trigger.dataset.normal;
+                    const story = trigger.dataset.story;
+                    if (preferred === 'plain') { location.href = normal; return; }
+                    if (preferred === 'story') { location.href = story; return; }
+                    openModal(normal, story);
+                }
+                if (e.target.matches('[data-close]')) {
+                    closeModal();
+                }
+            });
+
+            // Remember choice on click
+            btnPlain.addEventListener('click', () => {
+                if (remember.checked) localStorage.setItem('playMode', 'plain');
+            });
+            btnStory.addEventListener('click', () => {
+                if (remember.checked) localStorage.setItem('playMode', 'story');
+            });
+
+            // ESC to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+        })();
+    </script>
 </body>
 
 </html>
