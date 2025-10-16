@@ -121,7 +121,11 @@
             position: relative;
             text-align: center;
             color: #fff;
-            padding: clamp(120px, 20vh, 240px) 20px;
+            /* pin the hero area to viewport height so content behind scrolls under it */
+            min-height: 100vh;
+            display: grid;
+            align-items: center;
+            padding: 0 20px;
             overflow: hidden;
         }
 
@@ -160,12 +164,20 @@
         }
 
         .hero-inner {
-            position: relative;
+            position: fixed;
+            /* pin to the viewport */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            /* center both axes */
             z-index: 2;
-            /* was 1: raise above ::after fade */
             max-width: 880px;
+            width: min(92vw, 880px);
             margin: 0 auto;
-            animation: heroFadeIn 1.8s ease-out;
+            padding: 0;
+            /* no vertical padding needed */
+            text-align: center;
+            animation: heroFadeIn 1.2s ease-out;
         }
 
         /* Soft fade from the hero into the page */
@@ -430,23 +442,24 @@
             // --- Hero scroll-out animation (title -> left, lead -> right) ---
             const heroTitle = document.querySelector('.hero-title');
             const heroLead = document.querySelector('.hero-lead');
+            const hero = document.querySelector('.hero');
 
             if (heroTitle && heroLead) {
                 let ticking = false;
 
                 const updateHero = () => {
-                    const h = window.innerHeight;
-                    const y = window.scrollY || window.pageYOffset || 0;
-                    // Animate over the first ~60% of the viewport height
-                    const range = Math.max(1, h * 0.6);
+                    const heroTop = hero.offsetTop;
+                    const heroH = hero.offsetHeight || window.innerHeight;
+                    // progress within the hero only (0 -> 1)
+                    const y = Math.max(0, (window.scrollY || window.pageYOffset || 0) - heroTop);
+                    const range = Math.max(1, heroH * 0.8);
                     let p = y / range;
                     if (p < 0) p = 0;
                     if (p > 1) p = 1;
 
-                    // Move up to 12vw horizontally in opposite directions, fade out
+                    // Pure horizontal split, no vertical component
                     const shift = 12 * p; // vw
                     const op = 1 - p;
-
                     heroTitle.style.transform = `translateX(-${shift}vw)`;
                     heroLead.style.transform = `translateX(${shift}vw)`;
                     heroTitle.style.opacity = op.toFixed(3);
