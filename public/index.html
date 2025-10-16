@@ -476,10 +476,10 @@
 
             // Remember choice on click
             btnPlain.addEventListener('click', () => {
-                if (remember.checked) localStorage.setItem('playMode', 'plain');
+                if (remember && remember.checked) localStorage.setItem('playMode', 'plain');
             });
             btnStory.addEventListener('click', () => {
-                if (remember.checked) localStorage.setItem('playMode', 'story');
+                if (remember && remember.checked) localStorage.setItem('playMode', 'story');
             });
 
             // ESC to close
