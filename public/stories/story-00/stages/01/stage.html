@@ -31,13 +31,11 @@
 
 
     <footer id="ops-footer">
-        <!-- ① 指令（現状の ops-desc をここへ） -->
+        <!-- ① 指令（説明のみ ＋ ステータスメッセージ統合） -->
         <div class="ops-desc-row">
-            <a href="../../../../index.html" class="btn nav-btn" aria-label="ホーム">🏠</a>
-            <p class="ops-desc">
+            <p id="opsMsg" class="ops-desc" role="status" aria-live="polite">
                 メモに残された駅はどこでしょう？ その駅に向かえ
             </p>
-            <a href="../../../../about.html" class="btn nav-btn" aria-label="ヘルプ">❓</a>
         </div>
 
         <!-- ② 入力/計測フィールド（モードで出し分け） -->
@@ -53,14 +51,16 @@
             </div>
         </div>
 
-        <!-- ③ アクション行 -->
+        <!-- ③ アクション行（5ボタン） -->
         <div class="ops-actions-row">
+            <a href="../../../../index.html" class="btn icon" aria-label="ホーム">🏠</a>
             <button id="backBtn" class="btn icon" aria-label="前へ戻る">↩︎</button>
 
-            <!-- モードボタンは AR/Geo で出し分け -->
+            <!-- モードボタンは AR/Geo で出し分け（どちらか一方だけ表示） -->
             <a id="arLink" href="./ar.html?p=p1" class="btn cam" data-mode="ar">ARカメラ</a>
             <button id="geoBtn" class="btn cam" data-mode="geo" style="display:none">位置を確認</button>
 
+            <a href="../../../../about.html" class="btn icon" aria-label="ヘルプ">❓</a>
             <button id="nextBtn" class="btn next">次へ進む</button>
         </div>
 
