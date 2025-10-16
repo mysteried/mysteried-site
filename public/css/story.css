@@ -40,7 +40,6 @@ body.page-story::after {
     /* PC も安全に余白を確保 */
 }
 
-
 /* コンテンツは上に重ねる */
 header,
 main,
@@ -105,17 +104,6 @@ footer {
     transform: translateY(-1px);
 }
 
-/* 説明文 */
-#ops-footer .ops-desc {
-    margin: 0;
-    color: #333;
-    font-size: 14px;
-    text-align: center;
-    line-height: 1.6;
-}
-
-
-
 /* === 3段フッター用レイアウト === */
 #ops-footer {
     --ops-h: 42px;
@@ -145,6 +133,7 @@ footer {
 }
 
 #ops-footer .ops-desc-row .ops-desc {
+    margin: 0;
     text-align: center;
     font-size: 18px;
     /* ← サイズUP（14px → 18px） */
@@ -182,16 +171,13 @@ footer {
     font-weight: 600;
     /* ← 太字で視認性アップ */
     color: #c0392b;
-    /* ← 赤っぽい強調色（目標距離などに合う） */
+    /* ← 強調色 */
     background: rgba(255, 255, 255, 0.6);
-    /* ← 半透明背景で可読性アップ */
+    /* ← 読みやすさUP */
     padding: 6px 10px;
-    /* ← 文字の周りに余白をつける */
     border-radius: 6px;
-    /* ← 背景を少し柔らかく */
     text-align: center;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    /* ← 軽い影で浮かせる */
     transition: all 0.2s ease;
 }
 
@@ -225,18 +211,10 @@ footer {
     padding: 0;
     display: flex;
     align-items: center;
+    /* ← 中央寄せ */
     justify-content: center;
     font-size: 20px;
     /* optional: adjust icon size balance */
-}
-
-#ops-footer .ops-actions-row .btn.cam {
-    flex: 1 1 35%;
-}
-
-
-#ops-footer .ops-actions-row .btn.next {
-    flex: 1 1 35%;
 }
 
 /* --- Click affordance: make all footer controls show pointer --- */
@@ -252,7 +230,6 @@ footer {
     opacity: .65;
 }
 
-
 /* === PC幅：3段目の5ボタンを完全等幅に === */
 @media (min-width: 641px) {
     #ops-footer .ops-actions-row {
@@ -263,12 +240,6 @@ footer {
         width: 100%;
         max-width: 780px;
         margin: 0 auto;
-    }
-
-    #ops-footer .ops-actions-row .btn.cam,
-    #ops-footer .ops-actions-row .btn.next {
-        flex: initial;
-        grid-column: auto;
     }
 
     #ops-footer .ops-actions-row .btn {
@@ -289,7 +260,6 @@ footer {
         min-width: 0;
     }
 }
-
 
 /* ===== アクセス時のイントロ演出 ===== */
 #intro-overlay {
@@ -315,7 +285,6 @@ footer {
     }
 }
 
-
 /* === モバイル幅は従来通り（縦積み＋「次へ進む」は全幅） === */
 @media (max-width: 480px) {
     #ops-footer {
@@ -338,10 +307,9 @@ footer {
 
     #ops-footer .ops-actions-row .btn.next {
         flex: 1 0 100%;
+        /* ← 次へ進む は全幅 */
     }
 }
-
-
 
 /* ==== スマホ最適化（高さ・余白をコンパクトに／セーフエリア対応） ==== */
 @media (max-width: 480px) {
@@ -351,19 +319,17 @@ footer {
         width: 90vw;
         /* 画面幅の9割で縮む */
         aspect-ratio: 1 / 1;
-        /* ← これが縦横比固定の決め手！ */
+        /* ← 縦横比固定 */
         margin: 60px auto 120px;
         /* 上下の余白をスマホ向けに微調整 */
     }
 
-    /* 背景画像もそのまま比率にフィットさせる */
     .note-paper .note-bg {
         background-size: cover;
         /* はみ出し防止 */
         background-position: center;
     }
 
-    /* テキストは紙の縮小に合わせて控えめに */
     .note-paper .note-text {
         padding: 20px 16px;
         font-size: 22px;
@@ -395,33 +361,14 @@ footer {
         font-size: 15px;
     }
 
-    /* ボタンは広がらせず中央寄せ＋最小幅だけ確保 */
-    #ops-footer .btn {
-        width: auto;
-        min-width: 140px;
-        /* お好みで 120–160px に調整可 */
-        align-self: center;
-        /* 縦積み時に中央寄せ */
-        height: var(--ops-h);
-        font-size: 15px;
-        padding-inline: 16px;
-        flex: none;
-    }
-
-    /* 位置結果のテキストも伸びすぎないように */
+    /* 結果表示テキストの調整（中央寄せ＋読みやすさ） */
     #ops-footer #geoResult {
         width: auto;
         max-width: 100%;
         text-align: center;
         align-self: center;
-    }
-
-    /* 結果表示テキストを中央寄せ */
-    #ops-footer #geoResult {
         margin: 0;
         padding: 0 8px;
         font-size: 14px;
     }
-
-
 }
