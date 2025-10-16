@@ -204,10 +204,30 @@ if (STAGE.mode === 'geo') {
     });
 }
 
-// ====== 戻るボタン ======
+// ====== 戻るボタン（1つ前のステージへ戻る） ======
 backBtn && backBtn.addEventListener('click', () => {
-    if (history.length > 1) history.back();
-    else window.location.href = '../../../../index.html';
+    try {
+        // currentDir: .../stories/<story>/stages/<stage>
+        const parts = currentDir.split('/');
+        const stageSlug = parts[parts.length - 1]; // e.g. "01", "01h", "02", "02h"
+        const stageNum = parseInt(stageSlug, 10); // 先頭の2桁を数値化（"01h"→1）
+        if (!Number.isFinite(stageNum)) throw new Error('stage number parse failed');
+
+        if (stageNum <= 1) {
+            // 01（または 01h）のときはホームへ
+            window.location.href = `${siteRoot}/index.html`;
+            return;
+        }
+
+        const prevNum = String(stageNum - 1).padStart(2, '0');
+        // stages 直下のパスを作る
+        const stagesRoot = parts.slice(0, -1).join('/');
+        const prevUrl = `${stagesRoot}/${prevNum}/stage.html`;
+        window.location.href = prevUrl;
+    } catch (_) {
+        // フォールバック（念のため）
+        window.location.href = `${siteRoot}/index.html`;
+    }
 });
 
 // ====== variant 切り替え（plain/chat）======

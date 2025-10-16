@@ -21,36 +21,58 @@
         <div id="notePaper" class="note-paper">
             <div class="note-bg"></div>
             <div class="note-text">
-                <p class="note-line">エスカレータを降りる</p>
-                <p class="note-line">滝がある、なんだこれは？？</p>
-                <p class="note-line">これは一体？？</p>
+                <p class="note-line">ステージ2</p>
+                <p class="note-line">東、南、西、北、中、無、美、園・・・
+                </p>
+                <p class="note-line">ではない駅だ。</p>
             </div>
         </div>
     </main>
 
+
     <footer id="ops-footer">
+        <!-- ① 指令（説明のみ ＋ ステータスメッセージ統合） -->
         <div class="ops-desc-row">
-            <a href="../../../../index.html" class="btn nav-btn">🏠</a>
-            <p class="ops-desc">
-                彼は何も目撃したのか？ARカメラをかざせ
+            <p id="opsMsg" class="ops-desc" role="status" aria-live="polite">
+                メモに残された駅はどこか?<br>
+                その駅に辿り着き位置情報を押せ
             </p>
-            <a href="../../../../about.html" class="btn nav-btn">❓</a>
         </div>
 
-        <div class="ops-row ops-ar" data-mode="ar">
-            <a href="./ar.html?p=p1" class="btn cam">ARカメラ</a>
-            <input id="answerInput" type="text" placeholder="パスワード">
-            <button id="checkBtnAr" class="btn next">次へ進む</button>
+        <!-- ② 入力/計測フィールド（モードで出し分け） -->
+        <div class="ops-field-row">
+            <!-- AR用：パスワード -->
+            <div class="field-ar" data-mode="ar">
+                <input id="answerInput" type="text" placeholder="パスワード">
+            </div>
+
+            <!-- Geo用：結果表示 -->
+            <div class="field-geo" data-mode="geo" style="display:none">
+                <p id="geoResult" class="card-desc" style="margin:0;">到着未確認</p>
+            </div>
         </div>
 
-        <div class="ops-row ops-geo" data-mode="geo" style="display:none">
-            <button id="geoBtn" class="btn cam">位置を確認</button>
-            <p id="geoResult" class="card-desc" style="min-width:180px; margin:0;">未確認</p>
-            <button id="checkBtnGeo" class="btn next">次へ進む</button>
+        <!-- ③ アクション行（5ボタン） -->
+        <div class="ops-actions-row">
+            <a href="../../../../index.html" class="btn icon" aria-label="ホーム">🏠</a>
+            <button id="backBtn" class="btn icon" aria-label="前へ戻る">↩︎</button>
+
+            <!-- モードボタンは AR/Geo で出し分け（どちらか一方だけ表示） -->
+            <a id="arLink" href="./ar.html?p=p1" class="btn cam" data-mode="ar">ARカメラ</a>
+            <button id="geoBtn" class="btn cam" data-mode="geo" style="display:none">位置を確認</button>
+
+            <button id="hintBtn" class="btn icon" aria-label="ヒントを見る" type="button">❓</button>
+            <button id="nextBtn" class="btn next">次へ進む</button>
         </div>
-        <p id="resultMsg" class="card-desc"></p>
     </footer>
-
+    <div id="hintOverlay" class="hint-overlay" hidden>
+        <div class="hint-dialog" role="dialog" aria-modal="true" aria-labelledby="hintTitle"
+            aria-describedby="hintBody">
+            <h2 id="hintTitle" class="hint-title">ヒント</h2>
+            <p id="hintBody" class="hint-body">通りをまっすぐ進んで、その横に何かあるかもしれない。</p>
+            <button id="hintCloseBtn" class="btn close" type="button" aria-label="ヒントを閉じる">閉じる</button>
+        </div>
+    </div>
     <script type="module" src="../../../../js/stage-engine.js"></script>
 </body>
 
