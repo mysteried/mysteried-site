@@ -155,12 +155,17 @@
             /* let clicks pass through */
         }
 
-        .site-header,
+        .site-header {
+            position: relative;
+            z-index: 10;
+            /* ensure header sits above the fixed overlay & remains sharp */
+        }
+
         main,
         .site-footer {
             position: relative;
             z-index: 2;
-            /* keep content above fixed overlay */
+            /* content stays above overlay but below header */
         }
 
         .hero-inner {
@@ -178,6 +183,8 @@
             /* no vertical padding needed */
             text-align: center;
             animation: heroFadeIn 1.2s ease-out;
+            pointer-events: none;
+            /* let clicks pass through the hero texts when content scrolls under */
         }
 
         /* Soft fade from the hero into the page */
