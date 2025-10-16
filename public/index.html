@@ -126,11 +126,37 @@
         }
 
         .hero-overlay {
-            position: absolute;
+            position: fixed;
+            /* cover the viewport at all times */
             inset: 0;
             background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
             backdrop-filter: blur(4px);
             z-index: 0;
+            /* below all content */
+            pointer-events: none;
+            /* let clicks pass through */
+        }
+
+        .viewport-fader {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 160px;
+            /* fade length */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
+            z-index: 1;
+            /* above the fixed overlay, below the content */
+            pointer-events: none;
+            /* let clicks pass through */
+        }
+
+        .site-header,
+        main,
+        .site-footer {
+            position: relative;
+            z-index: 2;
+            /* keep content above fixed overlay */
         }
 
         .hero-inner {
@@ -143,19 +169,7 @@
         }
 
         /* Soft fade from the hero into the page */
-        .hero::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -1px;
-            height: 180px;
-            /* fade length */
-            z-index: 1;
-            /* above overlay, below text */
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
-            pointer-events: none;
-        }
+        /* Removed .hero::after rule */
 
         .hero-title {
             font-size: clamp(28px, 4vw, 44px);
@@ -187,23 +201,14 @@
         /* Seamless transition: overlap next section slightly under the hero */
         .stack.seamless {
             position: relative;
-            margin-top: -72px;
+            margin-top: 0;
             /* pull section upward into the fade */
-            padding-top: 72px;
+            padding-top: 24px;
             /* keep internal spacing */
         }
 
         /* optional soft top shadow so the cards feel anchored */
-        .stack.seamless::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 18px;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, .06), rgba(0, 0, 0, 0));
-            pointer-events: none;
-        }
+        /* Removed .stack.seamless::before rule */
     </style>
 </head>
 
@@ -223,6 +228,7 @@
         <!-- Hero (任意で差し替えOK) -->
         <section class="hero">
             <div class="hero-overlay"></div>
+            <div class="viewport-fader"></div>
             <div class="hero-inner">
                 <h1 class="hero-title">今週末、暇ならちょっと遠くへ出掛けてみよう。</h1>
                 <p class="hero-lead">
