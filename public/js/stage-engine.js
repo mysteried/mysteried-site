@@ -19,6 +19,37 @@ async function loadModule(src) {
     return import(src);
 }
 
+// ====== メッセージ表示用要素と関数 ======
+const opsMsg = document.querySelector('.ops-desc');
+let msgTimeout = null;
+
+// 既定メッセージを確定（config優先 → DOM 初期値 → 空）
+const defaultOpsText = (typeof STAGE.defaultMsg === 'string' && STAGE.defaultMsg.length > 0)
+    ? STAGE.defaultMsg
+    : (opsMsg?.textContent ?? '');
+
+// configに既定文言があれば、読み込み時に反映
+if (opsMsg && typeof STAGE.defaultMsg === 'string' && STAGE.defaultMsg.length > 0) {
+    opsMsg.textContent = STAGE.defaultMsg;
+    opsMsg.classList.remove('is-success', 'is-error');
+    opsMsg.classList.add('is-info');
+}
+
+function setMsg(text, type = 'info', duration = 4000) {
+    if (!opsMsg) return;
+    opsMsg.textContent = text;
+    opsMsg.classList.remove('is-success', 'is-error', 'is-info');
+    opsMsg.classList.add(type === 'success' ? 'is-success' : (type === 'error' ? 'is-error' : 'is-info'));
+    if (msgTimeout) clearTimeout(msgTimeout);
+    if (duration > 0) {
+        msgTimeout = setTimeout(() => {
+            opsMsg.textContent = defaultOpsText;
+            opsMsg.classList.remove('is-success', 'is-error', 'is-info');
+            opsMsg.classList.add('is-info');
+        }, duration);
+    }
+}
+
 // ===== タイトル反映 =====
 const titleEl = document.querySelector(".intro-title");
 if (titleEl && STAGE.title) {
@@ -33,7 +64,6 @@ const geoBtn = document.getElementById("geoBtn");
 const arLink = document.getElementById("arLink");
 const backBtn = document.getElementById("backBtn");
 const geoResult = document.getElementById("geoResult");
-const resultMsg = document.getElementById("resultMsg");
 const notePaperEl = document.getElementById("notePaper");
 
 // フィールド表示の入れ替え用
@@ -60,17 +90,14 @@ if (STAGE.mode === 'ar' && nextBtn) {
     nextBtn.addEventListener('click', () => {
         const val = (answerInput?.value || '').trim();
         if (!val) {
-            resultMsg.textContent = 'パスワードを入力してください';
-            resultMsg.style.color = '#d33';
+            setMsg('パスワードを入力してください', 'error');
             return;
         }
         if (val === STAGE.answer) {
-            resultMsg.textContent = '正解！次の謎へ進みます…';
-            resultMsg.style.color = '#107c10';
+            setMsg('正解！次の謎へ進みます…', 'success');
             setTimeout(() => { window.location.href = STAGE.nextUrl; }, 600);
         } else {
-            resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
-            resultMsg.style.color = '#d33';
+            setMsg('不正解。もう一度周囲を調べてみよう。', 'error');
         }
     });
 }
@@ -118,9 +145,14 @@ function handlePos(p, isMock) {
     if (inRange) {
         geoResult.style.color = '#107c10';
         geoResult.textContent = `OK（距離 ${meters(d)} / 精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
+        // 成功時は ops の既定文言に任せる（必要なら下の1行のコメントを外して使用）
+        // setMsg('到着！次へ進めます。', 'success', 3000);
     } else {
         geoResult.style.color = '#c62828';
-        geoResult.textContent = `目標まで 約${meters(d)}（精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
+        const msg = `目標まで 約${meters(d)}（精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
+        geoResult.textContent = msg;
+        // 一時的に上段にも案内を出し、時間経過で元の司令文へ自動復帰
+        setMsg(msg, 'info', 4000);
     }
 }
 if (STAGE.mode === 'geo') {
@@ -128,16 +160,10 @@ if (STAGE.mode === 'geo') {
 
     nextBtn && nextBtn.addEventListener('click', () => {
         if (geoOK) {
-            if (resultMsg) {
-                resultMsg.textContent = GEO_SUCCESS_TEXT;
-                resultMsg.style.color = '#107c10';
-            }
+            setMsg(GEO_SUCCESS_TEXT, 'success');
             setTimeout(() => { window.location.href = STAGE.nextUrl; }, GEO_SUCCESS_DELAY);
         } else {
-            if (geoResult) {
-                geoResult.textContent = 'まだ条件を満たしていません（まず「位置を確認」）';
-                geoResult.style.color = '#c62828';
-            }
+            setMsg('まだ条件を満たしていません（まず「位置を確認」）', 'error');
         }
     });
 }
