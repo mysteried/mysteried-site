@@ -186,6 +186,23 @@
             text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
         }
 
+        /* --- Hero scroll-out animation (title to left, lead to right) --- */
+        .hero-title,
+        .hero-lead {
+            will-change: transform, opacity;
+            transform: translateX(0);
+            transition: transform 0s, opacity 0s;
+            /* JS drives values; no easing jitter */
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .hero-title,
+            .hero-lead {
+                transition: none;
+            }
+        }
+
         @keyframes heroFadeIn {
             from {
                 opacity: 0;
@@ -410,6 +427,49 @@
                 if (e.key === 'Escape') closeModal();
             });
 
+            // --- Hero scroll-out animation (title -> left, lead -> right) ---
+            const heroTitle = document.querySelector('.hero-title');
+            const heroLead = document.querySelector('.hero-lead');
+
+            if (heroTitle && heroLead) {
+                let ticking = false;
+
+                const updateHero = () => {
+                    const h = window.innerHeight;
+                    const y = window.scrollY || window.pageYOffset || 0;
+                    // Animate over the first ~60% of the viewport height
+                    const range = Math.max(1, h * 0.6);
+                    let p = y / range;
+                    if (p < 0) p = 0;
+                    if (p > 1) p = 1;
+
+                    // Move up to 12vw horizontally in opposite directions, fade out
+                    const shift = 12 * p; // vw
+                    const op = 1 - p;
+
+                    heroTitle.style.transform = `translateX(-${shift}vw)`;
+                    heroLead.style.transform = `translateX(${shift}vw)`;
+                    heroTitle.style.opacity = op.toFixed(3);
+                    heroLead.style.opacity = op.toFixed(3);
+
+                    ticking = false;
+                };
+
+                const onScroll = () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(updateHero);
+                        ticking = true;
+                    }
+                };
+
+                // Initial paint and listeners (respect reduced motion)
+                const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+                if (!reduce.matches) {
+                    updateHero();
+                    window.addEventListener('scroll', onScroll, { passive: true });
+                    window.addEventListener('resize', onScroll);
+                }
+            }
         })();
     </script>
 </body>
