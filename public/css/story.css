@@ -454,17 +454,6 @@ footer {
         --ops-h: 38px;
     }
 
-    /* 3段目：アイコン(左)・戻る・AR/位置・アイコン(右)・次へ の5分割
-    #ops-footer .ops-actions-row {
-        display: grid;
-        grid-template-columns: 44px 1fr 1fr 44px 1fr;
-        /* アイコンは固定幅、他は自動 */
-    /* gap: 6px; */
-    /* 余白を詰める */
-    /* align-items: stretch;
-        width: 100%;
-        max-width: 100%;
-    } */
     #ops-footer .ops-actions-row {
         display: grid;
         grid-template-columns: repeat(5, 1fr);

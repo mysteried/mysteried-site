@@ -166,7 +166,7 @@ body.page-story main {
 .chat::after {
     content: "";
     display: block;
-    height: 30vh;
+    height: 5vh;
     /* 40〜60vhに好みで調整 */
 }
 
