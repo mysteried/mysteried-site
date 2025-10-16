@@ -112,8 +112,60 @@
         }
 
         body.page-home {
-            background: url('./assets/images/sample-03.jpg') no-repeat center center fixed;
+            background: url('./assets/images/back-sample.jpg') no-repeat center center fixed;
             background-size: cover;
+        }
+
+        /* --- Hero (overlay + fade) --- */
+        .hero {
+            position: relative;
+            text-align: center;
+            color: #fff;
+            padding: clamp(120px, 20vh, 240px) 20px;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
+            backdrop-filter: blur(4px);
+            z-index: 0;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 0 auto;
+            animation: heroFadeIn 1.8s ease-out;
+        }
+
+        .hero-title {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.4;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+        }
+
+        .hero-lead {
+            font-size: clamp(16px, 2vw, 20px);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, .92);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+        }
+
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -133,15 +185,15 @@
     <main>
         <!-- Hero (任意で差し替えOK) -->
         <section class="hero">
-            <div class="container">
-                <h1 class="hero-title">スマホ1つ。ふらっと、気軽に、いつでも謎解き</h1>
+            <div class="hero-overlay"></div>
+            <div class="hero-inner">
+                <h1 class="hero-title">今週末、暇ならちょっと遠くへ出掛けてみよう。</h1>
                 <p class="hero-lead">
                     混雑した観光地より行ったことがない街へ行きたい・・・<br>
                     時間や休日はあるけど目的地がない・・・<br>
                     一人でも楽しめる旅をしたい・・・<br>
                     参加型の謎解きはしんどい・・・
                 </p>
-                <h1 class="hero-title">ルールはシンプル。メモに残された謎を解きその答えにスマホのカメラを向けるだけ。</h1>
             </div>
         </section>
 
