@@ -4,7 +4,7 @@
 }
 
 /* =====================
-   ops-desc の状態色
+   ops-desc 状態色
    ===================== */
 /* 上段メッセージの色分け（ops-desc に付く状態クラス） */
 #ops-footer .ops-desc-row .ops-desc.is-error {
