@@ -185,6 +185,29 @@ body.page-home {
     margin-top: 100px;
 }
 
+/* Make news list scrollable within a fixed height */
+.page-news .news-list {
+    max-height: 40vh;
+    /* adjust height as desired */
+    overflow-y: auto;
+    padding-right: 8px;
+    /* avoid scrollbar overlap */
+}
+
+/* Optional: subtle scrollbar styling for better aesthetics */
+.page-news .news-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.page-news .news-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.page-news .news-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
 .page-home .viewport-fader {
     position: fixed;
     left: 0;
