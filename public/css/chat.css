@@ -182,13 +182,20 @@ body.page-story main {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.chat-image-caption {
-    margin-top: 0.5em;
-    font-size: 0.9rem;
-    color: #444;
-    opacity: 0.8;
+/* チャット内画像メッセージの水平位置を中央に揃える */
+.msg.image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* 子要素(.chat-image-block)を中央寄せ */
 }
 
+/* 保険：画像自体も中央に */
+.msg.image .chat-image-block img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* スマホ調整 */
 @media (max-width: 480px) {

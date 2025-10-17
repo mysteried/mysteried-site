@@ -77,13 +77,6 @@ export function mountChatUI(STAGE) {
             img.decoding = "async";
             block.appendChild(img);
 
-            if (item.caption) {
-                const cap = document.createElement("p");
-                cap.className = "chat-image-caption";
-                cap.textContent = item.caption;
-                block.appendChild(cap);
-            }
-
             wrap.appendChild(block);
             return wrap;
         }
