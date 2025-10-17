@@ -669,9 +669,19 @@ body.page-about {
 }
 
 /* header/footer の透明度・色味を news と統一 */
-.page-about .site-header,
-.page-about .site-footer {
+.page-about .site-header {
     background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+
+.page-about .site-footer {
+    background: rgba(255, 255, 255, 0.85);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
