@@ -29,11 +29,6 @@ body.page-story .site-header {
 
 /* ===== 背景：木の机 ===== */
 body.page-story {
-    /* background-image: url("../assets/images/wooddesk2.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll; */
     background-image: var(--stage-bg, url("../assets/images/wooddesk2.jpg"));
     background-size: var(--stage-bg-size, cover);
     background-position: var(--stage-bg-pos, center);
@@ -88,10 +83,19 @@ footer {
     aspect-ratio: 1 / 1;
 }
 
-.note-paper .note-bg {
+/* .note-paper .note-bg {
     position: absolute;
     inset: 0;
     background: url("../assets/images/note_texture.jpeg") center/cover no-repeat;
+    border: 1px solid rgba(0, 0, 0, .08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+    z-index: 0;
+} */
+
+.note-paper .note-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--note-bg, url("../assets/images/note_texture.jpeg")) center/cover no-repeat;
     border: 1px solid rgba(0, 0, 0, .08);
     box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
     z-index: 0;

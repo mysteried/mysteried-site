@@ -32,6 +32,31 @@ const siteRoot = currentDir.split('/stories/')[0] || "";
     if (bg.position) setVar('--stage-bg-pos', String(bg.position));
 })();
 
+// ===== メモ紙（note-paper）の背景指定（config & CSS変数連携） =====
+(function applyNoteBackground() {
+    const note = STAGE && STAGE.note;
+    if (!note) return;
+
+    const setVar = (name, value) => document.body && document.body.style.setProperty(name, value);
+    const toAbs = (p) => new URL(p, location.href).pathname;
+
+    // 画像指定があれば適用
+    if (note.background) {
+        const href = toAbs(note.background);
+        // ちらつき防止のため事前読み込み
+        const preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'image';
+        preload.href = href;
+        document.head.appendChild(preload);
+        setVar('--note-bg', `url("${href}")`);
+    }
+
+    // 任意：サイズ・位置（設定があればCSS変数に流す）
+    if (note.size) setVar('--note-bg-size', String(note.size));
+    if (note.position) setVar('--note-bg-pos', String(note.position));
+})();
+
 // ── 便利関数：動的読み込み ─────────────────────
 function loadCSS(href) {
     return new Promise((resolve, reject) => {

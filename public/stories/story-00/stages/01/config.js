@@ -15,11 +15,16 @@ export const STAGE = {
     introDuration: 2500,
     introOnceKey: "introPlayed_story00",
 
-    /* …既存… */
+    /*背景画像を指定　※開発時は木目 */
     background: {
-        image: "../../../../assets/images/story-background/story-back-sample.jpg", // 相対 or 絶対OK
+        image: "../../../../assets/images/story-background/wooddesk2.jpg", // 相対 or 絶対OK
         size: "cover",       // 任意: contain, auto など
         position: "center",  // 任意: 50% 35% など
+    },
+
+    // notepaperを指定
+    note: {
+        background: "../../assets/images/sample-note_texture.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用）=====
