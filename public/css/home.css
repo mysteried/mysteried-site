@@ -1,3 +1,16 @@
+/* =======================================================
+   Home / Shared UI Styles (consolidated)
+   - Shared (generic) hero: used by pages like news/about
+   - Homepage hero (overlay/fade): scoped by body.page-home
+   - Cards, badges, meta chips
+   - Modal (mode selector)
+   - News list
+   - Responsive tweaks
+   ======================================================= */
+
+/* =====================
+   SHARED: Simple hero (for news/about etc.)
+   ===================== */
 /* ===== Hero ===== */
 .hero {
     padding: 24px 0 8px;
@@ -13,6 +26,9 @@
     color: var(--muted);
 }
 
+/* =====================
+   SHARED: Cards
+   ===================== */
 /* ===== Cards ===== */
 .card {
     display: flex;
@@ -104,26 +120,171 @@
     border-radius: 999px;
 }
 
-/* ===== Responsive（ホームのカードだけ） ===== */
-@media (max-width:820px) {
-    .card {
-        flex-direction: column;
-    }
+/* =====================
+   HOMEPAGE ONLY: Background & advanced hero
+   ===================== */
+body.page-home {
+    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding-top: 64px;
+    /* ヘッダー分 */
+}
 
-    .card-media {
-        flex-basis: auto;
-        min-width: 100%;
+/* --- Hero (overlay + fade) --- */
+.page-home .hero {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    min-height: 100vh;
+    display: grid;
+    align-items: center;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+.page-home .hero-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.page-home .viewport-fader {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ヘッダー */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid transparent;
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+/* スクロール後だけ薄いガラス感を付与 */
+.site-header.scrolled {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* コンテンツはオーバーレイの上で表示 */
+main,
+.site-footer {
+    position: relative;
+    z-index: 2;
+}
+
+/* ナビゲーションのアクティブ表示（微細な下線） */
+.nav a.active {
+    position: relative;
+}
+
+.nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: currentColor;
+    opacity: .85;
+}
+
+/* Homepage hero typography overrides */
+.page-home .hero-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+
+.page-home .hero-lead {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, .92);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+}
+
+/* --- Hero scroll-out animation (title to left, lead to right) --- */
+.page-home .hero-title,
+.page-home .hero-lead {
+    will-change: transform, opacity;
+    transform: translateX(0);
+    transition: transform 0s, opacity 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page-home .hero-title,
+    .page-home .hero-lead {
+        transition: none;
     }
 }
 
-/* === Page-home shared styles (moved from index.html) === */
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.page-home .hero-inner {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    max-width: 880px;
+    width: min(92vw, 880px);
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    animation: heroFadeIn 1.2s ease-out;
+    pointer-events: none;
+}
+
+/* Seamless transition: overlap next section slightly under the hero */
+.stack.seamless {
+    position: relative;
+    margin-top: 0;
+    padding-top: 24px;
+}
+
+/* optional soft top shadow so the cards feel anchored */
+/* (kept comment: Removed .stack.seamless::before rule) */
+
+/* =====================
+   Modal (mode selector)
+   ===================== */
 /* --- Modal (mode selector) --- */
 .modal {
     position: fixed;
     inset: 0;
     display: none;
     z-index: 1000;
-    /* overlay stack root: above header/hero */
 }
 
 .modal[aria-hidden="false"] {
@@ -135,7 +296,6 @@
     inset: 0;
     background: rgba(0, 0, 0, .45);
     z-index: 1001;
-    /* under dialog, above page */
 }
 
 .modal-dialog {
@@ -149,7 +309,6 @@
     width: min(92vw, 560px);
     padding: 22px 22px 18px;
     z-index: 1002;
-    /* topmost in modal stack */
 }
 
 .modal-close {
@@ -225,178 +384,114 @@
     }
 }
 
-body.page-home {
-    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
-    background-size: cover;
+/* =====================
+   News List (shared header/background)
+   ===================== */
+.news-wrap {
+    padding: 48px 0 80px;
 }
 
-/* --- Hero (overlay + fade) --- */
-.hero {
-    position: relative;
+.news-wrap .section-title {
     text-align: center;
-    color: #fff;
-    /* pin the hero area to viewport height so content behind scrolls under it */
-    min-height: 100vh;
-    display: grid;
-    align-items: center;
-    padding: 0 20px;
-    overflow: hidden;
+    font-size: clamp(22px, 3.2vw, 28px);
+    margin: 0 0 24px;
 }
 
-.hero-overlay {
-    position: fixed;
-    /* cover the viewport at all times */
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
-    backdrop-filter: blur(4px);
-    z-index: 0;
-    /* below all content */
-    pointer-events: none;
-    /* let clicks pass through */
-}
-
-.viewport-fader {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 160px;
-    /* fade length */
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
-    z-index: 1;
-    /* above the fixed overlay, below the content */
-    pointer-events: none;
-    /* let clicks pass through */
-}
-
-.site-header {
-    position: fixed;
-    /* 固定ヘッダー */
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    /* 56–64px の範囲で調整可 */
-    display: flex;
-    align-items: center;
-    z-index: 10;
-    /* ヒーローの上に */
-    background: rgba(255, 255, 255, 0.02);
-    /* 初期はほぼ透明 */
-    border-bottom: 1px solid transparent;
-    /* 初期は境界なし */
-    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
-
-/* スクロール後だけ薄いガラス感を付与 */
-.site-header.scrolled {
-    background: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* コンテンツはオーバーレイの上で表示 */
-main,
-.site-footer {
-    position: relative;
-    z-index: 2;
-}
-
-/* ヘッダー下の隠れ防止（固定ヘッダーの高さ分余白）*/
-body.page-home {
-    padding-top: 64px;
-}
-
-/* ナビゲーションのアクティブ表示（微細な下線） */
-.nav a.active {
-    position: relative;
-}
-
-.nav a.active::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -6px;
-    height: 2px;
-    background: currentColor;
-    opacity: .85;
-}
-
-.hero-inner {
-    position: fixed;
-    /* pin to the viewport */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    /* center both axes */
-    z-index: 2;
-    max-width: 880px;
-    width: min(92vw, 880px);
-    margin: 0 auto;
+.news-list {
+    list-style: none;
+    margin: 0;
     padding: 0;
-    /* no vertical padding needed */
-    text-align: center;
-    animation: heroFadeIn 1.2s ease-out;
-    pointer-events: none;
-    /* let clicks pass through the hero texts when content scrolls under */
 }
 
-/* Soft fade from the hero into the page */
-/* Removed .hero::after rule */
+.news-item {
+    display: grid;
+    grid-template-columns: 110px 96px 1fr;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
 
-.hero-title {
-    font-size: clamp(28px, 4vw, 44px);
+.news-date {
+    color: #6b7280;
+    font-variant-numeric: tabular-nums;
+}
+
+.news-cat {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 12px;
     font-weight: 700;
-    margin-bottom: 24px;
-    line-height: 1.4;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    letter-spacing: .02em;
+    color: #fff;
 }
 
-.hero-lead {
-    font-size: clamp(16px, 2vw, 20px);
-    line-height: 1.8;
-    color: rgba(255, 255, 255, .92);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+.news-cat.is-news {
+    background: #2563eb;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, .28);
 }
 
-/* --- Hero scroll-out animation (title to left, lead to right) --- */
-.hero-title,
-.hero-lead {
-    will-change: transform, opacity;
-    transform: translateX(0);
-    transition: transform 0s, opacity 0s;
-    /* JS drives values; no easing jitter */
+.news-cat.is-event {
+    background: #f97316;
+    box-shadow: 0 6px 16px rgba(249, 115, 22, .28);
 }
 
-@media (prefers-reduced-motion: reduce) {
+.news-cat.is-seminar {
+    background: #10b981;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, .26);
+}
 
-    .hero-title,
-    .hero-lead {
-        transition: none;
+.news-cat.is-case {
+    background: #ef4444;
+    box-shadow: 0 6px 16px rgba(239, 68, 68, .28);
+}
+
+.news-title {
+    color: #1f2937;
+    text-decoration: none;
+    line-height: 1.5;
+}
+
+/* =====================
+   Responsive tweaks
+   ===================== */
+/* ===== Responsive（ホームのカードだけ） ===== */
+@media (max-width:820px) {
+    .card {
+        flex-direction: column;
+    }
+
+    .card-media {
+        flex-basis: auto;
+        min-width: 100%;
     }
 }
 
-@keyframes heroFadeIn {
-    from {
-        opacity: 0;
+/* Compact news list on small screens */
+@media (max-width: 640px) {
+    .news-item {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 6px;
+        padding: 14px 0;
     }
 
-    to {
-        opacity: 1;
+    .news-date {
+        order: 1;
+        font-size: 13px;
+    }
+
+    .news-cat {
+        order: 2;
+        width: max-content;
+    }
+
+    .news-title {
+        order: 3;
     }
 }
-
-/* Seamless transition: overlap next section slightly under the hero */
-.stack.seamless {
-    position: relative;
-    margin-top: 0;
-    /* pull section upward into the fade */
-    padding-top: 24px;
-    /* keep internal spacing */
-}
-
-/* optional soft top shadow so the cards feel anchored */
-/* Removed .stack.seamless::before rule */
