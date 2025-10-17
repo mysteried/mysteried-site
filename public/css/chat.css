@@ -163,12 +163,12 @@ body.page-story main {
 }
 
 /* 末尾の余白：最後の吹き出しが中央帯まで入れるため */
-.chat::after {
+/* 40〜60vhに好みで調整 */
+/* .chat::after {
     content: "";
     display: block;
     height: 5vh;
-    /* 40〜60vhに好みで調整 */
-}
+} */
 
 /* chatに画像を挿入した場合の対応 */
 .chat-image-block {
