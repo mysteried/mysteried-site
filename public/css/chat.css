@@ -162,7 +162,7 @@ body.page-story main {
     font-size: clamp(18px, 3.3vw, 22px);
 }
 
-/* 末尾の余白：最後の吹き出しが中央帯まで入れるため */
+/* 末尾の余白：最後の吹き出しが中央帯まで入れるため　※chatは常にnoteで終了するため一度コメントアウト　　 */
 /* 40〜60vhに好みで調整 */
 /* .chat::after {
     content: "";
