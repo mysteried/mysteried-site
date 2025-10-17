@@ -582,3 +582,115 @@ main {
         order: 3;
     }
 }
+
+/* =====================
+   About page
+   ===================== */
+/* =====================
+   About page (fix header/footer layout to match news)
+   ===================== */
+
+/* Fix header positioning and color */
+.page-about .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Fix footer style and position */
+.page-about .site-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    height: var(--footer-h, 80px);
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Add padding so content doesn't overlap header/footer */
+.page-about main.about-wrap {
+    margin-top: 100px;
+    margin-bottom: 140px;
+    padding-top: 40px;
+}
+
+.about-images {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.about-images img {
+    width: min(92vw, 960px);
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* =====================
+   About page: unified visuals with news page
+   ===================== */
+
+/* 背景（newsと同じトーン） */
+body.page-about {
+    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* 上下ぼかしオーバーレイ */
+.page-about::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* header/footer の透明度・色味を news と統一 */
+.page-about .site-header,
+.page-about .site-footer {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* footer固定 */
+.page-about .site-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    height: var(--footer-h);
+}
+
+/* コンテンツに余白を確保（footerと被らないように） */
+.page-about main.about-wrap {
+    margin-top: 100px;
+    margin-bottom: 140px;
+}
