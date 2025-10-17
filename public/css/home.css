@@ -152,6 +152,7 @@ body.page-home {
 }
 
 /* Overlay for pages without hero (news/about) */
+
 .page-news::before {
     content: "";
     position: fixed;
@@ -161,6 +162,27 @@ body.page-home {
     backdrop-filter: blur(4px);
     z-index: 0;
     pointer-events: none;
+}
+
+/* News page: match header/footer color scheme with index scrolled state */
+.page-news .site-header,
+.page-news .site-footer {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* News main container: semi-transparent background for readability */
+.page-news main.container.news-wrap {
+    background: rgba(255, 255, 255, 0.75);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 48px 32px 96px;
+    margin-top: 100px;
 }
 
 .page-home .viewport-fader {
