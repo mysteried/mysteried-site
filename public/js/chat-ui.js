@@ -56,6 +56,38 @@ export function mountChatUI(STAGE) {
             return wrap;
         }
 
+        // 画像ブロック（会話途中に挿入）
+        if (item.type === "image") {
+            const wrap = document.createElement("div");
+            wrap.className = "msg image";
+
+            const block = document.createElement("div");
+            block.className = "chat-image-block";
+
+            const img = document.createElement("img");
+            try {
+                // 相対パスを現在のページ基準で解決
+                const abs = new URL(item.src, location.href).pathname;
+                img.src = abs;
+            } catch (_) {
+                img.src = item.src || "";
+            }
+            img.alt = item.alt || "";
+            img.loading = "lazy";
+            img.decoding = "async";
+            block.appendChild(img);
+
+            if (item.caption) {
+                const cap = document.createElement("p");
+                cap.className = "chat-image-caption";
+                cap.textContent = item.caption;
+                block.appendChild(cap);
+            }
+
+            wrap.appendChild(block);
+            return wrap;
+        }
+
         // 通常メッセージ（masu/hina）
         const role = item.who === "hina" ? "hina" : "masu";
         const wrap = document.createElement("div");

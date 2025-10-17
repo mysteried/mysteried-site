@@ -6,18 +6,26 @@ export const STAGE = {
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
-    nextUrl: "../02h/stage.html?intro=1",
+    nextUrl: "../02/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 35.85706, lng: 139.61060, radius_m: 200 },
+    target: { lat: 35.83706, lng: 139.64095, radius_m: 200 },
 
     // ===== タイトル演出 =====
     introDuration: 2500,
     introOnceKey: "introPlayed_story00",
 
-    // 次へ進むのメッセージをここでも管理できる
-    geoSuccessText: "到着だ！この先に向かおう…",
-    geoSuccessDelayMs: 800,
+    /*背景画像を指定　※開発時は木目 */
+    background: {
+        image: "../../../../assets/images/story-background/wooddesk2.jpg", // 相対 or 絶対OK
+        size: "cover",       // 任意: contain, auto など
+        position: "center",  // 任意: 50% 35% など
+    },
+
+    // notepaperを指定
+    note: {
+        background: "../../assets/images/sample-note_texture.webp",
+    },
 
     // ===== 会話UI（variant: "chat" の時だけ使用）=====
     chat: {
@@ -55,8 +63,8 @@ export const STAGE = {
             { who: "hina", face: "normal", text: "“フランスの1800年。世界を変えた一冊。”…本のことを指してそうですね。" },
             { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
             { who: "masu", face: "normal", text: "部屋から脱出・・・" },
-            { who: "hina", face: "smile", text: "何か分かりました？？" },
-            { type: "note" }
+            { type: "image", src: "../../assets/images/pictures/sample-pictures.jpeg", alt: "ヒナタの昼食", caption: "名物カレー" },
+            { who: "hina", face: "smile", text: "何か分かりました？？" }
         ]
     }
 };

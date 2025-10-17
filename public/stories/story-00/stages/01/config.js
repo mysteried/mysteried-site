@@ -63,6 +63,7 @@ export const STAGE = {
             { who: "hina", face: "normal", text: "“フランスの1800年。世界を変えた一冊。”…本のことを指してそうですね。" },
             { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
             { who: "masu", face: "normal", text: "部屋から脱出・・・" },
+            { type: "image", src: "../../assets/images/pictures/sample-pictures.jpeg", alt: "ヒナタの昼食", caption: "名物カレー" },
             { who: "hina", face: "smile", text: "何か分かりました？？" }
         ]
     }
