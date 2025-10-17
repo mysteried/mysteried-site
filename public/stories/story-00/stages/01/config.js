@@ -15,6 +15,13 @@ export const STAGE = {
     introDuration: 2500,
     introOnceKey: "introPlayed_story00",
 
+    /* …既存… */
+    background: {
+        image: "../../../../assets/images/story-background/story-back-sample.jpg", // 相対 or 絶対OK
+        size: "cover",       // 任意: contain, auto など
+        position: "center",  // 任意: 50% 35% など
+    },
+
     // ===== 会話UI（variant: "chat" の時だけ使用）=====
     chat: {
         avatars: {

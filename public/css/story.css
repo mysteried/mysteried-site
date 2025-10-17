@@ -29,9 +29,14 @@ body.page-story .site-header {
 
 /* ===== 背景：木の机 ===== */
 body.page-story {
-    background-image: url("../assets/images/wooddesk2.jpg");
+    /* background-image: url("../assets/images/wooddesk2.jpg");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll; */
+    background-image: var(--stage-bg, url("../assets/images/wooddesk2.jpg"));
+    background-size: var(--stage-bg-size, cover);
+    background-position: var(--stage-bg-pos, center);
     background-repeat: no-repeat;
     background-attachment: scroll;
     /* iOS Safari 対応 */

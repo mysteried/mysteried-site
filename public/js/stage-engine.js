@@ -4,7 +4,33 @@ const configPath = `${currentDir}/config.js`;
 const { STAGE } = await import(configPath);
 
 // ルート（/public）を推定して共通アセットにアクセス
+
 const siteRoot = currentDir.split('/stories/')[0] || "";
+
+// ===== ステージごとの背景指定（config & CSS変数連携） =====
+(function applyStageBackground() {
+    const bg = STAGE && STAGE.background;
+    if (!bg) return;
+
+    const setVar = (name, value) => document.body && document.body.style.setProperty(name, value);
+
+    // 画像の事前読み込み（ちらつき防止）
+    const toAbs = (p) => new URL(p, location.href).pathname;
+
+    if (bg.image) {
+        const href = toAbs(bg.image);
+        const preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'image';
+        preload.href = href;
+        document.head.appendChild(preload);
+        setVar('--stage-bg', `url("${href}")`);
+    }
+
+    // 任意指定：サイズ・位置
+    if (bg.size) setVar('--stage-bg-size', String(bg.size));
+    if (bg.position) setVar('--stage-bg-pos', String(bg.position));
+})();
 
 // ── 便利関数：動的読み込み ─────────────────────
 function loadCSS(href) {
