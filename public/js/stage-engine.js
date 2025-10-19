@@ -361,10 +361,24 @@ if (STAGE.variant === 'chat') {
         ended = true;
         if (timer) { clearTimeout(timer); timer = null; }
         viewport.innerHTML = '';
-        // フェードで消したい場合は CSS 側で #prologue.hidden を用意
-        root.classList.add('hidden');
-        // 完全に消す場合：
-        // root.style.display = 'none';
+
+        // フェードしたいなら hidden クラス付与 → 少し待って display:none
+        const hasTransition =
+            root && getComputedStyle(root).transitionDuration !== '0s';
+
+        if (root) {
+            root.classList.add('hidden');   // CSSで opacity などを使っていればフェード
+            if (hasTransition) {
+                setTimeout(() => {
+                    root.hidden = true;
+                    root.style.display = 'none'; // ← これで黒幕レイヤーを完全に消す
+                }, 400); // CSSのtransitionに合わせて調整（.4s想定）
+            } else {
+                // フェード無しなら即時消去
+                root.hidden = true;
+                root.style.display = 'none';
+            }
+        }
     }
 
     function showStep(i) {

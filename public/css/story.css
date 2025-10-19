@@ -413,35 +413,29 @@ footer {
     overflow: hidden;
 }
 
-/* ===== ステップの共通 ===== */
-#prologue .viewport>div {
-    opacity: 1;
-    transition: opacity 0.6s ease;
-    margin: 1rem 0;
+/* Skipボタンの位置固定 */
+#prologue .prologue-skip {
+    position: fixed;
+    /* 常に画面上に固定 */
+    top: 16px;
+    /* 上からの余白 */
+    left: 16px;
+    /* 左からの余白 */
+    z-index: 10000;
+    /* 他要素より上に */
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-/* ===== テキスト ===== */
-#prologue .viewport>div p,
-#prologue .viewport>div {
-    font-size: 1.8rem;
-    line-height: 1.6;
-    letter-spacing: 0.05em;
-}
-
-/* ===== 画像・動画 ===== */
-#prologue img,
-#prologue video {
-    max-width: 90%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
-/* ===== 終了後にフェードアウトする準備用（後でJSで使える） ===== */
-#prologue.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease;
+/* hover時の軽い演出 */
+#prologue .prologue-skip:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 
