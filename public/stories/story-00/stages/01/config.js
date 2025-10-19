@@ -21,7 +21,7 @@ export const STAGE = {
         steps: [
             { type: "text", html: "書庫の奥に、鍵がある。", dur: 3600 },
             { type: "image", src: "../../../../assets/images/sample-01.jpg", alt: "説明画像", dur: 1500 },
-            { type: "video", src: "../../assets/videos/sample.mp4", dur: 3000 }
+            { type: "video", src: "../../assets/videos/sample.mp4", dur: 14000 }
         ]
     },
 
