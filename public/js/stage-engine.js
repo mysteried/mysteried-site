@@ -124,6 +124,10 @@ const hintCloseBtn = document.getElementById("hintCloseBtn");
 const fieldAr = document.querySelector('.field-ar');
 const fieldGeo = document.querySelector('.field-geo');
 
+// ===== Prologue（超シンプル版：config直書き→そのまま描画） =====
+const steps = STAGE.intro?.steps ?? [];
+const viewport = document.querySelector('#prologue .viewport');
+
 // ====== モード切り替え（AR / GEO）======
 if (STAGE.mode === 'geo') {
     fieldAr && (fieldAr.style.display = 'none');
@@ -302,6 +306,127 @@ if (STAGE.variant === 'chat') {
     // plain：既存の notePaper をそのまま表示
     if (notePaperEl) notePaperEl.style.display = '';
 }
+
+
+// ===== Prologue 再生コントローラ（順次表示＋スキップ） =====
+(function runPrologueSequentially() {
+    const root = document.getElementById('prologue');
+    if (!root || !viewport) return; // 画面側ブロックや描画先がなければ何もしない
+    if (!Array.isArray(steps) || steps.length === 0) return;
+
+    // onceKey / ?intro=1 による再生制御
+    const cfg = STAGE.intro || {};
+    const params = new URLSearchParams(location.search);
+    const force = params.get('intro') === '1';
+    const onceKey = cfg.onceKey || STAGE.introOnceKey;
+    const already = onceKey ? localStorage.getItem(onceKey) : null;
+    if (!force && already) return; // 既に再生済みならスキップ
+    if (onceKey && !already) localStorage.setItem(onceKey, 'true');
+
+    // 事前読み込み（ちらつき防止）
+    const toAbs = (p) => new URL(p, location.href).pathname;
+    steps.forEach(s => {
+        if (!s) return;
+        if (s.src) {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = (s.type === 'video') ? 'video' : 'image';
+            link.href = toAbs(s.src);
+            document.head.appendChild(link);
+        }
+    });
+
+    // スキップボタンを用意（なければ作る）
+    let skipBtn = root.querySelector('.prologue-skip');
+    if (!skipBtn) {
+        skipBtn = document.createElement('button');
+        skipBtn.type = 'button';
+        skipBtn.className = 'prologue-skip';
+        skipBtn.textContent = 'Skip';
+        root.appendChild(skipBtn);
+    }
+
+    // 進行制御
+    let idx = 0;
+    let timer = null;
+    let ended = false;
+
+    function cleanup() {
+        ended = true;
+        if (timer) { clearTimeout(timer); timer = null; }
+        viewport.innerHTML = '';
+        // フェードで消したい場合は CSS 側で #prologue.hidden を用意
+        root.classList.add('hidden');
+        // 完全に消す場合：
+        // root.style.display = 'none';
+    }
+
+    function showStep(i) {
+        if (ended) return;
+        viewport.innerHTML = '';
+        const step = steps[i];
+        if (!step) { cleanup(); return; }
+
+        const wrap = document.createElement('div');
+        wrap.className = 'prologue-step';
+
+        switch (step.type) {
+            case 'text': {
+                wrap.innerHTML = step.html || step.text || '';
+                break;
+            }
+            case 'image': {
+                const img = document.createElement('img');
+                img.src = toAbs(step.src);
+                img.alt = step.alt || '';
+                wrap.appendChild(img);
+                break;
+            }
+            case 'video': {
+                const v = document.createElement('video');
+                v.src = toAbs(step.src);
+                v.autoplay = true; v.muted = true; v.playsInline = true; v.controls = !!step.controls;
+                wrap.appendChild(v);
+                // 再生失敗時も dur でフォールバック
+                v.play().catch(() => { });
+                // 動画が終わったら次へ（安全のため dur でも進む）
+                const go = () => { if (!ended) next(); };
+                v.addEventListener('ended', go, { once: true });
+                timer = setTimeout(go, Number(step.dur) || 2500);
+                viewport.appendChild(wrap);
+                return;
+            }
+            default: {
+                wrap.textContent = step.text || '';
+            }
+        }
+
+        viewport.appendChild(wrap);
+        timer = setTimeout(next, Number(step.dur) || 1500);
+    }
+
+    function next() {
+        if (ended) return;
+        idx += 1;
+        if (idx >= steps.length) { cleanup(); return; }
+        showStep(idx);
+    }
+
+    // スキップ操作
+    const skippable = cfg.skippable !== false;
+    if (skippable) {
+        skipBtn.addEventListener('click', cleanup);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') cleanup();
+        });
+    } else {
+        skipBtn.style.display = 'none';
+    }
+
+    // 表示開始
+    root.classList.remove('hidden');
+    showStep(0);
+})();
 
 // ====== タイトル演出：一度だけ再生 ======
 // window.addEventListener("load", () => {

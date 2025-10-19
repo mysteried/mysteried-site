@@ -393,6 +393,57 @@ footer {
     }
 } */
 
+/* ===== プロローグ全体 ===== */
+#prologue {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    /* 背景を黒フェードに */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* ===== ステップの共通 ===== */
+#prologue .viewport>div {
+    opacity: 1;
+    transition: opacity 0.6s ease;
+    margin: 1rem 0;
+}
+
+/* ===== テキスト ===== */
+#prologue .viewport>div p,
+#prologue .viewport>div {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+}
+
+/* ===== 画像・動画 ===== */
+#prologue img,
+#prologue video {
+    max-width: 90%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== 終了後にフェードアウトする準備用（後でJSで使える） ===== */
+#prologue.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+
+
+
+
 /* =====================
    レスポンシブ
    ===================== */

@@ -15,6 +15,18 @@ export const STAGE = {
     // introDuration: 2500,
     // introOnceKey: "introPlayed_story00",
 
+    intro: {
+        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        skippable: true,
+        steps: [
+            { type: "text", html: "書庫の奥に、鍵がある。", dur: 1200 },
+            { type: "image", src: "../../assets/img/pic.jpg", alt: "説明画像", dur: 1500 },
+            { type: "video", src: "../../assets/vid/intro.mp4", dur: 3000 }
+        ]
+    },
+
+
+
     /*背景画像を指定　※開発時は木目 */
     background: {
         image: "../../../../assets/images/story-background/wooddesk2.jpg", // 相対 or 絶対OK
