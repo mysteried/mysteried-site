@@ -3,7 +3,7 @@ export const STAGE = {
     // ===== 基本 =====
     id: "story00_stage01",
     title: "辿り着いた先",
-    mode: "geo",                 // "ar" or "geo"
+    mode: "ar",                 // "ar" or "geo"
     variant: "plain",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
