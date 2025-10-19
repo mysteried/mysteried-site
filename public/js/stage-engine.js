@@ -392,7 +392,22 @@ if (STAGE.variant === 'chat') {
 
         switch (step.type) {
             case 'text': {
-                wrap.innerHTML = step.html || step.text || '';
+                // text 表示拡張：\nで改行、paragraphs配列なら<p>で出力、htmlがあればそのまま
+                const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+                })[m]);
+
+                if (step.html) {
+                    // 任意のHTMLをそのまま描画（信頼できる入力のみ推奨）
+                    wrap.innerHTML = step.html;
+                } else if (Array.isArray(step.paragraphs)) {
+                    // paragraphs: ["一段落目", "二段落目"] のように渡すと<p>で分割表示
+                    wrap.innerHTML = step.paragraphs.map(p => `<p>${esc(p)}</p>`).join('');
+                } else {
+                    // text 内の\n を <br> に変換
+                    const t = step.text || '';
+                    wrap.innerHTML = esc(t).replace(/\n/g, '<br>');
+                }
                 break;
             }
             case 'image': {

@@ -19,7 +19,7 @@ export const STAGE = {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
-            { type: "text", html: "書庫の奥に、鍵がある。", dur: 3600 },
+            { type: "text", text: "書庫の奥に、\n鍵がある。", dur: 3600 },
             { type: "image", src: "../../../../assets/images/sample-01.jpg", alt: "説明画像", dur: 1500 },
             { type: "video", src: "../../assets/videos/sample.mp4", dur: 14000 }
         ]
