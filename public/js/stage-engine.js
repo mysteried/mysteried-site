@@ -309,10 +309,16 @@ if (STAGE.variant === 'chat') {
 
 
 // ===== Prologue 再生コントローラ（順次表示＋スキップ） =====
+// ===== Prologue 再生コントローラ（順次表示＋スキップ） =====
 (function runPrologueSequentially() {
     const root = document.getElementById('prologue');
-    if (!root || !viewport) return; // 画面側ブロックや描画先がなければ何もしない
-    if (!Array.isArray(steps) || steps.length === 0) return;
+    const hideRoot = () => { if (root) { root.hidden = true; root.style.display = 'none'; } };
+    const showRoot = () => { if (root) { root.hidden = false; root.style.display = ''; } };
+
+    if (!root || !viewport) return; // そもそもブロックが無ければ何もしない
+    // デフォルトは非表示（早期returnでも黒幕が残らないように）
+    hideRoot();
+    if (!Array.isArray(steps) || steps.length === 0) { hideRoot(); return; }
 
     // onceKey / ?intro=1 による再生制御
     const cfg = STAGE.intro || {};
@@ -320,7 +326,7 @@ if (STAGE.variant === 'chat') {
     const force = params.get('intro') === '1';
     const onceKey = cfg.onceKey || STAGE.introOnceKey;
     const already = onceKey ? localStorage.getItem(onceKey) : null;
-    if (!force && already) return; // 既に再生済みならスキップ
+    if (!force && already) { hideRoot(); return; } // 既に再生済みなら確実に隠す
     if (onceKey && !already) localStorage.setItem(onceKey, 'true');
 
     // 事前読み込み（ちらつき防止）
@@ -424,6 +430,7 @@ if (STAGE.variant === 'chat') {
     }
 
     // 表示開始
+    showRoot();
     root.classList.remove('hidden');
     showStep(0);
 })();
