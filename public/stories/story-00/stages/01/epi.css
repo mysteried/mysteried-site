@@ -20,10 +20,54 @@
     transition: opacity .6s ease, transform .6s ease;
 }
 
+/* text1 をフェードイン（少し下から持ち上げる） */
+#prologue .k-text1.is-text {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .6s ease, transform .6s ease;
+}
+
+#prologue .k-text1.is-text.is-show {
+    opacity: 1;
+    transform: none;
+}
+
 
 
 /* text2 を赤くする */
 #prologue .k-text2.is-text {
     color: #e53935;
     /* 好みで色は変更OK */
+}
+
+
+/* video1：ビューポート内に完全表示（上下はみ出し防止） */
+#prologue .k-video1.is-video {
+    /* 中央寄せ（念のため） */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#prologue .k-video1.is-video video {
+    display: block;
+
+    /* どちらの向きの動画でも収まる指定 */
+    object-fit: contain;
+
+    /* 横は画面幅に依存しすぎないよう余白を確保 */
+    max-width: 92vw;
+    width: auto;
+
+    /* 縦は“確実に”画面内に収める（モバイル対策で svh も指定） */
+    max-height: 80vh;
+    /* デスクトップ等の基本 */
+    max-height: 80svh;
+    /* iOS/Safari 新ビューポート */
+
+    /* お好みの演出（任意） */
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .45);
+    background: #000;
+    /* レターボックス部分の色 */
 }
