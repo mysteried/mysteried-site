@@ -71,3 +71,48 @@
     background: #000;
     /* レターボックス部分の色 */
 }
+
+
+/* video1：入→維持→出（フェードアウトで締める） */
+#prologue .k-video1.is-video video {
+    /* 再生中の見た目はそのまま流用OK */
+    display: block;
+    object-fit: contain;
+    max-width: 92vw;
+    width: auto;
+    max-height: 80vh;
+    max-height: 80svh;
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .45);
+    background: #000;
+
+    /* ← ここがポイント：入→維持→出 のアニメ */
+    animation: prologueVideoInOut 3.6s ease-in-out both;
+    /* ↑ 3.6s は config の dur (3600ms) に合わせて調整 */
+}
+
+@keyframes prologueVideoInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.995);
+    }
+
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* フェードイン完了 */
+    85% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* 維持 */
+    100% {
+        opacity: 0;
+        transform: scale(0.995);
+    }
+
+    /* フェードアウトで締め */
+}
