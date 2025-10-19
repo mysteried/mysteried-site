@@ -12,8 +12,8 @@ export const STAGE = {
     target: { lat: 35.83706, lng: 139.64095, radius_m: 200 },
 
     // ===== タイトル演出 =====
-    introDuration: 2500,
-    introOnceKey: "introPlayed_story00",
+    // introDuration: 2500,
+    // introOnceKey: "introPlayed_story00",
 
     /*背景画像を指定　※開発時は木目 */
     background: {

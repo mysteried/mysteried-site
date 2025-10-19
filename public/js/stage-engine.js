@@ -304,31 +304,31 @@ if (STAGE.variant === 'chat') {
 }
 
 // ====== タイトル演出：一度だけ再生 ======
-window.addEventListener("load", () => {
-    const overlay = document.getElementById("intro-overlay");
-    const params = new URLSearchParams(window.location.search);
-    // 本番想定　一回だけ、アニメーションが流れる
-    // const introEnabled = params.get("intro");
-    // const introPlayed = localStorage.getItem(STAGE.introOnceKey);
+// window.addEventListener("load", () => {
+//     const overlay = document.getElementById("intro-overlay");
+//     const params = new URLSearchParams(window.location.search);
+// 本番想定　一回だけ、アニメーションが流れる
+// const introEnabled = params.get("intro");
+// const introPlayed = localStorage.getItem(STAGE.introOnceKey);
 
-    // if (introEnabled === "1" && !introPlayed) {
-    //     localStorage.setItem(STAGE.introOnceKey, "true");
-    //     setTimeout(() => {
-    //         overlay.style.display = "none";
-    //     }, STAGE.introDuration);
-    // } else {
-    //     overlay.style.display = "none";
-    // }
+// if (introEnabled === "1" && !introPlayed) {
+//     localStorage.setItem(STAGE.introOnceKey, "true");
+//     setTimeout(() => {
+//         overlay.style.display = "none";
+//     }, STAGE.introDuration);
+// } else {
+//     overlay.style.display = "none";
+// }
 
-    // 開発用（クエリがあれば毎回、それ以外は初回のみ）
-    const playByQuery = params.get("intro") === "1";
-    const onceKey = STAGE.introOnceKey;
-    const already = localStorage.getItem(onceKey);
+// 開発用（クエリがあれば毎回、それ以外は初回のみ）
+// const playByQuery = params.get("intro") === "1";
+// const onceKey = STAGE.introOnceKey;
+// const already = localStorage.getItem(onceKey);
 
-    if (playByQuery || (!already && STAGE.introDuration > 0)) {
-        if (!already) localStorage.setItem(onceKey, "true");
-        setTimeout(() => { overlay.style.display = "none"; }, STAGE.introDuration);
-    } else {
-        overlay.style.display = "none";
-    }
-});
+// if (playByQuery || (!already && STAGE.introDuration > 0)) {
+//     if (!already) localStorage.setItem(onceKey, "true");
+//     setTimeout(() => { overlay.style.display = "none"; }, STAGE.introDuration);
+// } else {
+//     overlay.style.display = "none";
+// }
+// });

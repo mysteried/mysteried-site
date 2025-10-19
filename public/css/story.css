@@ -370,7 +370,7 @@ footer {
    アクセス時のイントロ演出
    ===================== */
 /* ===== アクセス時のイントロ演出 ===== */
-#intro-overlay {
+/* #intro-overlay {
     position: fixed;
     inset: 0;
     background: #000;
@@ -391,7 +391,7 @@ footer {
         opacity: 0;
         visibility: hidden;
     }
-}
+} */
 
 /* =====================
    レスポンシブ
