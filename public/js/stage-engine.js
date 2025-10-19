@@ -357,28 +357,27 @@ if (STAGE.variant === 'chat') {
     let timer = null;
     let ended = false;
 
-    function cleanup() {
+    function cleanup(immediate = false) {
         ended = true;
         if (timer) { clearTimeout(timer); timer = null; }
         viewport.innerHTML = '';
 
-        // フェードしたいなら hidden クラス付与 → 少し待って display:none
-        const hasTransition =
-            root && getComputedStyle(root).transitionDuration !== '0s';
+        if (!root) return;
 
-        if (root) {
-            root.classList.add('hidden');   // CSSで opacity などを使っていればフェード
-            if (hasTransition) {
-                setTimeout(() => {
-                    root.hidden = true;
-                    root.style.display = 'none'; // ← これで黒幕レイヤーを完全に消す
-                }, 400); // CSSのtransitionに合わせて調整（.4s想定）
-            } else {
-                // フェード無しなら即時消去
-                root.hidden = true;
-                root.style.display = 'none';
-            }
+        if (immediate) {
+            // スキップ時など：即時に黒幕を消して本編を見せる
+            root.classList.remove('hidden');
+            root.hidden = true;
+            root.style.display = 'none';
+            return;
         }
+
+        // 通常終了：退場アニメ（CSSがあれば活かす）→ 既定 400ms 後に完全消去
+        root.classList.add('hidden');
+        setTimeout(() => {
+            root.hidden = true;
+            root.style.display = 'none';
+        }, 400); // 退場の既定時間（CSSのtransitionに合わせて調整可）
     }
 
     function showStep(i) {
@@ -389,6 +388,12 @@ if (STAGE.variant === 'chat') {
 
         const wrap = document.createElement('div');
         wrap.className = 'prologue-step';
+
+        // 種別クラスと個別キー（例: .is-text / .is-image / .is-video, .k-text2）
+        if (step.type === 'text') wrap.classList.add('is-text');
+        if (step.type === 'image') wrap.classList.add('is-image');
+        if (step.type === 'video') wrap.classList.add('is-video');
+        if (step.key) wrap.classList.add(`k-${String(step.key)}`);
 
         switch (step.type) {
             case 'text': {
@@ -443,16 +448,16 @@ if (STAGE.variant === 'chat') {
     function next() {
         if (ended) return;
         idx += 1;
-        if (idx >= steps.length) { cleanup(); return; }
+        if (idx >= steps.length) { cleanup(false); return; }
         showStep(idx);
     }
 
     // スキップ操作
     const skippable = cfg.skippable !== false;
     if (skippable) {
-        skipBtn.addEventListener('click', cleanup);
+        skipBtn.addEventListener('click', () => cleanup(true));
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') cleanup();
+            if (e.key === 'Escape') cleanup(true);
         });
     } else {
         skipBtn.style.display = 'none';

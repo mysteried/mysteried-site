@@ -1,0 +1,29 @@
+/* text1：タイトル感（大きく・堂々と） */
+#prologue .k-text1.is-text {
+    /* 書体：好みで差し替えOK（例は明朝寄り） */
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", "YuMincho", serif;
+
+    /* サイズ：画面に応じて伸縮 */
+    font-size: clamp(36px, 7vw, 80px);
+    line-height: 1.2;
+    letter-spacing: .06em;
+    font-weight: 700;
+    /* タイトルっぽく太めに */
+    color: #fff;
+
+    /* 立体感（お好みで調整） */
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, .35),
+        0 0 1px rgba(255, 255, 255, .2);
+
+    /* フェードのスピードを少しゆっくり（.is-show で効く） */
+    transition: opacity .6s ease, transform .6s ease;
+}
+
+
+
+/* text2 を赤くする */
+#prologue .k-text2.is-text {
+    color: #e53935;
+    /* 好みで色は変更OK */
+}

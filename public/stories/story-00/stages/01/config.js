@@ -19,9 +19,10 @@ export const STAGE = {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
-            { type: "text", text: "書庫の奥に、\n鍵がある。", dur: 3600 },
-            { type: "image", src: "../../../../assets/images/sample-01.jpg", alt: "説明画像", dur: 1500 },
-            { type: "video", src: "../../assets/videos/sample.mp4", dur: 14000 }
+            { type: "text", key: "text1", text: "書庫の奥に、\n鍵がある。", dur: 3600 },
+            { type: "image", key: "image1", src: "../../../../assets/images/sample-01.jpg", alt: "説明画像", dur: 1500 },
+            { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
+            { type: "text", key: "text2", text: "私は目を覚ました。\nすごくすごくさむさい\nここは一体どこなんだ", dur: 3600 }
         ]
     },
 
