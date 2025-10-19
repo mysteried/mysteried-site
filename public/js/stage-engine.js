@@ -434,6 +434,8 @@ if (STAGE.variant === 'chat') {
                 v.addEventListener('ended', go, { once: true });
                 timer = setTimeout(go, Number(step.dur) || 2500);
                 viewport.appendChild(wrap);
+                // フェードイン開始（.is-show を付与）
+                requestAnimationFrame(() => wrap.classList.add('is-show'));
                 return;
             }
             default: {
@@ -442,6 +444,8 @@ if (STAGE.variant === 'chat') {
         }
 
         viewport.appendChild(wrap);
+        // フェードイン開始（.is-show を付与）
+        requestAnimationFrame(() => wrap.classList.add('is-show'));
         timer = setTimeout(next, Number(step.dur) || 1500);
     }
 
