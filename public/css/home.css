@@ -13,20 +13,6 @@
    ===================== */
 /* ===== Hero ===== */
 
-/* .hero {
-    padding: 24px 0 8px;
-} */
-
-/* .hero-title {
-    margin: 0 0 6px;
-    font-size: clamp(20px, 3.2vw, 28px);
-}
-
-.hero-lead {
-    margin: 0;
-    color: var(--muted);
-}  */
-
 /* タイトル：柔らかいセリフ体で余白感を出す */
 .hero-title {
     font-family: "Noto Serif JP", serif;
@@ -35,18 +21,20 @@
     line-height: 1.35;
     letter-spacing: .02em;
     font-feature-settings: "palt" 1, "kern" 1;
+    font-style: oblique 8deg;
+    font-synthesis: style;
 }
 
 /* リード：読みやすさ重視のサンセリフ */
 .hero-lead {
-    font-family: "Noto Sans JP", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Noto Serif JP", serif;
     font-weight: 400;
     font-size: clamp(15px, 2.1vw, 18px);
     line-height: 1.9;
     letter-spacing: .01em;
     color: var(--muted);
     font-feature-settings: "palt" 1, "kern" 1;
-    font-style: oblique 10deg;
+    font-style: oblique 8deg;
     font-synthesis: style;
 }
 
@@ -57,7 +45,34 @@
 }
 
 
+.brand {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 700;
+    letter-spacing: .05em;
+    font-size: 20px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+}
 
+
+
+
+
+
+/* ===== Section title readability (chip-like badge) ===== */
+.section-cards {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 8px 14px;
+    font-size: clamp(14px, 1.8vw, 18px);
+    line-height: 1;
+    color: #111;
+    background: rgba(255, 255, 255, .65);
+    border: 1px solid rgba(0, 0, 0, .06);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .10);
+}
 
 /* =====================
    SHARED: Cards
@@ -157,7 +172,7 @@
    HOMEPAGE ONLY: Background & advanced hero
    ===================== */
 body.page-home {
-    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
+    background: url('../assets/images/sample-04.jpg') no-repeat center center fixed;
     background-size: cover;
     padding-top: 64px;
     /* ヘッダー分 */
