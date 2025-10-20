@@ -20,7 +20,7 @@ body.page-story main {
     max-width: 780px;
     margin: 24px auto 120px;
     padding: 0 16px;
-    padding-top: 40vh;
+    padding-top: 20vh;
     /* 最初のメッセージが画面40%位置から始まる */
     display: flex;
     flex-direction: column;

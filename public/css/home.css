@@ -392,10 +392,15 @@ body.page-home {
 .page-news main.container.news-wrap {
     background: rgba(255, 255, 255, 0.75);
     -webkit-backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     border-radius: 12px;
+    width: min(92vw, 960px);
+    /* ← 画面の92%か960pxの小さい方 */
+    margin: 100px auto 96px;
+    /* ← 中央寄せ（上の余白はお好みで） */
     padding: 48px 32px 96px;
-    margin-top: 100px;
+    /* 既存値でOK */
 }
 
 /* Make news list scrollable within a fixed height */

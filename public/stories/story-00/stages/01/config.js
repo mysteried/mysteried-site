@@ -4,7 +4,7 @@ export const STAGE = {
     id: "story00_stage01",
     title: "辿り着いた先",
     mode: "ar",                 // "ar" or "geo"
-    variant: "plain",            // "plain" or "chat"
+    variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
 
@@ -77,7 +77,8 @@ export const STAGE = {
             { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
             { who: "masu", face: "normal", text: "部屋から脱出・・・" },
             { type: "image", src: "../../assets/images/pictures/sample-pictures.jpeg", alt: "ヒナタの昼食" },
-            { who: "hina", face: "smile", text: "何か分かりました？？" }
+            { who: "hina", face: "smile", text: "何か分かりました？？" },
+            { type: "note" }
         ]
     }
 };
