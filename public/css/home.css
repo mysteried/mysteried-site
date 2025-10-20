@@ -1,50 +1,18 @@
 /* =======================================================
    Home / Shared UI Styles (consolidated)
-   - Shared (generic) hero: used by pages like news/about
-   - Homepage hero (overlay/fade): scoped by body.page-home
-   - Cards, badges, meta chips
+   - Header (brand, header-inner, nav)
+   - Hero (shared + home-specific)
+   - Section-cards
+   - Cards
+   - News (including background overlays)
+   - About page
    - Modal (mode selector)
-   - News list
    - Responsive tweaks
    ======================================================= */
 
 /* =====================
-   SHARED: Simple hero (for news/about etc.)
+   Header (brand, header-inner, nav)
    ===================== */
-/* ===== Hero ===== */
-
-/* タイトル：柔らかいセリフ体で余白感を出す */
-.hero-title {
-    font-family: "Noto Serif JP", serif;
-    font-weight: 600;
-    font-size: clamp(24px, 3.6vw, 34px);
-    line-height: 1.35;
-    letter-spacing: .02em;
-    font-feature-settings: "palt" 1, "kern" 1;
-    font-style: oblique 8deg;
-    font-synthesis: style;
-}
-
-/* リード：読みやすさ重視のサンセリフ */
-.hero-lead {
-    font-family: "Noto Serif JP", serif;
-    font-weight: 400;
-    font-size: clamp(15px, 2.1vw, 18px);
-    line-height: 1.9;
-    letter-spacing: .01em;
-    color: var(--muted);
-    font-feature-settings: "palt" 1, "kern" 1;
-    font-style: oblique 8deg;
-    font-synthesis: style;
-}
-
-/* 横幅が広いページで行が伸びすぎないように */
-.hero .hero-inner,
-.hero .container {
-    max-width: 42ch;
-}
-
-
 .brand {
     /* font-family: "Noto Serif JP", serif; */
     font-weight: 700;
@@ -90,9 +58,193 @@
     color: inherit;
 }
 
+/* ヘッダー */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid transparent;
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
 
+/* スクロール後だけ薄いガラス感を付与 */
+.site-header.scrolled {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
 
+/* ナビゲーションのアクティブ表示（微細な下線） */
+.nav a.active {
+    position: relative;
+}
 
+.nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: currentColor;
+    opacity: .85;
+}
+
+/* =====================
+   Hero (shared + home-specific)
+   ===================== */
+/* ===== Hero ===== */
+/* タイトル：柔らかいセリフ体で余白感を出す */
+.hero-title {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 600;
+    font-size: clamp(24px, 3.6vw, 34px);
+    line-height: 1.35;
+    letter-spacing: .02em;
+    font-feature-settings: "palt" 1, "kern" 1;
+    font-style: oblique 8deg;
+    font-synthesis: style;
+}
+
+/* リード：読みやすさ重視のサンセリフ */
+.hero-lead {
+    font-family: "Noto Serif JP", serif;
+    font-weight: 400;
+    font-size: clamp(15px, 2.1vw, 18px);
+    line-height: 1.9;
+    letter-spacing: .01em;
+    color: var(--muted);
+    font-feature-settings: "palt" 1, "kern" 1;
+    font-style: oblique 8deg;
+    font-synthesis: style;
+}
+
+/* 横幅が広いページで行が伸びすぎないように */
+.hero .hero-inner,
+.hero .container {
+    max-width: 42ch;
+}
+
+/* Homepage hero typography overrides */
+.page-home .hero-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+
+.page-home .hero-lead {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, .92);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+}
+
+/* --- Hero scroll-out animation (title to left, lead to right) --- */
+.page-home .hero-title,
+.page-home .hero-lead {
+    will-change: transform, opacity;
+    transform: translateX(0);
+    transition: transform 0s, opacity 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page-home .hero-title,
+    .page-home .hero-lead {
+        transition: none;
+    }
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* =====================
+   HOMEPAGE ONLY: Background & advanced hero
+   ===================== */
+body.page-home {
+    background: url('../assets/images/sample-04.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding-top: 64px;
+    /* ヘッダー分 */
+}
+
+/* --- Hero (overlay + fade) --- */
+.page-home .hero {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    min-height: 100vh;
+    display: grid;
+    align-items: center;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+.page-home .hero-inner {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    max-width: 880px;
+    width: min(92vw, 880px);
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    animation: heroFadeIn 1.2s ease-out;
+    pointer-events: none;
+}
+
+.page-home .hero-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.page-home .viewport-fader {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Seamless transition: overlap next section slightly under the hero */
+.stack.seamless {
+    position: relative;
+    margin-top: 0;
+    padding-top: 24px;
+}
+
+/* optional soft top shadow so the cards feel anchored */
+/* (kept comment: Removed .stack.seamless::before rule) */
+
+/* =====================
+   Section-cards
+   ===================== */
 /* ===== Section title readability (chip-like badge) ===== */
 .section-cards {
     display: inline-block;
@@ -110,7 +262,7 @@
 }
 
 /* =====================
-   SHARED: Cards
+   Cards
    ===================== */
 /* ===== Cards ===== */
 .card {
@@ -204,38 +356,9 @@
 }
 
 /* =====================
-   HOMEPAGE ONLY: Background & advanced hero
+   News (including background overlays)
    ===================== */
-body.page-home {
-    background: url('../assets/images/sample-04.jpg') no-repeat center center fixed;
-    background-size: cover;
-    padding-top: 64px;
-    /* ヘッダー分 */
-}
-
-/* --- Hero (overlay + fade) --- */
-.page-home .hero {
-    position: relative;
-    text-align: center;
-    color: #fff;
-    min-height: 100vh;
-    display: grid;
-    align-items: center;
-    padding: 0 20px;
-    overflow: hidden;
-}
-
-.page-home .hero-overlay {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
-    backdrop-filter: blur(4px);
-    z-index: 0;
-    pointer-events: none;
-}
-
 /* Overlay for pages without hero (news/about) */
-
 .page-news::before {
     content: "";
     position: fixed;
@@ -291,52 +414,6 @@ body.page-home {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.page-home .viewport-fader {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* ヘッダー */
-.site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid transparent;
-    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
-
-/* スクロール後だけ薄いガラス感を付与 */
-.site-header.scrolled {
-    background: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* コンテンツはオーバーレイの上で表示 */
-main {
-    position: relative;
-    z-index: 2;
-}
-
-.site-footer {
-    position: relative;
-    z-index: 2;
-}
-
 /* Sticky footer only for news */
 .page-news main {
     padding-bottom: var(--footer-h);
@@ -355,96 +432,173 @@ main {
     border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.page-home:not(.page-news) .site-footer {
+/* News List (shared header/background) */
+.news-wrap {
+    padding: 48px 0 80px;
+}
+
+.news-wrap .section-title {
+    text-align: center;
+    font-size: clamp(22px, 3.2vw, 28px);
+    margin: 0 0 24px;
+}
+
+.news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.news-item {
+    display: grid;
+    grid-template-columns: 110px 96px 1fr;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+.news-date {
+    color: #6b7280;
+    font-variant-numeric: tabular-nums;
+}
+
+.news-cat {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    color: #fff;
+}
+
+.news-cat.is-news {
+    background: #2563eb;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, .28);
+}
+
+.news-cat.is-event {
+    background: #f97316;
+    box-shadow: 0 6px 16px rgba(249, 115, 22, .28);
+}
+
+.news-cat.is-seminar {
+    background: #10b981;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, .26);
+}
+
+.news-cat.is-case {
+    background: #ef4444;
+    box-shadow: 0 6px 16px rgba(239, 68, 68, .28);
+}
+
+.news-title {
+    color: #1f2937;
+    text-decoration: none;
+    line-height: 1.5;
+}
+
+/* =====================
+   About page
+   ===================== */
+/* =====================
+   About page (fix header/footer layout to match news)
+   ===================== */
+/* 背景（newsと同じトーン） */
+body.page-about {
+    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* 上下ぼかしオーバーレイ */
+.page-about::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.page-about main.about-wrap {
+    position: relative;
+    z-index: 5;
+}
+
+/* header/footer の透明度・色味を news と統一 */
+.page-about .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
     background: rgba(255, 255, 255, 0.65);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* ナビゲーションのアクティブ表示（微細な下線） */
-.nav a.active {
-    position: relative;
-}
-
-.nav a.active::after {
-    content: "";
-    position: absolute;
+.page-about .site-footer {
+    position: fixed;
     left: 0;
     right: 0;
-    bottom: -6px;
-    height: 2px;
-    background: currentColor;
-    opacity: .85;
+    bottom: 0;
+    z-index: 5;
+    height: var(--footer-h, 80px);
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* Homepage hero typography overrides */
-.page-home .hero-title {
-    font-size: clamp(28px, 4vw, 44px);
-    font-weight: 700;
-    margin-bottom: 24px;
-    line-height: 1.4;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
-}
-
-.page-home .hero-lead {
-    font-size: clamp(16px, 2vw, 20px);
-    line-height: 1.8;
-    color: rgba(255, 255, 255, .92);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-}
-
-/* --- Hero scroll-out animation (title to left, lead to right) --- */
-.page-home .hero-title,
-.page-home .hero-lead {
-    will-change: transform, opacity;
-    transform: translateX(0);
-    transition: transform 0s, opacity 0s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .page-home .hero-title,
-    .page-home .hero-lead {
-        transition: none;
-    }
-}
-
-@keyframes heroFadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.page-home .hero-inner {
+/* footer固定 */
+.page-about .site-footer {
     position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    max-width: 880px;
-    width: min(92vw, 880px);
-    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    height: var(--footer-h);
+}
+
+/* Add padding so content doesn't overlap header/footer */
+.page-about main.about-wrap {
+    margin-top: 100px;
+    margin-bottom: 140px;
+    padding-top: 0px;
+}
+
+.about-images {
+    list-style: none;
     padding: 0;
-    text-align: center;
-    animation: heroFadeIn 1.2s ease-out;
-    pointer-events: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
 }
 
-/* Seamless transition: overlap next section slightly under the hero */
-.stack.seamless {
-    position: relative;
-    margin-top: 0;
-    padding-top: 24px;
+.about-images img {
+    width: min(92vw, 960px);
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
-
-/* optional soft top shadow so the cards feel anchored */
-/* (kept comment: Removed .stack.seamless::before rule) */
 
 /* =====================
    Modal (mode selector)
@@ -555,79 +709,6 @@ main {
 }
 
 /* =====================
-   News List (shared header/background)
-   ===================== */
-.news-wrap {
-    padding: 48px 0 80px;
-}
-
-.news-wrap .section-title {
-    text-align: center;
-    font-size: clamp(22px, 3.2vw, 28px);
-    margin: 0 0 24px;
-}
-
-.news-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.news-item {
-    display: grid;
-    grid-template-columns: 110px 96px 1fr;
-    align-items: center;
-    gap: 18px;
-    padding: 14px 4px;
-    border-bottom: 1px solid rgba(0, 0, 0, .08);
-}
-
-.news-date {
-    color: #6b7280;
-    font-variant-numeric: tabular-nums;
-}
-
-.news-cat {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 72px;
-    height: 26px;
-    padding: 0 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .02em;
-    color: #fff;
-}
-
-.news-cat.is-news {
-    background: #2563eb;
-    box-shadow: 0 6px 16px rgba(37, 99, 235, .28);
-}
-
-.news-cat.is-event {
-    background: #f97316;
-    box-shadow: 0 6px 16px rgba(249, 115, 22, .28);
-}
-
-.news-cat.is-seminar {
-    background: #10b981;
-    box-shadow: 0 6px 16px rgba(16, 185, 129, .26);
-}
-
-.news-cat.is-case {
-    background: #ef4444;
-    box-shadow: 0 6px 16px rgba(239, 68, 68, .28);
-}
-
-.news-title {
-    color: #1f2937;
-    text-decoration: none;
-    line-height: 1.5;
-}
-
-/* =====================
    Responsive tweaks
    ===================== */
 /* ===== Responsive（ホームのカードだけ） ===== */
@@ -667,116 +748,17 @@ main {
 }
 
 /* =====================
-   About page
+   Footer (shared)
    ===================== */
-/* =====================
-   About page (fix header/footer layout to match news)
-   ===================== */
+.site-footer {
+    position: relative;
+    z-index: 2;
+}
 
-/* Fix header positioning and color */
-.page-about .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    z-index: 10;
-    display: flex;
-    align-items: center;
+.page-home:not(.page-news) .site-footer {
     background: rgba(255, 255, 255, 0.65);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* Fix footer style and position */
-.page-about .site-footer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 5;
-    height: var(--footer-h, 80px);
-    background: rgba(255, 255, 255, 0.85);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-
-.about-images {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-}
-
-.about-images img {
-    width: min(92vw, 960px);
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-}
-
-/* =====================
-   About page: unified visuals with news page
-   ===================== */
-
-/* 背景（newsと同じトーン） */
-body.page-about {
-    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
-    background-size: cover;
-}
-
-/* 上下ぼかしオーバーレイ */
-.page-about::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, .25) 40%, rgba(0, 0, 0, .65) 100%);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* header/footer の透明度・色味を news と統一 */
-.page-about .site-header {
-    background: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.page-about .site-footer {
-    background: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* footer固定 */
-.page-about .site-footer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 5;
-    height: var(--footer-h);
-}
-
-/* Add padding so content doesn't overlap header/footer */
-.page-about main.about-wrap {
-    margin-top: 100px;
-    margin-bottom: 140px;
-    padding-top: 0px;
 }
