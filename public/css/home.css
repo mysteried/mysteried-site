@@ -15,7 +15,7 @@
    ===================== */
 .brand {
     /* font-family: "Noto Serif JP", serif; */
-    font-weight: 700;
+    /* font-weight: 700; */
     letter-spacing: .05em;
     font-size: 20px;
     /* text-shadow: 0 1px 4px rgba(0, 0, 0, .15); */
@@ -56,6 +56,12 @@
     letter-spacing: .02em;
     text-decoration: none;
     color: inherit;
+}
+
+/* ヘッダーのリンクにホバー時の青色を付与 */
+.header-inner .nav a:hover {
+    color: #2563eb;
+    transition: color 0.2s ease;
 }
 
 /* ヘッダー */
@@ -261,6 +267,7 @@ body.page-home {
     box-shadow: 0 6px 18px rgba(0, 0, 0, .10);
 }
 
+
 /* =====================
    Cards
    ===================== */
@@ -459,7 +466,7 @@ body.page-home {
 }
 
 .news-date {
-    color: #6b7280;
+    color: black;
     font-variant-numeric: tabular-nums;
 }
 
@@ -511,7 +518,7 @@ body.page-home {
    ===================== */
 /* 背景（newsと同じトーン） */
 body.page-about {
-    background: url('../assets/images/sample-03.jpg') no-repeat center center fixed;
+    background: url('../assets/images/sample-04.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
