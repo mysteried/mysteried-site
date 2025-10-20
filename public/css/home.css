@@ -46,14 +46,49 @@
 
 
 .brand {
-    font-family: "Noto Serif JP", serif;
+    /* font-family: "Noto Serif JP", serif; */
     font-weight: 700;
     letter-spacing: .05em;
     font-size: 20px;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+    /* text-shadow: 0 1px 4px rgba(0, 0, 0, .15); */
 }
 
+/* ヘッダー内の配置（左ロゴ・右ナビ） */
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    /* ← 左右に分ける */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    /* 任意、中央寄せを防ぐ */
+    margin: 0 auto;
+    padding: 0 40px;
+    /* 端の余白 */
+}
 
+/* brandを左側に固定 */
+.header-inner .brand {
+    margin-right: auto;
+    /* これで左寄せを明確に */
+}
+
+/* navを右側に寄せる */
+.header-inner .nav {
+    display: flex;
+    gap: 10px;
+    /* メニュー間の間隔 */
+    margin-left: auto;
+    /* 右寄せ */
+}
+
+.header-inner .nav a {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-decoration: none;
+    color: inherit;
+}
 
 
 
@@ -314,7 +349,7 @@ main {
     bottom: 0;
     z-index: 5;
     height: var(--footer-h);
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.65);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-top: 1px solid rgba(0, 0, 0, 0.06);
@@ -720,10 +755,8 @@ body.page-about {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-
-
 .page-about .site-footer {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.65);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
