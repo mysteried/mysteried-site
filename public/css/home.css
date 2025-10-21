@@ -185,7 +185,7 @@
    HOMEPAGE ONLY: Background & advanced hero
    ===================== */
 body.page-home {
-    background: url('../assets/images/sample-04.jpg') no-repeat center center fixed;
+    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center fixed;
     background-size: cover;
     padding-top: 64px;
     /* ヘッダー分 */
@@ -523,7 +523,7 @@ body.page-home {
    ===================== */
 /* 背景（newsと同じトーン） */
 body.page-about {
-    background: url('../assets/images/sample-04.jpg') no-repeat center center fixed;
+    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center fixed;
     background-size: cover;
 }
 
