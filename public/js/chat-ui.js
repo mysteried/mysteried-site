@@ -98,6 +98,14 @@ export function mountChatUI(STAGE) {
         img.alt = role === "hina" ? "ヒナタ" : "マスオ";
         avatar.appendChild(img);
 
+        //背景
+        const bg = STAGE.chat?.avatarBg;
+        if (bg) {
+            const abs = new URL(bg, location.href).pathname; // 相対→絶対
+            avatar.style.setProperty('--avatar-bg', `url("${abs}")`);
+            avatar.classList.add('has-bg');
+        }
+
         // 吹き出し
         const bubble = document.createElement("div");
         bubble.className = "bubble";

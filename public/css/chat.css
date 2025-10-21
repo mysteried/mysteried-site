@@ -28,6 +28,7 @@ body.page-story main {
     /* メッセージ間の距離（演出に効く） */
 }
 
+
 /* フェードイン/アウト（IntersectionObserver で .reveal を付け外し） */
 .msg {
     display: flex;
@@ -195,6 +196,26 @@ body.page-story main {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.chat .avatar {
+    position: relative;
+    z-index: 1;
+}
+
+.chat .avatar.has-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--avatar-bg) center/cover no-repeat;
+    border-radius: 10px;
+    z-index: 0;
+}
+
+.chat .avatar img {
+    position: relative;
+    z-index: 1;
+    display: block;
 }
 
 /* スマホ調整 */
