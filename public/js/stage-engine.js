@@ -233,7 +233,6 @@ function handlePos(p, isMock) {
     const d = distanceMeters({ lat: latitude, lng: longitude }, { lat: STAGE.target.lat, lng: STAGE.target.lng });
     const inRange = d <= STAGE.target.radius_m; geoOK = inRange;
     if (inRange) {
-        try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
         geoResult.style.color = '#107c10';
         geoResult.textContent = `OK（距離 ${meters(d)} / 精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
         // 成功時は ops の既定文言に任せる（必要なら下の1行のコメントを外して使用）
@@ -250,18 +249,33 @@ function handlePos(p, isMock) {
 function initGeoMode() {
     const alreadyCleared = localStorage.getItem(CLEARED_KEY) === '1';
     if (alreadyCleared) {
+        // 再開時のみ固定メッセージ表示
         applyClearedGeoState();
     }
+
     geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
     nextBtn && nextBtn.addEventListener('click', () => {
-        if (geoOK) {
-            setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
-            setTimeout(() => { window.location.href = STAGE.nextUrl; }, 800);
-        } else {
+        if (!geoOK) {
             setMsg('まだ条件を満たしていません（まず「位置を確認」）', 'error');
+            return;
         }
+
+        const isFirst = localStorage.getItem(CLEARED_KEY) !== '1';
+        const delay = isFirst ? 3000 : 0; // 初回は3秒見せる／再開は即
+
+        if (isFirst) {
+            setMsg('到着！次の謎へ進めます。', 'success', delay);
+            try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
+        } else {
+            setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
+        }
+
+        nextBtn.disabled = true; // 二度押し防止
+        setTimeout(() => { window.location.href = STAGE.nextUrl; }, delay);
     });
 }
+
+
 
 // ====== 初期化：ARモード ======
 function initArMode() {
@@ -284,7 +298,7 @@ function initArMode() {
                 // クリア記録
                 try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
                 setMsg('正解！次の謎へ進みます…', 'success');
-                setTimeout(() => { window.location.href = STAGE.nextUrl; }, 600);
+                setTimeout(() => { window.location.href = STAGE.nextUrl; }, 3000);
             } else {
                 setMsg('不正解。もう一度周囲を調べてみよう。', 'error');
             }
