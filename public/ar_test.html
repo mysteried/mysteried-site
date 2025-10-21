@@ -277,7 +277,7 @@
             if (resumeBtn) {
                 resumeBtn.addEventListener('click', () => {
                     hideOverlay(); // 単純にオーバーレイを閉じるだけ
-                    if (hint) hint.textContent = 'ARカメラ起動';
+                    if (hint) hint.textContent = 'ARカメラテスト';
                 });
             }
 
@@ -298,21 +298,21 @@
                     setTimeout(() => {
                         showOverlay({
                             title: 'ターゲットを発見',
-                            message: 'メモの対象を発見。\n彼は野球が好きなのだろうか？',
-                            code: 'REWARD-0416'
+                            message: 'ARカメラテストは成功です。謎解きを開始しましょう。',
+                            code: ''
                         });
                     }, 1000); // 1秒後に表示
                 });
                 anchorEl.addEventListener('targetLost', () => {
                     console.log('[MindAR] targetLost');
-                    if (hint) hint.textContent = 'ARカメラ起動';
+                    if (hint) hint.textContent = 'ARカメラテスト';
                 });
             }
 
 
             sceneEl.addEventListener('arReady', () => {
                 console.log('[MindAR] arReady');
-                hint.textContent = 'ARカメラ起動';
+                hint.textContent = 'ARカメラテスト';
             });
 
             sceneEl.addEventListener('arError', (e) => {
