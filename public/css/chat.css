@@ -15,7 +15,7 @@ body.page-story main {
     -webkit-overflow-scrolling: touch;
 }
 
-/* ===== 会話レイアウト ===== */
+/* ===== コンテナ ===== */
 .chat {
     max-width: 780px;
     margin: 24px auto 120px;
@@ -26,10 +26,10 @@ body.page-story main {
     flex-direction: column;
     gap: 110px;
     /* メッセージ間の距離（演出に効く） */
+    font-size: clamp(18px, 3.3vw, 22px);
 }
 
-
-/* フェードイン/アウト（IntersectionObserver で .reveal を付け外し） */
+/* ===== 要素 ===== */
 .msg {
     display: flex;
     align-items: flex-end;
@@ -40,35 +40,6 @@ body.page-story main {
     will-change: opacity, transform;
 }
 
-.msg.reveal {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* 中央帯に入ったメッセージを強調（.active は JS で付与） */
-.msg .bubble {
-    transform: scale(1);
-    transform-origin: center center;
-    /* 既定。左右ごとの指定で上書き */
-    transition: transform 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
-    will-change: transform;
-}
-
-.msg.active .bubble {
-    transform: scale(1.10);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    z-index: 2;
-}
-
-.msg.masu .bubble {
-    transform-origin: left center;
-}
-
-.msg.hina .bubble {
-    transform-origin: right center;
-}
-
-/* アバター（角丸の正方形） */
 .msg .avatar {
     flex: 0 0 120px;
     width: 120px;
@@ -86,13 +57,12 @@ body.page-story main {
     object-fit: cover;
 }
 
-/* 吹き出し */
 .bubble {
     max-width: min(72%, 560px);
     padding: 10px 12px;
     border-radius: 14px;
     line-height: 1.7;
-    font-size: 25px;
+    font-size: 1em;
     position: relative;
     box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
     background: #fff;
@@ -101,6 +71,27 @@ body.page-story main {
     /* \n を改行として表示 */
 }
 
+.chat .avatar {
+    position: relative;
+    z-index: 1;
+}
+
+.chat .avatar.has-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--avatar-bg) center/cover no-repeat;
+    border-radius: 12px;
+    z-index: 0;
+}
+
+.chat .avatar img {
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+/* ===== バリエーション ===== */
 /* 左（マスオ） */
 .msg.masu {
     flex-direction: row;
@@ -124,6 +115,10 @@ body.page-story main {
     border-left: 1px solid rgba(0, 0, 0, .08);
     border-bottom: 1px solid rgba(0, 0, 0, .08);
     transform: rotate(45deg);
+}
+
+.msg.masu .bubble {
+    transform-origin: left center;
 }
 
 /* 右（ヒナタ） */
@@ -152,24 +147,17 @@ body.page-story main {
     transform: rotate(-45deg);
 }
 
+.msg.hina .bubble {
+    transform-origin: right center;
+}
+
+/* ===== 追加要素 ===== */
 /* note-paper を会話の途中に挿入する場合の微調整 */
 /* 「会話の途中に、紙の謎が自然に登場する」ための微調整ブロック */
 .chat .note-paper {
     width: min(560px, 92vw);
     margin: 12px auto 20px;
 }
-
-.chat {
-    font-size: clamp(18px, 3.3vw, 22px);
-}
-
-/* 末尾の余白：最後の吹き出しが中央帯まで入れるため　※chatは常にnoteで終了するため一度コメントアウト　　 */
-/* 40〜60vhに好みで調整 */
-/* .chat::after {
-    content: "";
-    display: block;
-    height: 5vh;
-} */
 
 /* chatに画像を挿入した場合の対応 */
 .chat-image-block {
@@ -191,34 +179,33 @@ body.page-story main {
     /* 子要素(.chat-image-block)を中央寄せ */
 }
 
-/* 保険：画像自体も中央に */
 .msg.image .chat-image-block img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
-.chat .avatar {
-    position: relative;
-    z-index: 1;
+/* ===== アニメ/ユーティリティ ===== */
+/* フェードイン/アウト（IntersectionObserver で .reveal を付け外し） */
+.msg.reveal {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.chat .avatar.has-bg::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--avatar-bg) center/cover no-repeat;
-    border-radius: 12px;
-    z-index: 0;
+.msg .bubble {
+    transform: scale(1);
+    transform-origin: center center;
+    /* 既定。左右ごとの指定で上書き */
+    transition: transform 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+    will-change: transform;
 }
 
-.chat .avatar img {
-    position: relative;
-    z-index: 1;
-    display: block;
+.msg.active .bubble {
+    transform: scale(1.10);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    z-index: 2;
 }
 
-/* スマホ調整 */
+/* ===== レスポンシブ ===== */
 @media (max-width: 480px) {
     .msg .avatar {
         width: 36px;

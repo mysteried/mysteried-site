@@ -3,7 +3,7 @@ export const STAGE = {
     // ===== 基本 =====
     id: "story00_stage01",
     title: "辿り着いた先",
-    mode: "ar",                 // "ar" or "geo"
+    mode: "geo",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
@@ -30,7 +30,10 @@ export const STAGE = {
 
     /*背景画像を指定　※開発時は木目 */
     background: {
-        image: "../../../../assets/images/story-background/wooddesk.webp", // 相対 or 絶対OK
+        image: "../../../../assets/images/story-background/room.webp",
+        // // 汎用背景
+        // image: "../../assets/images/background/higashi-bokashi.webp",
+        // エピソード指定背景
         size: "cover",       // 任意: contain, auto など
         position: "center",  // 任意: 50% 35% など
     },
@@ -42,7 +45,7 @@ export const STAGE = {
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
     chat: {
-        avatarBg: "../../../../assets/images/avatars/bg-blue.webp",
+        avatarBg: "../../../../assets/images/avatars/bg-yellow.webp",
         avatars: {
             // 画像パスは /public からの相対…ではなく、stage.html から見た相対でもOK
             // ここでは stage.html からの相対で書いています
