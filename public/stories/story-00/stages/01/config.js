@@ -1,9 +1,9 @@
 // 各ステージ固有の設定だけを編集してください
 export const STAGE = {
     // ===== 基本 =====
-    id: "story00_stage01",
+    id: "story00_stage01",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける
     title: "辿り着いた先",
-    mode: "ar",                 // "ar" or "geo"
+    mode: "geo",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",

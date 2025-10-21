@@ -3,8 +3,11 @@ const currentDir = window.location.pathname.split("/").slice(0, -1).join("/");
 const configPath = `${currentDir}/config.js`;
 
 const { STAGE } = await import(configPath);
-// ===== 進捗キー（このステージをクリア済みか判定） =====
-const CLEARED_KEY = `cleared:${STAGE.id}`;
+// ===== 進捗キー（このステージをクリア済みか判定）   🔥本番運用系
+// const CLEARED_KEY = `cleared:${STAGE.id}`;
+
+// 開発中：毎回違うキーにして読まれない＆残らない（= 進捗保存オフ）　　🔥開発系　クリアのユーザー端末保存、本番はこっちをオフにする
+const CLEARED_KEY = `dev:${STAGE.id}:${Date.now()}`;
 
 // ルート（/public）を推定して共通アセットにアクセス
 
@@ -252,7 +255,7 @@ function initGeoMode() {
     geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
     nextBtn && nextBtn.addEventListener('click', () => {
         if (geoOK) {
-            setMsg('到着！次の謎へ進みます…', 'success');
+            setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
             setTimeout(() => { window.location.href = STAGE.nextUrl; }, 800);
         } else {
             setMsg('まだ条件を満たしていません（まず「位置を確認」）', 'error');
