@@ -216,7 +216,7 @@
     </div>
 
     <!-- a-sceneはA-Frameのルート用要素　ARの土台部分をここで記述している この中にlightやカメラをセットして設定していく⇨子要素のこと-->
-    <!-- mindar-imageがAR画像認識を有効化するための設定,imageTargetSrc⇨ここでtargets.mindを指定/filter系　検出の揺れを調整,数値が小さいほど反応は早いがノイジーになる/autostart true シーン生成と同時に検出を始める -->
+    <!-- 🔥 mindar-imageがAR画像認識を有効化するための設定,imageTargetSrc⇨ここでtargets.mindを指定/filter系　検出の揺れを調整,数値が小さいほど反応は早いがノイジーになる/autostart true シーン生成と同時に検出を始める -->
     <!-- embedded　<a-scene> をページ全体フルスクリーンにせず、埋め込み表示にする。　color-spaceと繋がっているように見えるが全く別の設定、htmlはスペースをいれるだけなのでこうなる -->
     <!-- color-space　色の扱いをsRGB基準にする（最近の標準的な色空間） -->
     <!-- rendererはwebGLキャンバスの設定（つまり映像やdivのパーツはスルーしていくれる）/3dオブジェクトの色味やライティング設定 "colorManagement: true, physicallyCorrectLights: true,/ギザギザをなめらかに antialias: true,/キャンバス背景を透明に（オブジェクトは対象外） alpha: true" -->
@@ -225,15 +225,21 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ./assets/targets/targets-1.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ./assets/targets/targets-1000yen.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
 
         <!-- mindar-image-targetはMindARでアンカーを決めるものでここでは.mindファイルの0番目が検出された際に有効になるアンカーであり、子要素はこのアンカーを基準に配置などがされていく -->
-        <!-- これによりターゲットごとに演出を変えることができる　その際にidはanchor1,anchor2,3,・・・などユニーク化は必要 -->
-        <a-entity mindar-image-target="targetIndex: 0" id="anchor">
-        </a-entity>
+        <!--🔥 これによりターゲットごとに演出を変えることができる　その際にidはanchor1,anchor2,3,・・・などユニーク化は必要 -->
+        <!-- <a-entity mindar-image-target="targetIndex: 0" id="anchor">
+        </a-entity> -->
+        <!-- 新札　今回のターゲットには複数詰めてみた -->
+        <a-entity mindar-image-target="targetIndex: 0" id="anchor0"></a-entity>
+        <!-- 旧札 -->
+        <a-entity mindar-image-target="targetIndex: 1" id="anchor1"></a-entity>
+
+
         <!-- A-Frame の カメラコンポーネント,「ここからシーンを覗く」視点を作る そのため座標は000がいい/look-controls="enabled: false"デフォルトだとスマホの傾きでカメラが動いてしまいARが破綻する/near="0.01" far="2000"カメラが描画できる最小と最大の距離 この範囲外は描画不可 -->
         <a-camera position="0 0 0" look-controls="enabled: false" near="0.01" far="2000"></a-camera>
     </a-scene>
@@ -285,29 +291,53 @@
             if (!sceneEl) return;
 
             // MindARのターゲットエンティティ（<a-entity mindar-image-target="..." id="anchor">）を取得。
-            const anchorEl = document.getElementById('anchor');
-            // ここから先は「ターゲットが見えた/消えた」イベントを扱うフェーズ。
-            if (anchorEl) {
-                // ターゲットを見つけたら着火
-                anchorEl.addEventListener('targetFound', () => {
-                    // これはデバック用
-                    console.log('[MindAR] targetFound');
+            // const anchorEl = document.getElementById('anchor');
+            // // ここから先は「ターゲットが見えた/消えた」イベントを扱うフェーズ。
+            // if (anchorEl) {
+            //     // ターゲットを見つけたら着火
+            //     anchorEl.addEventListener('targetFound', () => {
+            //         // これはデバック用
+            //         console.log('[MindAR] targetFound');
 
+            //         if (hint) hint.textContent = 'ターゲット検出！';
+            //         // // 🔥ここは毎回変更をする
+            //         setTimeout(() => {
+            //             showOverlay({
+            //                 title: 'ターゲットを発見',
+            //                 message: 'ARカメラテストは成功です。謎解きを開始しましょう。',
+            //                 code: ''
+            //             });
+            //         }, 1000); // 1秒後に表示
+            //     });
+            //     anchorEl.addEventListener('targetLost', () => {
+            //         console.log('[MindAR] targetLost');
+            //         if (hint) hint.textContent = 'ARカメラテスト';
+            //     });
+            // }
+
+            //🔥 これは複数のアンカーを同じ挙動にしている すべてのアンカーを配列として取得
+            const anchors = [document.getElementById('anchor0'), document.getElementById('anchor1')];
+
+            anchors.forEach((anchorEl) => {
+                if (!anchorEl) return;
+
+                anchorEl.addEventListener('targetFound', () => {
+                    console.log('[MindAR] targetFound (multi)');
                     if (hint) hint.textContent = 'ターゲット検出！';
-                    // // 🔥ここは毎回変更をする
                     setTimeout(() => {
                         showOverlay({
                             title: 'ターゲットを発見',
                             message: 'ARカメラテストは成功です。謎解きを開始しましょう。',
                             code: ''
                         });
-                    }, 1000); // 1秒後に表示
+                    }, 1000);
                 });
+
                 anchorEl.addEventListener('targetLost', () => {
-                    console.log('[MindAR] targetLost');
+                    console.log('[MindAR] targetLost (multi)');
                     if (hint) hint.textContent = 'ARカメラテスト';
                 });
-            }
+            });
 
 
             sceneEl.addEventListener('arReady', () => {
