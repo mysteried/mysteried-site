@@ -97,7 +97,7 @@
         /* 左上の縦積みボタン（ライト／戻る） */
         .gate-stack {
             position: fixed;
-            top: calc(env(safe-area-inset-top, 0px) + 72px);
+            top: calc(env(safe-area-inset-top, 0px) + 12px);
             left: 12px;
             display: flex;
             flex-direction: column;
@@ -122,17 +122,18 @@
             z-index: 20;
         }
 
+
         .overlay.hidden {
             display: none !important;
         }
 
         .overlay-panel {
             width: min(92vw, 520px);
-            background: rgba(20, 20, 20, 0.92);
-            color: #fff;
             border-radius: 14px;
             padding: 18px 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+            background: linear-gradient(135deg, #ff9800 0%, #f44336 100%);
+            color: #fff;
+            box-shadow: 0 0 40px rgba(255, 100, 0, 0.5);
             backdrop-filter: blur(6px);
         }
 
@@ -154,13 +155,23 @@
             font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
             font-size: 16px;
             line-height: 1.4;
-            background: #111;
-            border: 1px solid #2a2a2a;
             padding: 10px 12px;
             border-radius: 10px;
             word-break: break-all;
             margin-bottom: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 200, 100, 0.7);
+            color: #ffd180;
+            text-shadow: 0 0 6px rgba(255, 140, 0, 0.7);
         }
+
+        /* こっちの配色もなかなか良かったのでストック */
+        /* .overlay-reward {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 152, 0, 0.8);
+            color: #d84315;
+            font-weight: 700;
+        } */
 
         .overlay-btn {
             background: #fff;
@@ -183,9 +194,10 @@
 </head>
 
 <body>
-    <!-- 🔥毎回webARの名前を作る？？ -->
-    <div class="ui badge">WebAR MVP</div>
-    <div id="hint" class="hint">ターゲットにカメラを向けてください</div>
+    <!-- 毎回webARの名前を作る？？ -->
+    <div class="ui badge">ミステリード</div>
+    <!-- これがカメラの上部にデフォルトメッセージ -->
+    <div id="hint" class="hint"></div>
     <!-- これで2つを縦に並べて配置 -->
     <div class="ui gate-stack">
         <button id="torchBtn" class="btn">ライトON</button>
@@ -195,10 +207,10 @@
     <div id="freezeOverlay" class="overlay hidden">
         <div class="overlay-panel">
             <div id="overlayTitle" class="overlay-title">ヒント</div>
-            <div id="overlayMessage" class="overlay-message">次へのヒントを表示します</div>
-            <div id="overlayReward" class="overlay-reward hidden">報酬コード: <span id="overlayCode">XXXX-0000</span></div>
+            <div id="overlayMessage" class="overlay-message">ターゲットを発見</div>
+            <div id="overlayReward" class="overlay-reward hidden">パスワード: <span id="overlayCode">XXXX-0000</span></div>
             <div class="overlay-actions">
-                <button id="resumeBtn" class="btn overlay-btn">戻る</button>
+                <button id="resumeBtn" class="btn overlay-btn">閉じる</button>
             </div>
         </div>
     </div>
@@ -265,7 +277,7 @@
             if (resumeBtn) {
                 resumeBtn.addEventListener('click', () => {
                     hideOverlay(); // 単純にオーバーレイを閉じるだけ
-                    if (hint) hint.textContent = 'カメラ再開。ターゲットにかざしてください';
+                    if (hint) hint.textContent = 'ARカメラ起動';
                 });
             }
 
@@ -280,24 +292,27 @@
                 anchorEl.addEventListener('targetFound', () => {
                     // これはデバック用
                     console.log('[MindAR] targetFound');
-                    if (hint) hint.textContent = 'ターゲット検出！ヒントを表示します…';
-                    // 🔥ここは毎回変更をする
-                    showOverlay({
-                        title: '次へのヒント',
-                        message: '境内左手の灯籠の裏面に注目してみよう。\n刻印の数字が鍵になりそうだ。',
-                        code: 'REWARD-0416'
-                    });
+
+                    if (hint) hint.textContent = 'ターゲット検出！';
+                    // // 🔥ここは毎回変更をする
+                    setTimeout(() => {
+                        showOverlay({
+                            title: 'ターゲットを発見',
+                            message: 'メモの対象を発見。\n彼は野球が好きなのだろうか？',
+                            code: 'REWARD-0416'
+                        });
+                    }, 1000); // 1秒後に表示
                 });
                 anchorEl.addEventListener('targetLost', () => {
                     console.log('[MindAR] targetLost');
-                    if (hint) hint.textContent = '見失いました。もう一度ターゲットにかざしてください。';
+                    if (hint) hint.textContent = 'ARカメラ起動';
                 });
             }
 
 
             sceneEl.addEventListener('arReady', () => {
                 console.log('[MindAR] arReady');
-                hint.textContent = 'カメラ起動OK。ターゲットにかざしてください（明るい場所推奨）';
+                hint.textContent = 'ARカメラ起動';
             });
 
             sceneEl.addEventListener('arError', (e) => {
@@ -344,7 +359,7 @@
             // 同階層のstage.htmlに戻る
             if (backBtn) {
                 backBtn.addEventListener('click', () => {
-                    // 同階層の stage.html へ戻る
+                    // 同階層の ホームへ戻る　🔥
                     window.location.href = './index.html';
                     // もしヒストリで戻したいだけなら↓でもOK
                     // history.back();
