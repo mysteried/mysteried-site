@@ -4,7 +4,7 @@ export const STAGE = {
     id: "story00_stage01",
     title: "辿り着いた先",
     mode: "ar",                 // "ar" or "geo"
-    variant: "chat",            // "plain" or "chat"
+    variant: "plain",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../02/stage.html?intro=1",
 
@@ -20,7 +20,7 @@ export const STAGE = {
         skippable: true,
         steps: [
             { type: "text", key: "text1", text: "書庫の奥に、\n鍵がある。", dur: 3600 },
-            { type: "image", key: "image1", src: "../../../../assets/images/sample-01.jpg", alt: "説明画像", dur: 1500 },
+            { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },
             { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
             { type: "text", key: "text2", text: "私は目を覚ました。\nすごくすごくさむさい\nここは一体どこなんだ", dur: 3600 }
         ]
@@ -30,14 +30,14 @@ export const STAGE = {
 
     /*背景画像を指定　※開発時は木目 */
     background: {
-        image: "../../../../assets/images/story-background/wooddesk2.jpg", // 相対 or 絶対OK
+        image: "../../../../assets/images/story-background/wooddesk.webp", // 相対 or 絶対OK
         size: "cover",       // 任意: contain, auto など
         position: "center",  // 任意: 50% 35% など
     },
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/sample-note_texture.webp",
+        background: "../../assets/images/notes/sample-note_texture.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用）=====
@@ -76,7 +76,7 @@ export const STAGE = {
             { who: "hina", face: "normal", text: "“フランスの1800年。世界を変えた一冊。”…本のことを指してそうですね。" },
             { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
             { who: "masu", face: "normal", text: "部屋から脱出・・・" },
-            { type: "image", src: "../../assets/images/pictures/sample-pictures.jpeg", alt: "ヒナタの昼食" },
+            { type: "image", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "ヒナタの昼食" },
             { who: "hina", face: "smile", text: "何か分かりました？？" },
             { type: "note" }
         ]
