@@ -83,7 +83,7 @@ let msgTimeout = null;
 // 既定メッセージを確定（config優先 → DOM 初期値 → 空）
 const defaultOpsText = (typeof STAGE.defaultMsg === 'string' && STAGE.defaultMsg.length > 0)
     ? STAGE.defaultMsg
-    : (opsMsg?.textContent ?? '');
+    : (opsMsg?.innerHTML ?? '');
 
 // configに既定文言があれば、読み込み時に反映
 if (opsMsg && typeof STAGE.defaultMsg === 'string' && STAGE.defaultMsg.length > 0) {
@@ -94,13 +94,13 @@ if (opsMsg && typeof STAGE.defaultMsg === 'string' && STAGE.defaultMsg.length > 
 
 function setMsg(text, type = 'info', duration = 4000) {
     if (!opsMsg) return;
-    opsMsg.textContent = text;
+    opsMsg.innerHTML = text;
     opsMsg.classList.remove('is-success', 'is-error', 'is-info');
     opsMsg.classList.add(type === 'success' ? 'is-success' : (type === 'error' ? 'is-error' : 'is-info'));
     if (msgTimeout) clearTimeout(msgTimeout);
     if (duration > 0) {
         msgTimeout = setTimeout(() => {
-            opsMsg.textContent = defaultOpsText;
+            opsMsg.innerHTML = defaultOpsText;
             opsMsg.classList.remove('is-success', 'is-error', 'is-info');
             opsMsg.classList.add('is-info');
         }, duration);
