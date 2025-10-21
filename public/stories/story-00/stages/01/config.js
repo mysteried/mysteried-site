@@ -40,7 +40,7 @@ export const STAGE = {
         background: "../../assets/images/notes/sample-note_texture.webp",
     },
 
-    // ===== 会話UI（variant: "chat" の時だけ使用）=====
+    // ===== 会話UI（variant: "chat" の時だけ使用　=====
     chat: {
         avatars: {
             // 画像パスは /public からの相対…ではなく、stage.html から見た相対でもOK
