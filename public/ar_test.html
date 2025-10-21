@@ -97,7 +97,7 @@
         /* 左上の縦積みボタン（ライト／戻る） */
         .gate-stack {
             position: fixed;
-            top: calc(env(safe-area-inset-top, 0px) + 12px);
+            top: calc(env(safe-area-inset-top, 0px) + 72px);
             left: 12px;
             display: flex;
             flex-direction: column;
@@ -183,10 +183,9 @@
 </head>
 
 <body>
-    <!-- 毎回webARの名前を作る？？ -->
-    <div class="ui badge">ミステリード</div>
-    <!-- これがカメラの上部にデフォルトメッセージ -->
-    <div id="hint" class="hint"></div>
+    <!-- 🔥毎回webARの名前を作る？？ -->
+    <div class="ui badge">WebAR MVP</div>
+    <div id="hint" class="hint">ターゲットにカメラを向けてください</div>
     <!-- これで2つを縦に並べて配置 -->
     <div class="ui gate-stack">
         <button id="torchBtn" class="btn">ライトON</button>
@@ -196,10 +195,10 @@
     <div id="freezeOverlay" class="overlay hidden">
         <div class="overlay-panel">
             <div id="overlayTitle" class="overlay-title">ヒント</div>
-            <div id="overlayMessage" class="overlay-message">ターゲットを発見</div>
-            <div id="overlayReward" class="overlay-reward hidden">パスワード: <span id="overlayCode">XXXX-0000</span></div>
+            <div id="overlayMessage" class="overlay-message">次へのヒントを表示します</div>
+            <div id="overlayReward" class="overlay-reward hidden">報酬コード: <span id="overlayCode">XXXX-0000</span></div>
             <div class="overlay-actions">
-                <button id="resumeBtn" class="btn overlay-btn">閉じる</button>
+                <button id="resumeBtn" class="btn overlay-btn">戻る</button>
             </div>
         </div>
     </div>
@@ -214,7 +213,7 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ../../assets/targets/targets-1.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ./assets/targets/targets-1.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
@@ -266,7 +265,7 @@
             if (resumeBtn) {
                 resumeBtn.addEventListener('click', () => {
                     hideOverlay(); // 単純にオーバーレイを閉じるだけ
-                    if (hint) hint.textContent = 'ARカメラ起動';
+                    if (hint) hint.textContent = 'カメラ再開。ターゲットにかざしてください';
                 });
             }
 
@@ -281,24 +280,24 @@
                 anchorEl.addEventListener('targetFound', () => {
                     // これはデバック用
                     console.log('[MindAR] targetFound');
-                    if (hint) hint.textContent = 'ターゲット検出';
+                    if (hint) hint.textContent = 'ターゲット検出！ヒントを表示します…';
                     // 🔥ここは毎回変更をする
                     showOverlay({
-                        title: 'ターゲットを発見',
-                        message: 'メモの対象を発見。\n彼は野球が好きなのだろうか？',
+                        title: '次へのヒント',
+                        message: '境内左手の灯籠の裏面に注目してみよう。\n刻印の数字が鍵になりそうだ。',
                         code: 'REWARD-0416'
                     });
                 });
                 anchorEl.addEventListener('targetLost', () => {
                     console.log('[MindAR] targetLost');
-                    if (hint) hint.textContent = 'ARカメラ起動';
+                    if (hint) hint.textContent = '見失いました。もう一度ターゲットにかざしてください。';
                 });
             }
 
 
             sceneEl.addEventListener('arReady', () => {
                 console.log('[MindAR] arReady');
-                hint.textContent = 'ARカメラ起動';
+                hint.textContent = 'カメラ起動OK。ターゲットにかざしてください（明るい場所推奨）';
             });
 
             sceneEl.addEventListener('arError', (e) => {
@@ -345,8 +344,8 @@
             // 同階層のstage.htmlに戻る
             if (backBtn) {
                 backBtn.addEventListener('click', () => {
-                    // 同階層の stage.html へ戻る　🔥
-                    window.location.href = './stage.html';
+                    // 同階層の stage.html へ戻る
+                    window.location.href = './index.html';
                     // もしヒストリで戻したいだけなら↓でもOK
                     // history.back();
                 });
