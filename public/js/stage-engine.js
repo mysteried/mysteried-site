@@ -1,7 +1,10 @@
 // ===== 動的に config.js を読み込む =====
 const currentDir = window.location.pathname.split("/").slice(0, -1).join("/");
 const configPath = `${currentDir}/config.js`;
+
 const { STAGE } = await import(configPath);
+// ===== 進捗キー（このステージをクリア済みか判定） =====
+const CLEARED_KEY = `cleared:${STAGE.id}`;
 
 // ルート（/public）を推定して共通アセットにアクセス
 
@@ -177,25 +180,17 @@ if (hintOverlay && hintBtn && hintCloseBtn) {
     document.addEventListener('keydown', handleKeydown);
 }
 
-// ====== AR モードの答え判定 ======
-if (STAGE.mode === 'ar' && nextBtn) {
-    nextBtn.addEventListener('click', () => {
-        const val = (answerInput?.value || '').trim();
-        if (!val) {
-            setMsg('パスワードを入力してください', 'error');
-            return;
-        }
-        if (val === STAGE.answer) {
-            setMsg('正解！次の謎へ進みます…', 'success');
-            setTimeout(() => { window.location.href = STAGE.nextUrl; }, 600);
-        } else {
-            setMsg('不正解。もう一度周囲を調べてみよう。', 'error');
-        }
-    });
-}
+// (ARモードの答え判定ブロックは削除)
 
 // ====== 位置情報処理 ======
 let geoOK = false;
+// クリア済みUI適用（GEO再開時に位置判定をスキップ）
+function applyClearedGeoState() {
+    // geoモードのゲートを解放
+    geoOK = true;
+    // メッセージを成功表示で固定（自動クリア表示）
+    setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
+}
 function meters(n) { return `${Math.round(n)}m`; }
 function distanceMeters(a, b) {
     const R = 6371000, toRad = d => d * Math.PI / 180;
@@ -235,6 +230,7 @@ function handlePos(p, isMock) {
     const d = distanceMeters({ lat: latitude, lng: longitude }, { lat: STAGE.target.lat, lng: STAGE.target.lng });
     const inRange = d <= STAGE.target.radius_m; geoOK = inRange;
     if (inRange) {
+        try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
         geoResult.style.color = '#107c10';
         geoResult.textContent = `OK（距離 ${meters(d)} / 精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
         // 成功時は ops の既定文言に任せる（必要なら下の1行のコメントを外して使用）
@@ -246,9 +242,14 @@ function handlePos(p, isMock) {
         // setMsg(msg, 'info', 4000); // 範囲外のときは .ops-desc を変更しない
     }
 }
-if (STAGE.mode === 'geo') {
-    geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
 
+// ====== 初期化：GEOモード ======
+function initGeoMode() {
+    const alreadyCleared = localStorage.getItem(CLEARED_KEY) === '1';
+    if (alreadyCleared) {
+        applyClearedGeoState();
+    }
+    geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
     nextBtn && nextBtn.addEventListener('click', () => {
         if (geoOK) {
             setMsg('到着！次の謎へ進みます…', 'success');
@@ -258,6 +259,44 @@ if (STAGE.mode === 'geo') {
         }
     });
 }
+
+// ====== 初期化：ARモード ======
+function initArMode() {
+    if (!nextBtn) return;
+    const isCleared = localStorage.getItem(CLEARED_KEY) === '1';
+    if (isCleared) {
+        // ARはゲート解放のみ（geoOKは触らない）
+        setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
+        nextBtn.addEventListener('click', () => {
+            window.location.href = STAGE.nextUrl;
+        });
+    } else {
+        nextBtn.addEventListener('click', () => {
+            const val = (answerInput?.value || '').trim();
+            if (!val) {
+                setMsg('パスワードを入力してください', 'error');
+                return;
+            }
+            if (val === STAGE.answer) {
+                // クリア記録
+                try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
+                setMsg('正解！次の謎へ進みます…', 'success');
+                setTimeout(() => { window.location.href = STAGE.nextUrl; }, 600);
+            } else {
+                setMsg('不正解。もう一度周囲を調べてみよう。', 'error');
+            }
+        });
+    }
+}
+
+// ====== モード別初期化の実行 ======
+(function runModeInit() {
+    if (STAGE.mode === 'geo') {
+        initGeoMode();
+    } else if (STAGE.mode === 'ar') {
+        initArMode();
+    }
+})();
 
 // ====== 戻るボタン（1つ前のステージへ戻る：variant維持） ======
 backBtn && backBtn.addEventListener('click', () => {
