@@ -21,7 +21,7 @@ body.page-story main {
     margin: 24px auto 120px;
     padding: 0 16px;
     padding-top: 20vh;
-    /* 最初のメッセージが画面40%位置から始まる */
+    /* 最初のメッセージが画面20%位置から始まる */
     display: flex;
     flex-direction: column;
     gap: 110px;
@@ -208,7 +208,7 @@ body.page-story main {
     position: absolute;
     inset: 0;
     background: var(--avatar-bg) center/cover no-repeat;
-    border-radius: 10px;
+    border-radius: 12px;
     z-index: 0;
 }
 
