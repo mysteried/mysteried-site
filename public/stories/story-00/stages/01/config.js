@@ -45,7 +45,7 @@ export const STAGE = {
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
     chat: {
-        avatarBg: "../../../../assets/images/avatars/bg-yellow.webp",
+        avatarBg: "../../../../assets/images/avatars/bg-blue.webp",
         avatars: {
             // 画像パスは /public からの相対…ではなく、stage.html から見た相対でもOK
             // ここでは stage.html からの相対で書いています
