@@ -12,6 +12,7 @@ export function mountChatUI(STAGE) {
         // IDは捨てる（CSSは .note-paper クラスで当てる）
         clone.removeAttribute("id");
         // 元の紙は chat では表示しない
+
         srcNote.style.display = "none";
 
         noteTemplate = document.createElement("template");

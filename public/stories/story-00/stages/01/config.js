@@ -40,7 +40,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/sample-note_texture.webp",
+        background: "../../assets/images/notes/note_東松山テスト.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====

@@ -83,21 +83,12 @@ footer {
     aspect-ratio: 1 / 1;
 }
 
-/* .note-paper .note-bg {
-    position: absolute;
-    inset: 0;
-    background: url("../assets/images/note_texture.jpeg") center/cover no-repeat;
-    border: 1px solid rgba(0, 0, 0, .08);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
-    z-index: 0;
-} */
-
 .note-paper .note-bg {
     position: absolute;
     inset: 0;
     background: var(--note-bg, url("../assets/images/note_texture.jpeg")) center/cover no-repeat;
-    border: 1px solid rgba(0, 0, 0, .08);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+    /* border: 1px solid rgba(0, 0, 0, .08); */
+    /* box-shadow: 0 10px 25px rgba(0, 0, 0, .2); */
     z-index: 0;
 }
 
