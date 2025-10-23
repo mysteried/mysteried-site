@@ -574,6 +574,10 @@ body.page-about {
     /* ensure content starts below fixed header */
 }
 
+.page-about {
+    --footer-h: 80px;
+}
+
 /* About page: show hero heading above images */
 .page-about .hero {
     position: relative;
@@ -609,7 +613,7 @@ body.page-about {
     z-index: 5;
     margin-top: 16px;
     /* small gap under the hero heading */
-    margin-bottom: 140px;
+    margin-bottom: calc(var(--footer-h) + 24px);
     padding-top: 0;
 }
 
@@ -866,6 +870,19 @@ body.page-about {
         width: 18px;
         height: 18px;
     }
+
+    /* About page header/footer alignment for mobile */
+    .page-about .site-header {
+        height: 56px;
+    }
+
+    body.page-about {
+        padding-top: 56px;
+    }
+
+    .page-about {
+        --footer-h: 68px;
+    }
 }
 
 /* Very narrow screens: avoid overflow */
@@ -898,6 +915,10 @@ body.page-about {
         width: 15px;
         height: 15px;
     }
+
+    .page-about {
+        --footer-h: 64px;
+    }
 }
 
 @media (max-width: 380px) {
@@ -924,6 +945,18 @@ body.page-about {
 
     .header-inner .nav a {
         font-size: 12px;
+    }
+
+    .page-about .site-header {
+        height: 52px;
+    }
+
+    body.page-about {
+        padding-top: 52px;
+    }
+
+    .page-about {
+        --footer-h: 60px;
     }
 }
 
