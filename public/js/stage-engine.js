@@ -202,13 +202,17 @@ function distanceMeters(a, b) {
     const s = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(s));
 }
+
+
 function readMock() {
-    const q = new URLSearchParams(location.search);
-    const m = q.get('mock'); if (!m) return null;
-    const [lat, lng] = m.split(',').map(Number);
-    if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng, accuracy: 5 };
+    // 🔥ここをオンにすると位置情報をurlに入れて開発テストができる、本番時はコメントアウト必須
+    // const q = new URLSearchParams(location.search);
+    // const m = q.get('mock'); if (!m) return null;
+    // const [lat, lng] = m.split(',').map(Number);
+    // if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng, accuracy: 5 };
     return null;
 }
+
 async function checkGeoOnce() {
     geoOK = false;
     if (geoResult) { geoResult.style.color = ''; geoResult.textContent = '測位中…'; }
