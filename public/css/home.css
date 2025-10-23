@@ -105,6 +105,21 @@
 }
 
 
+/* =====================
+   Footer (shared)
+   ===================== */
+.site-footer {
+    position: relative;
+    z-index: 2;
+}
+
+.page-home:not(.page-news) .site-footer {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
 
 /* =====================
    Hero (shared + home-specific)
@@ -779,18 +794,49 @@ body.page-about {
     }
 }
 
-/* =====================
-   Footer (shared)
-   ===================== */
-.site-footer {
-    position: relative;
-    z-index: 2;
+/* ===== Responsive: header/nav ===== */
+@media (max-width: 720px) {
+    .site-header {
+        height: 56px;
+    }
+
+    .header-inner {
+        padding: 0 12px;
+    }
+
+    .header-inner .brand {
+        font-size: 18px;
+        letter-spacing: .04em;
+    }
+
+    .header-inner .nav {
+        gap: 12px;
+        align-items: center;
+    }
+
+    .header-inner .nav a {
+        font-size: 14px;
+    }
+
+    /* SNS icons: keep visible but smaller */
+    .header-inner .nav nav[aria-label="SNS"] svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 
-.page-home:not(.page-news) .site-footer {
-    background: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+/* Very narrow screens: avoid overflow */
+@media (max-width: 480px) {
+    .header-inner {
+        padding: 0 8px;
+    }
+
+    .header-inner .nav a {
+        font-size: 13px;
+    }
+
+    /* If space is too tight, hide the ARテスト link on phones */
+    .header-inner .nav a[href*="ar_test"] {
+        display: none;
+    }
 }
