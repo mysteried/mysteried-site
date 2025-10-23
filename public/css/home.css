@@ -19,6 +19,7 @@
     letter-spacing: .05em;
     font-size: 20px;
     /* text-shadow: 0 1px 4px rgba(0, 0, 0, .15); */
+    white-space: nowrap;
 }
 
 /* ヘッダー内の配置（左ロゴ・右ナビ） */
@@ -33,6 +34,7 @@
     margin: 0 auto;
     padding: 0 40px;
     /* 端の余白 */
+    gap: 10px;
 }
 
 /* brandを左側に固定 */
@@ -44,10 +46,36 @@
 /* navを右側に寄せる */
 .header-inner .nav {
     display: flex;
-    gap: 10px;
-    /* メニュー間の間隔 */
+    align-items: center;
+    gap: 12px;
     margin-left: auto;
-    /* 右寄せ */
+    flex-wrap: nowrap;
+    /* 1行に固定 */
+    white-space: nowrap;
+    /* 文字の折返し防止 */
+    justify-content: flex-end;
+}
+
+/* SNS icon container */
+.header-inner .nav nav[aria-label="SNS"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.header-inner .nav nav[aria-label="SNS"] a {
+    display: inline-flex;
+    align-items: center;
+}
+
+.header-inner .nav nav[aria-label="SNS"] svg {
+    width: 20px;
+    height: 20px;
+}
+
+.header-inner .nav a {
+    white-space: nowrap;
 }
 
 .header-inner .nav a {
@@ -801,21 +829,36 @@ body.page-about {
     }
 
     .header-inner {
-        padding: 0 12px;
+        padding: 0 10px;
     }
 
     .header-inner .brand {
-        font-size: 18px;
-        letter-spacing: .04em;
+        font-size: 17px;
+        letter-spacing: .035em;
+    }
+
+    /* tighter spacing for mobile */
+    .header-inner .nav a {
+        font-size: 13.5px;
+        line-height: 1;
+        padding: 0;
+        letter-spacing: -0.01em;
+        font-feature-settings: "palt" 1, "kern" 1;
     }
 
     .header-inner .nav {
-        gap: 12px;
-        align-items: center;
+        gap: 4px;
     }
 
-    .header-inner .nav a {
-        font-size: 14px;
+    .header-inner .nav nav[aria-label="SNS"] {
+        gap: 6px;
+    }
+
+    .header-inner .nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        /* はみ出す場合は横スクロール */
+        -webkit-overflow-scrolling: touch;
     }
 
     /* SNS icons: keep visible but smaller */
@@ -831,12 +874,62 @@ body.page-about {
         padding: 0 8px;
     }
 
-    .header-inner .nav a {
-        font-size: 13px;
+    .header-inner .brand {
+        font-size: 15px;
+        letter-spacing: .01em;
+        white-space: nowrap;
     }
 
-    /* If space is too tight, hide the ARテスト link on phones */
-    .header-inner .nav a[href*="ar_test"] {
-        display: none;
+    .header-inner .nav {
+        gap: 3px;
+    }
+
+    .header-inner .nav nav[aria-label="SNS"] {
+        gap: 4px;
+    }
+
+    .header-inner .nav a {
+        font-size: 12.5px;
+        letter-spacing: -0.01em;
+        font-feature-settings: "palt" 1, "kern" 1;
+    }
+
+    .header-inner .nav nav[aria-label="SNS"] svg {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .site-header {
+        height: 52px;
+    }
+
+    .header-inner {
+        padding: 0 6px;
+    }
+
+    .header-inner .brand {
+        font-size: 14px;
+        letter-spacing: .005em;
+    }
+
+    .header-inner .nav {
+        gap: 2px;
+    }
+
+    .header-inner .nav nav[aria-label="SNS"] {
+        gap: 3px;
+    }
+
+    .header-inner .nav a {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 340px) {
+    .header-inner .brand {
+        font-size: 13px;
+        letter-spacing: 0;
     }
 }
