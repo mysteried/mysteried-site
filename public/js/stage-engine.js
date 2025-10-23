@@ -215,7 +215,7 @@ function readMock() {
 
 async function checkGeoOnce() {
     geoOK = false;
-    if (geoResult) { geoResult.style.color = ''; geoResult.textContent = '測位中…'; }
+    if (geoResult) { geoResult.style.color = ''; geoResult.textContent = '現在地を確認中…'; }
     const mock = readMock();
     if (mock) { handlePos({ coords: { latitude: mock.lat, longitude: mock.lng, accuracy: mock.accuracy } }, true); return; }
     if (!('geolocation' in navigator)) {
@@ -243,7 +243,7 @@ function handlePos(p, isMock) {
         // setMsg('到着！次へ進めます。', 'success', 3000);
     } else {
         geoResult.style.color = '#c62828';
-        const msg = `目標まで 約${meters(d)}（精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
+        const msg = `目的地まで 約${meters(d)}（精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
         geoResult.textContent = msg;
         // setMsg(msg, 'info', 4000); // 範囲外のときは .ops-desc を変更しない
     }
@@ -260,7 +260,7 @@ function initGeoMode() {
     geoBtn && geoBtn.addEventListener('click', checkGeoOnce);
     nextBtn && nextBtn.addEventListener('click', () => {
         if (!geoOK) {
-            setMsg('まだ条件を満たしていません（まず「位置を確認」）', 'error');
+            setMsg('まだ目的地に到着していません', 'error');
             return;
         }
 
@@ -268,10 +268,10 @@ function initGeoMode() {
         const delay = isFirst ? 3000 : 0; // 初回は3秒見せる／再開は即
 
         if (isFirst) {
-            setMsg('到着！次の謎へ進めます。', 'success', delay);
+            setMsg('到着を確認 次へ進みます…', 'success', delay);
             try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
         } else {
-            setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
+            setMsg('クリア済み 次へ進めます', 'success', 0);
         }
 
         nextBtn.disabled = true; // 二度押し防止
@@ -287,7 +287,7 @@ function initArMode() {
     const isCleared = localStorage.getItem(CLEARED_KEY) === '1';
     if (isCleared) {
         // ARはゲート解放のみ（geoOKは触らない）
-        setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
+        setMsg('クリア済み 次へ進めます', 'success', 0);
         nextBtn.addEventListener('click', () => {
             window.location.href = STAGE.nextUrl;
         });
@@ -301,10 +301,10 @@ function initArMode() {
             if (val === STAGE.answer) {
                 // クリア記録
                 try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
-                setMsg('正解！次の謎へ進みます…', 'success');
+                setMsg('正解 次へ進みます…', 'success');
                 setTimeout(() => { window.location.href = STAGE.nextUrl; }, 3000);
             } else {
-                setMsg('不正解。もう一度周囲を調べてみよう。', 'error');
+                setMsg('パスワードが違います 『❓』でヒントを確認できます', 'error');
             }
         });
     }
