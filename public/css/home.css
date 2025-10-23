@@ -527,6 +527,25 @@ body.page-home {
 body.page-about {
     background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center fixed;
     background-size: cover;
+    padding-top: 64px;
+    /* ensure content starts below fixed header */
+}
+
+/* About page: show hero heading above images */
+.page-about .hero {
+    position: relative;
+    z-index: 5;
+    /* above background overlay */
+    text-align: center;
+    padding: 24px 0 12px;
+    /* space above/below */
+    margin: 0;
+    /* no extra top offset now that body is padded */
+}
+
+.page-about .hero .hero-title {
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, .35);
 }
 
 /* 上下ぼかしオーバーレイ */
@@ -541,9 +560,14 @@ body.page-about {
     pointer-events: none;
 }
 
+/* Merge and adjust: About main wrapper */
 .page-about main.about-wrap {
     position: relative;
     z-index: 5;
+    margin-top: 16px;
+    /* small gap under the hero heading */
+    margin-bottom: 140px;
+    padding-top: 0;
 }
 
 /* header/footer の透明度・色味を news と統一 */
@@ -589,12 +613,6 @@ body.page-about {
     height: var(--footer-h);
 }
 
-/* Add padding so content doesn't overlap header/footer */
-.page-about main.about-wrap {
-    margin-top: 100px;
-    margin-bottom: 140px;
-    padding-top: 0px;
-}
 
 .about-images {
     list-style: none;
