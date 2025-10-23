@@ -840,15 +840,17 @@ body.page-about {
     }
 
     /* About page header/footer alignment for mobile */
-    .page-about .site-header {
-        height: 56px;
-    }
 
     body.page-about {
         padding-top: 56px;
     }
 
-    .page-about {
+    body.page-news {
+        padding-top: 56px;
+    }
+
+    .page-about,
+    .page-news {
         --footer-h: 68px;
     }
 }
@@ -884,7 +886,8 @@ body.page-about {
         height: 15px;
     }
 
-    .page-about {
+    .page-about,
+    .page-news {
         --footer-h: 64px;
     }
 }
@@ -915,15 +918,16 @@ body.page-about {
         font-size: 12px;
     }
 
-    .page-about .site-header {
-        height: 52px;
-    }
-
     body.page-about {
         padding-top: 52px;
     }
 
-    .page-about {
+    body.page-news {
+        padding-top: 52px;
+    }
+
+    .page-about,
+    .page-news {
         --footer-h: 60px;
     }
 }
