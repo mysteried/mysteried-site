@@ -211,6 +211,8 @@ body.page-story main {
     .chat {
         padding-top: 30vh;
         /* 最初のメッセージが画面20%位置から始まる */
+        margin: 24px auto 40px;
+        /* ここの40pxがチャット終わりの下の空白　chat版はnoteはchatに包まれているからここで調整  */
     }
 
     .msg .avatar {
