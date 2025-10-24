@@ -621,4 +621,9 @@ footer {
         padding-right: max(12px, env(safe-area-inset-right));
         padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     }
+
+    body.variant-plain .note-paper {
+        margin: 100px auto 45px;
+        /* スマホのplainだけこれをいかして、noteの位置をいい感じに調整したい */
+    }
 }

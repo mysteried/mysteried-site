@@ -3,6 +3,15 @@ const currentDir = window.location.pathname.split("/").slice(0, -1).join("/");
 const configPath = `${currentDir}/config.js`;
 
 const { STAGE } = await import(configPath);
+// ===== ページvariant用のクラスを<body>に付与 (plain/chatのレイアウト分岐に使う) =====
+(function applyVariantClass() {
+    if (!document.body) return;
+    // 念のため両方外してから現在のvariantを付ける
+    document.body.classList.remove("variant-chat", "variant-plain");
+    document.body.classList.add(
+        STAGE.variant === "chat" ? "variant-chat" : "variant-plain"
+    );
+})();
 // ===== 進捗キー（このステージをクリア済みか判定）   🔥本番運用系　こっちをオンに切り替える
 // const CLEARED_KEY = `cleared:${STAGE.id}`;
 
