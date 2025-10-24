@@ -20,7 +20,7 @@ body.page-story main {
     max-width: 780px;
     margin: 24px auto 120px;
     padding: 0 16px;
-    padding-top: 20vh;
+    padding-top: 30vh;
     /* 最初のメッセージが画面20%位置から始まる */
     display: flex;
     flex-direction: column;
@@ -107,7 +107,7 @@ body.page-story main {
     content: "";
     position: absolute;
     left: -6px;
-    bottom: 25px;
+    bottom: 18px;
     /* ← テール(しっぽ)の高さ。上げ下げはここを調整 */
     width: 12px;
     height: 12px;
@@ -137,7 +137,7 @@ body.page-story main {
     content: "";
     position: absolute;
     right: -6px;
-    bottom: 25px;
+    bottom: 18px;
     /* ← テール(しっぽ)の高さ。上げ下げはここを調整 */
     width: 12px;
     height: 12px;
@@ -207,14 +207,23 @@ body.page-story main {
 
 /* ===== レスポンシブ ===== */
 @media (max-width: 480px) {
+
+    .chat {
+        padding-top: 30vh;
+        /* 最初のメッセージが画面20%位置から始まる */
+    }
+
     .msg .avatar {
-        width: 36px;
-        height: 36px;
-        flex-basis: 36px;
+        width: 90px;
+        height: 90px;
+        flex-basis: 90px;
     }
 
     .bubble {
         max-width: 78%;
-        font-size: 14px;
+        font-size: 18px;
+        max-width: calc(100% - 80px);
+        margin: 0 16px;
+
     }
 }

@@ -152,7 +152,7 @@ export function mountChatUI(STAGE) {
         {
             root: rootEl,
             threshold: 0.3,
-            rootMargin: "-40% 0px -40% 0px",
+            rootMargin: "-35% 0px -40% 0px",
         }
     );
     Array.from(chat.children).forEach((el) => centerIO.observe(el));
