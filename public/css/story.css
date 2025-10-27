@@ -390,13 +390,14 @@ footer {
     inset: 0;
     background: #000;
     /* 背景を黒フェードに */
-    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Noto Serif JP", serif;
+    /* 以下の部分はepi.cssでいいかも */
+    /* font-family: "Noto Serif JP", serif;
     font-size: 60px;
     letter-spacing: .1em;
+    color: #fff; */
     opacity: 1;
     flex-direction: column;
     text-align: center;

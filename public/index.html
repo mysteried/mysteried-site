@@ -115,30 +115,30 @@
 
             <!-- カード（NEWは is-new を付ける）?intro=1でここからのアクセスでOPアニメーションを着火させる　　 -->
             <a class="card is-new open-modal reveal" href="#" data-title="文学に埋もれた部屋"
-                data-normal="./stories/story-00/stages/01/stage.html?intro=1"
-                data-story="./stories/story-00/stages/01h/stage.html?intro=1">
+                data-normal="./stories/story-01/stages/01/stage.html?intro=1"
+                data-story="./stories/story-01/stages/01h/stage.html?intro=1">
                 <div class="card-media">
-                    <img src="./assets/images/main-cards/main-card-01.webp" alt="茎と魚は何故消えたのか？ のサムネイル" loading="lazy" />
+                    <img src="./assets/images/main-cards/story-01.webp" alt="茎と魚は何故消えたのか？ のサムネイル" loading="lazy" />
                     <span class="badge badge-new">NEW</span>
                 </div>
                 <div class="card-body">
-                    <div class="card-title">思い出のコーヒーと胡椒を挽く男</div>
+                    <div class="card-title">胡椒を挽く男</div>
                     <p class="card-desc">
-                        商店街に漂う“消えたモチーフ”の噂。看板、レシート、古い掲示板——街の断片から真相へ近づく。
+                        記憶を失った男が降り立った知らない街。何かに触れるたびにかすれた記憶が音を立てて戻ってくる。牡丹、野球、物理学——。残されたメモを頼りに彼の歩いた道を辿ってみよう。
                     </p>
                     <div class="meta">
-                        <span class="chip" aria-label="難易度 星2">レベル⭐️</span>
-                        <span class="chip">埼玉県 秩父</span>
-                        <span class="chip">45–90分</span>
-                        <span class="chip">10/01配信</span>
-                        <span class="chip">車推奨</span>
-                        <span class="chip">探偵シリーズ</span>
+                        <span class="chip">10/27配信</span>
+                        <span class="chip" aria-label="難易度 星1">レベル⭐️</span>
+                        <span class="chip">関東</span>
+                        <span class="chip">徒歩可</span>
+                        <span class="chip">移動目安3km</span>
+                        <span class="chip">手記シリーズ</span>
                     </div>
                 </div>
             </a>
 
             <!-- カード（NEWは is-new を付ける） -->
-            <a class="card is-new reveal" href="./stories/story-00/stages/01h/stage.html?intro=1">
+            <a class="card is-new reveal" href="./stories/story-01/stages/01h/stage.html?intro=1">
                 <div class="card-media">
                     <img src="./assets/images/main-cards/main-card-02.webp" alt="茎と魚は何故消えたのか？ のサムネイル" loading="lazy" />
                     <span class="badge badge-new">NEW</span>
@@ -255,11 +255,13 @@
                 const trigger = e.target.closest('.open-modal');
                 if (trigger) {
                     e.preventDefault();
-                    const preferred = localStorage.getItem('playMode'); // 'plain' | 'story'
+                    //記憶モードは変更する動線が確保できないから一時的にアウト 
+                    // const preferred = localStorage.getItem('playMode'); // 'plain' | 'story'
                     const normal = trigger.dataset.normal;
                     const story = trigger.dataset.story;
-                    if (preferred === 'plain') { location.href = normal; return; }
-                    if (preferred === 'story') { location.href = story; return; }
+                    //記憶モードは変更する動線が確保できないから一時的にアウト 
+                    // if (preferred === 'plain') { location.href = normal; return; }
+                    // if (preferred === 'story') { location.href = story; return; }
                     openModal(normal, story);
                 }
                 if (e.target.matches('[data-close]')) {
