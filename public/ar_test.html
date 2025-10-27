@@ -1,4 +1,4 @@
-<!-- 上に貼り付けるスタイル　これでもいいかも 一旦ゼロ秒フリーズで-->
+<!-- 千円札バージョン　東松山テストで動かなくなったらこれを使う-->
 <!-- 解説付き -->
 <!doctype html>
 <html lang="ja">
@@ -183,14 +183,6 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
         }
 
-        .overlay-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
         /* ========== Responsive ========== */
         @media (max-width: 480px) {
             .btn {
@@ -218,14 +210,13 @@
             <div id="overlayMessage" class="overlay-message">ターゲットを発見</div>
             <div id="overlayReward" class="overlay-reward hidden">パスワード: <span id="overlayCode">XXXX-0000</span></div>
             <div class="overlay-actions">
-                <button id="copyBtn" class="btn overlay-btn">コピー</button>
                 <button id="resumeBtn" class="btn overlay-btn">閉じる</button>
             </div>
         </div>
     </div>
 
     <!-- a-sceneはA-Frameのルート用要素　ARの土台部分をここで記述している この中にlightやカメラをセットして設定していく⇨子要素のこと-->
-    <!-- mindar-imageがAR画像認識を有効化するための設定,imageTargetSrc⇨ここでtargets.mindを指定/filter系　検出の揺れを調整,数値が小さいほど反応は早いがノイジーになる/autostart true シーン生成と同時に検出を始める -->
+    <!-- 🔥 mindar-imageがAR画像認識を有効化するための設定,imageTargetSrc⇨ここでtargets.mindを指定/filter系　検出の揺れを調整,数値が小さいほど反応は早いがノイジーになる/autostart true シーン生成と同時に検出を始める -->
     <!-- embedded　<a-scene> をページ全体フルスクリーンにせず、埋め込み表示にする。　color-spaceと繋がっているように見えるが全く別の設定、htmlはスペースをいれるだけなのでこうなる -->
     <!-- color-space　色の扱いをsRGB基準にする（最近の標準的な色空間） -->
     <!-- rendererはwebGLキャンバスの設定（つまり映像やdivのパーツはスルーしていくれる）/3dオブジェクトの色味やライティング設定 "colorManagement: true, physicallyCorrectLights: true,/ギザギザをなめらかに antialias: true,/キャンバス背景を透明に（オブジェクトは対象外） alpha: true" -->
@@ -234,15 +225,21 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ./assets/targets/targets-yakyu-b.mind; filterMinCF:0.0005; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ./assets/targets/targets-1000yen.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
 
         <!-- mindar-image-targetはMindARでアンカーを決めるものでここでは.mindファイルの0番目が検出された際に有効になるアンカーであり、子要素はこのアンカーを基準に配置などがされていく -->
-        <!-- これによりターゲットごとに演出を変えることができる　その際にidはanchor1,anchor2,3,・・・などユニーク化は必要 -->
-        <a-entity mindar-image-target="targetIndex: 0" id="anchor">
-        </a-entity>
+        <!--🔥 これによりターゲットごとに演出を変えることができる　その際にidはanchor1,anchor2,3,・・・などユニーク化は必要 -->
+        <!-- <a-entity mindar-image-target="targetIndex: 0" id="anchor">
+        </a-entity> -->
+        <!-- 新札　今回のターゲットには複数詰めてみた -->
+        <a-entity mindar-image-target="targetIndex: 0" id="anchor0"></a-entity>
+        <!-- 旧札 -->
+        <a-entity mindar-image-target="targetIndex: 1" id="anchor1"></a-entity>
+
+
         <!-- A-Frame の カメラコンポーネント,「ここからシーンを覗く」視点を作る そのため座標は000がいい/look-controls="enabled: false"デフォルトだとスマホの傾きでカメラが動いてしまいARが破綻する/near="0.01" far="2000"カメラが描画できる最小と最大の距離 この範囲外は描画不可 -->
         <a-camera position="0 0 0" look-controls="enabled: false" near="0.01" far="2000"></a-camera>
     </a-scene>
@@ -264,7 +261,6 @@
             const overlayReward = document.getElementById('overlayReward');
             const overlayCode = document.getElementById('overlayCode');
             const resumeBtn = document.getElementById('resumeBtn');
-            const copyBtn = document.getElementById('copyBtn');
 
             // title,message,codeをまとめてオブジェクトで渡せるようにしている　= {} は「何も渡されなかったときは空オブジェクト」とする保険。
             function showOverlay({ title = 'ヒント', message = '', code = '' } = {}) {
@@ -276,8 +272,6 @@
                 if (overlayReward) overlayReward.classList.toggle('hidden', !code);
                 // コードをセット
                 if (overlayCode && code) overlayCode.textContent = code;
-                // コピー用ボタンの表示制御
-                if (copyBtn) copyBtn.classList.toggle('hidden', !code);
                 // オーバーレイ全体を表示
                 overlayEl && overlayEl.classList.remove('hidden');
             }
@@ -289,40 +283,7 @@
             if (resumeBtn) {
                 resumeBtn.addEventListener('click', () => {
                     hideOverlay(); // 単純にオーバーレイを閉じるだけ
-                    if (hint) hint.textContent = 'ARカメラ起動';
-                });
-            }
-
-            if (copyBtn) {
-                copyBtn.addEventListener('click', async () => {
-                    const text = (overlayCode && overlayCode.textContent) ? overlayCode.textContent.trim() : '';
-                    if (!text) {
-                        alert('コピーできるコードがありません。');
-                        return;
-                    }
-                    try {
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                            await navigator.clipboard.writeText(text);
-                        } else {
-                            // Fallback for older browsers
-                            const ta = document.createElement('textarea');
-                            ta.value = text;
-                            ta.style.position = 'fixed';
-                            ta.style.opacity = '0';
-                            document.body.appendChild(ta);
-                            ta.focus();
-                            ta.select();
-                            document.execCommand('copy');
-                            document.body.removeChild(ta);
-                        }
-                        // 軽いフィードバック
-                        const original = copyBtn.textContent;
-                        copyBtn.textContent = 'コピー済み';
-                        setTimeout(() => { copyBtn.textContent = original; }, 6000);
-                    } catch (e) {
-                        console.error('Copy failed:', e);
-                        alert('コピーに失敗しました。手動で選択してください。');
-                    }
+                    if (hint) hint.textContent = 'ARカメラテスト';
                 });
             }
 
@@ -330,34 +291,58 @@
             if (!sceneEl) return;
 
             // MindARのターゲットエンティティ（<a-entity mindar-image-target="..." id="anchor">）を取得。
-            const anchorEl = document.getElementById('anchor');
-            // ここから先は「ターゲットが見えた/消えた」イベントを扱うフェーズ。
-            if (anchorEl) {
-                // ターゲットを見つけたら着火
-                anchorEl.addEventListener('targetFound', () => {
-                    // これはデバック用
-                    console.log('[MindAR] targetFound');
+            // const anchorEl = document.getElementById('anchor');
+            // // ここから先は「ターゲットが見えた/消えた」イベントを扱うフェーズ。
+            // if (anchorEl) {
+            //     // ターゲットを見つけたら着火
+            //     anchorEl.addEventListener('targetFound', () => {
+            //         // これはデバック用
+            //         console.log('[MindAR] targetFound');
 
+            //         if (hint) hint.textContent = 'ターゲット検出！';
+            //         // // 🔥ここは毎回変更をする
+            //         setTimeout(() => {
+            //             showOverlay({
+            //                 title: 'ターゲットを発見',
+            //                 message: 'ARカメラテストは成功です。謎解きを開始しましょう。',
+            //                 code: ''
+            //             });
+            //         }, 1000); // 1秒後に表示
+            //     });
+            //     anchorEl.addEventListener('targetLost', () => {
+            //         console.log('[MindAR] targetLost');
+            //         if (hint) hint.textContent = 'ARカメラテスト';
+            //     });
+            // }
+
+            //🔥 これは複数のアンカーを同じ挙動にしている すべてのアンカーを配列として取得
+            const anchors = [document.getElementById('anchor0'), document.getElementById('anchor1')];
+
+            anchors.forEach((anchorEl) => {
+                if (!anchorEl) return;
+
+                anchorEl.addEventListener('targetFound', () => {
+                    console.log('[MindAR] targetFound (multi)');
                     if (hint) hint.textContent = 'ターゲット検出！';
-                    // // 🔥ここは毎回変更をする
                     setTimeout(() => {
                         showOverlay({
                             title: 'ターゲットを発見',
-                            message: 'メモの対象を発見。\n彼は野球が好きなのだろうか？',
-                            code: 'REWARD-0416'
+                            message: 'ARカメラテストは成功です。謎解きを開始しましょう。',
+                            code: ''
                         });
-                    }, 1000); // 1秒後に表示
+                    }, 1000);
                 });
+
                 anchorEl.addEventListener('targetLost', () => {
-                    console.log('[MindAR] targetLost');
-                    if (hint) hint.textContent = 'ARカメラ起動';
+                    console.log('[MindAR] targetLost (multi)');
+                    if (hint) hint.textContent = 'ARカメラテスト';
                 });
-            }
+            });
 
 
             sceneEl.addEventListener('arReady', () => {
                 console.log('[MindAR] arReady');
-                hint.textContent = 'ARカメラ起動';
+                hint.textContent = 'ARカメラテスト';
             });
 
             sceneEl.addEventListener('arError', (e) => {
@@ -404,7 +389,7 @@
             // 同階層のstage.htmlに戻る
             if (backBtn) {
                 backBtn.addEventListener('click', () => {
-                    // 同階層の stage.html へ戻る　🔥
+                    // 同階層の ホームへ戻る　🔥
                     window.location.href = './index.html';
                     // もしヒストリで戻したいだけなら↓でもOK
                     // history.back();
