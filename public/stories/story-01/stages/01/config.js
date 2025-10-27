@@ -26,10 +26,10 @@ export const STAGE = {
 
     /*背景画像を指定　※開発時は木目 */
     background: {
-        image: "../../../../assets/images/story-background/room.webp",
-        // // 汎用背景
-        // image: "../../assets/images/background/higashi-bokashi.webp",
-        // エピソード指定背景
+        // image: "../../../../assets/images/story-background/room.webp",
+        // // 🔥汎用背景
+        image: "../../assets/images/background/main-background-2.webp",
+        // 🔥エピソード指定背景
         size: "cover",       // 任意: contain, auto など
         position: "center",  // 任意: 50% 35% など
     },

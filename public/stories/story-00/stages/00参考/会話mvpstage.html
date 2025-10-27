@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>文学に埋もれた部屋 〜探偵シリーズ〜 – ミステリアリティ</title>
+
+    <!-- 既存の共通CSSを利用 -->
+    <link rel="icon" href="../../../../favicon.ico" />
+    <link rel="stylesheet" href="../../../../css/base.css" />
+
+    <!-- 探偵シリーズ・ページ専用の薄い追記 -->
+    <style>
+        body.page-story {
+            background-image: url("../../../../assets/images/wooddesk2.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* 背景固定 */
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        body.page-story main {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+
+        /* ===== 会話レイアウト ===== */
+        .chat {
+            max-width: 780px;
+            margin: 24px auto 120px;
+            padding: 0 16px;
+            padding-top: 40vh;
+            /* 会話の最初をwindowの40%の位置から始める */
+            display: flex;
+            flex-direction: column;
+            /* 会話間のスペース */
+            gap: 110px;
+        }
+
+        .msg {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .35s ease, transform .35s ease;
+            will-change: opacity, transform;
+        }
+
+        .msg.reveal {
+            opacity: 1;
+            transform: none;
+        }
+
+        .msg.active .bubble {
+            transform: scale(1.10);
+            transition: transform 0.8s ease, box-shadow 0.8s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+        }
+
+        .msg.masu .bubble {
+            transform-origin: left center;
+        }
+
+        .msg.hina .bubble {
+            transform-origin: right center;
+        }
+
+        .msg .bubble {
+            transform: scale(1);
+            transform-origin: center center;
+            /* default; per side rules will override */
+            transition: transform 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+            will-change: transform;
+        }
+
+
+
+        /* キャラ画像のサイズなど */
+        .msg .avatar {
+            flex: 0 0 120px;
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            margin: 0 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+            background: #fff;
+        }
+
+        .msg .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bubble {
+            max-width: min(72%, 560px);
+            padding: 10px 12px;
+            border-radius: 14px;
+            line-height: 1.7;
+            font-size: 25px;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+            background: #fff;
+            margin: 0 8px;
+            white-space: pre-wrap;
+            /* ← \n を有効にする */
+        }
+
+        /* 左（マスオ） */
+        .msg.masu {
+            flex-direction: row;
+            margin-bottom: 24px;
+        }
+
+        .msg.masu .bubble {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, .08);
+        }
+
+        .msg.masu .bubble::after {
+            content: "";
+            position: absolute;
+            left: -6px;
+            bottom: 25px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-left: 1px solid rgba(0, 0, 0, .08);
+            border-bottom: 1px solid rgba(0, 0, 0, .08);
+            transform: rotate(45deg);
+        }
+
+        /* 右（ヒナタ） */
+        .msg.hina {
+            flex-direction: row-reverse;
+            margin-bottom: 24px;
+        }
+
+        .msg.hina .bubble {
+            background: #111;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .msg.hina .bubble::after {
+            content: "";
+            position: absolute;
+            right: -6px;
+            bottom: 25px;
+            width: 12px;
+            height: 12px;
+            background: #111;
+            border-right: 1px solid rgba(255, 255, 255, .15);
+            border-bottom: 1px solid rgba(255, 255, 255, .15);
+            transform: rotate(-45deg);
+        }
+
+
+        /* ===== note-paper を会話の途中に挿入する用 ===== */
+        .chat .note-paper {
+            width: min(560px, 92vw);
+            margin: 12px auto 20px;
+        }
+
+        .chat .note-text {
+            font-size: clamp(18px, 3.3vw, 22px);
+        }
+
+        .chat .note-paper .note-bg {
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+        }
+
+        /* 最下部にも余白を作り、最後の吹き出しが中央帯までスクロールできるようにする */
+        .chat::after {
+            content: "";
+            display: block;
+            height: 30vh;
+            /* 調整可：40〜60vhくらいで好みに合わせて これがしたのスペース*/
+        }
+
+
+        .msg {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .msg.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 小さめ端末調整 */
+        @media (max-width: 480px) {
+            .msg .avatar {
+                width: 36px;
+                height: 36px;
+                flex-basis: 36px;
+            }
+
+            .bubble {
+                max-width: 78%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body class="page-story">
+    <!-- タイトルのイントロ演出（必要なければ削除OK） -->
+    <div id="intro-overlay">
+        <h1 class="intro-title">文学に埋もれた部屋 〜探偵シリーズ〜</h1>
+    </div>
+
+    <main>
+        <!-- 会話本体（JSがここに流し込み） -->
+        <section id="chat" class="chat" aria-live="polite"></section>
+
+        <!-- 既存の note-paper をこのページでも再利用するためのテンプレ（JSでクローンして使う） -->
+        <template id="notePaperTpl">
+            <div id="notePaper" class="note-paper">
+                <div class="note-bg"></div>
+                <div class="note-text">
+                    <p class="note-line">この部屋から脱出せよ。</p>
+                    <p class="note-line">本にヒントがある。</p>
+                    <p class="note-line">フランスの1800年。</p>
+                    <p class="note-line">世界を変えた一冊。</p>
+                </div>
+            </div>
+        </template>
+    </main>
+
+    <!-- 下部の操作フッター（AR起動・パス入力）は通常版と同じ体験にする場合だけ残す -->
+    <footer id="ops-footer">
+        <div class="ops-desc-row">
+            <a href="../../../../index.html" class="btn nav-btn">🏠</a>
+            <p class="ops-desc">
+                カメラを起動して、正しい本にかざしてください。<br>
+                正解なら次へ進むパスワードが表示されます。
+            </p>
+            <a href="../../../../about.html" class="btn nav-btn">❓</a>
+        </div>
+
+        <div class="ops-row">
+            <a href="./ar.html?p=p1" class="btn cam">ARカメラ</a>
+            <input id="answerInput" type="text" placeholder="パスワード">
+            <button id="checkBtn" class="btn next">次へ進む</button>
+        </div>
+
+        <p id="resultMsg" class="card-desc"></p>
+    </footer>
+
+    <script>
+        /* ========= 1) 会話データ（表情は画像ファイル名の差し替えで） ========= */
+        // 画像は /public/assets/images/avatars/ に置く想定
+        const AV = {
+            masu: {
+                normal: "../../../../assets/images/avatars/masuo_normal.png",
+                sweat: "../../../../assets/images/avatars/masuo_sweat.webp"
+            },
+            hina: {
+                smile: "../../../../assets/images/avatars/hinata_smile.webp",
+                normal: "../../../../assets/images/avatars/hinata_normal.png"
+            }
+        };
+
+        // type:'note' で note-paper を差し込み
+        const dialogue = [
+            { who: "masu", face: "normal", text: "また例のサイトが\n更新されて新しい謎が\n配信\nされているよ。" },
+            { who: "hina", face: "smile", text: "マスオさん！\nまたやりましょうよ！どうせ暇でしょ！" },
+            { who: "masu", face: "sweat", text: "おいおい、ヒナタくん……\nまあ、いいか。どんな謎か見せてくれるかい？" },
+            { type: "note" }, // ← ここで note-paper が会話に挟まる
+            { who: "hina", face: "normal", text: "“フランスの1800年。世界を変えた一冊。”…本のことを指してそうですね。" },
+            { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
+            { who: "masu", face: "normal", text: "部屋から脱出・・・" },
+            { who: "hina", face: "smile", text: "何か分かりました？？" }
+        ];
+
+        /* ========= 2) DOM 生成 ========= */
+        const chat = document.getElementById('chat');
+        const notePaperTpl = document.getElementById('notePaperTpl');
+
+        function createMsg(item) {
+            const wrap = document.createElement('div');
+            if (item.type === 'note') {
+                // note-paper を会話に差し込み
+                wrap.className = 'msg note';
+                const node = notePaperTpl.content.firstElementChild.cloneNode(true);
+                wrap.appendChild(node);
+                return wrap;
+            }
+            const role = item.who === 'hina' ? 'hina' : 'masu';
+            wrap.className = `msg ${role}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            const img = document.createElement('img');
+            const src = (AV[role] && AV[role][item.face]) || (AV[role] && Object.values(AV[role])[0]) || '';
+            img.src = src; img.alt = role === 'hina' ? 'ヒナタ' : 'マスオ';
+            avatar.appendChild(img);
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const text = document.createElement('div');
+            text.textContent = item.text;
+            bubble.appendChild(text);
+
+            // 左右の配置
+            if (role === 'hina') {
+                wrap.appendChild(avatar);
+                wrap.appendChild(bubble);
+            } else {
+                wrap.appendChild(avatar);
+                wrap.appendChild(bubble);
+            }
+            return wrap;
+        }
+
+        dialogue.forEach(d => chat.appendChild(createMsg(d)));
+
+        /* ========= 3) スクロールに合わせて 1〜2個ずつ “自然に” 出す ========= */
+        const mainRoot = document.querySelector('main'); // スクロールする要素を基準に監視
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('reveal');   // 見えたらフェードイン
+                } else {
+                    e.target.classList.remove('reveal'); // 外れたらフェードアウト
+                }
+            });
+        }, {
+            root: mainRoot,
+            threshold: 0.25,
+            rootMargin: '-20% 0px -30% 0px'
+        });
+
+        // .msg を順番に監視開始
+        Array.from(chat.children).forEach(el => io.observe(el));
+
+        // ========= 3.5) スクロール中に中央の吹き出しを強調 =========
+        const centerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, {
+            root: mainRoot,
+            threshold: 0.3, // 要素の100％が見えたら「中央付近」とみなす
+            rootMargin: "-40% 0px -40% 0px", // 上下40%を除外して中央だけを判定 rootMargin: "<上> <右> <下> <左>"、結果として、**真ん中の20％くらいの帯が“中央ゾーン”**になる
+        });
+
+        Array.from(chat.children).forEach(el => centerObserver.observe(el));
+
+        /* ========= 4) 既存の判定＆遷移（通常版と全く同じ） ========= */
+        const ANSWER = 'サンプル'; // 後で reward.js のハッシュ照合に差し替え可
+        const NEXT_STAGE_URL = '../02/stage.html?intro=1';
+
+        const answerInput = document.getElementById('answerInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultMsg = document.getElementById('resultMsg');
+
+        checkBtn.addEventListener('click', () => {
+            const val = (answerInput.value || '').trim();
+            if (!val) { resultMsg.textContent = 'パスワードを入力してください'; resultMsg.style.color = '#d33'; return; }
+            if (val === ANSWER) {
+                resultMsg.textContent = '正解！次の謎へ進みます…';
+                resultMsg.style.color = '#107c10';
+                setTimeout(() => { window.location.href = NEXT_STAGE_URL; }, 600);
+            } else {
+                resultMsg.textContent = '不正解。もう一度周囲を調べてみよう。';
+                resultMsg.style.color = '#d33';
+            }
+        });
+
+        /* ========= 5) タイトルのイントロ（intro=1 の時のみ） ========= */
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('intro-overlay');
+            const params = new URLSearchParams(location.search);
+            const introEnabled = params.get('intro');
+            overlay.style.display = (introEnabled === '1') ? '' : 'none';
+            if (introEnabled === '1') setTimeout(() => { overlay.style.display = 'none'; }, 4000);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+/* これはエピソードごとに設定していく */
+
+/* text1：タイトル感（大きく・堂々と） */
+#prologue .k-text1.is-text {
+    /* 書体：好みで差し替えOK（例は明朝寄り） */
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", "YuMincho", serif;
+
+    /* サイズ：画面に応じて伸縮 */
+    font-size: clamp(36px, 7vw, 80px);
+    line-height: 1.2;
+    letter-spacing: .06em;
+    font-weight: 700;
+    /* タイトルっぽく太めに */
+    color: #fff;
+
+    /* 立体感（お好みで調整） */
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, .35),
+        0 0 1px rgba(255, 255, 255, .2);
+
+    /* フェードのスピードを少しゆっくり（.is-show で効く） */
+    transition: opacity .6s ease, transform .6s ease;
+}
+
+/* text1 をフェードイン（少し下から持ち上げる） */
+#prologue .k-text1.is-text {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .6s ease, transform .6s ease;
+}
+
+#prologue .k-text1.is-text.is-show {
+    opacity: 1;
+    transform: none;
+}
+
+
+
+/* text2 を赤くする */
+#prologue .k-text2.is-text {
+    color: #e53935;
+    /* 好みで色は変更OK */
+}
+
+
+/* video1：ビューポート内に完全表示（上下はみ出し防止） */
+#prologue .k-video1.is-video {
+    /* 中央寄せ（念のため） */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#prologue .k-video1.is-video video {
+    display: block;
+    /* どちらの向きの動画でも収まる指定 */
+    object-fit: contain;
+    /* 横は画面幅に依存しすぎないよう余白を確保 */
+    /* max-width: 92vw;
+    width: auto; */
+    /* 縦は“確実に”画面内に収める（モバイル対策で svh も指定） */
+    /* max-height: 80vh; */
+    /* デスクトップ等の基本 */
+    /* max-height: 80svh; */
+    /* iOS/Safari 新ビューポート */
+
+    /* まずは縦をめいっぱい使ってほしい */
+    height: 100vh;
+    height: 100svh;
+    /* Safari/iOSのアドレスバー考慮 */
+    /* アスペクト比は維持して横は自動 */
+    width: auto;
+    max-width: 100vw;
+
+    /* これでPCでもスマホでも基本は「縦いっぱい」になる */
+    max-height: 100vh;
+    max-height: 100svh;
+
+    /* お好みの演出（任意） */
+    /* border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .45); */
+    background: #000;
+    /* レターボックス部分の色 */
+}
+
+
+/* video1：入→維持→出（フェードアウトで締める） */
+#prologue .k-video1.is-video video {
+    /* 再生中の見た目はそのまま流用OK */
+    display: block;
+    object-fit: contain;
+    /* max-width: 92vw; */
+    max-width: 100vw;
+    width: auto;
+    /* max-height: 80vh;
+    max-height: 80svh; */
+    max-height: 100vh;
+    max-height: 100vh;
+    /* border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .45); */
+    background: #000;
+
+    /* ← ここがポイント：入→維持→出 のアニメ */
+    animation: prologueVideoInOut 3.6s ease-in-out both;
+    /* ↑ 3.6s は config の dur (3600ms) に合わせて調整 */
+}
+
+@keyframes prologueVideoInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.995);
+    }
+
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* フェードイン完了 */
+    85% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* 維持 */
+    100% {
+        opacity: 0;
+        transform: scale(0.995);
+    }
+
+    /* フェードアウトで締め */
+}
