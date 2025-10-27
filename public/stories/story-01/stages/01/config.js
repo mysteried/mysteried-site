@@ -15,10 +15,10 @@ export const STAGE = {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
-            { type: "text", key: "text1", text: "書庫の奥に、\n鍵がある。", dur: 3600 },
-            { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },
-            { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            { type: "text", key: "text2", text: "私は目を覚ました。\nすごくすごくさむさい\nここは一体どこなんだ", dur: 3600 }
+            { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
+            // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
+            // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
+            { type: "text", key: "text2", text: "1枚目のメモ", dur: 2000 }
         ]
     },
 
@@ -26,9 +26,9 @@ export const STAGE = {
 
     /*背景画像を指定　※開発時は木目 */
     background: {
-        // image: "../../../../assets/images/story-background/room.webp",
+        image: "../../../../assets/images/story-background/room.webp",
         // // 🔥汎用背景
-        image: "../../assets/images/background/main-background-2.webp",
+        // image: "../../assets/images/background/main-background-2.webp",
         // 🔥エピソード指定背景
         size: "cover",       // 任意: contain, auto など
         position: "center",  // 任意: 50% 35% など
@@ -36,7 +36,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note_東松山テスト.webp",
+        background: "../../assets/images/notes/note-1-1.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====

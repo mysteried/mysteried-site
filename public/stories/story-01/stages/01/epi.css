@@ -5,7 +5,7 @@
     /* 書体：好みで差し替えOK（例は明朝寄り） */
     font-family: "Noto Serif JP", "Hiragino Mincho ProN", "YuMincho", serif;
 
-    /* サイズ：画面に応じて伸縮 */
+    /* サイズ：画面に応じて伸縮　この clamp(最小値, 可変値, 最大値) は、　「画面サイズに応じて文字を伸縮させる」指定です。 */
     font-size: clamp(36px, 7vw, 80px);
     line-height: 1.2;
     letter-spacing: .06em;
@@ -35,9 +35,50 @@
 }
 
 
+/* text1：タイトル感（大きく・堂々と） */
+#prologue .k-text2.is-text {
+    /* 書体：好みで差し替えOK（例は明朝寄り） */
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", "YuMincho", serif;
+
+    /* サイズ：画面に応じて伸縮 */
+    font-size: clamp(28px, 5vw, 60px);
+    line-height: 1.2;
+    letter-spacing: .06em;
+    font-weight: 700;
+    /* タイトルっぽく太めに */
+    color: #fff;
+
+    /* 立体感（お好みで調整） */
+    text-shadow:
+        0 2px 12px rgba(0, 0, 0, .35),
+        0 0 1px rgba(255, 255, 255, .2);
+
+    /* フェードのスピードを少しゆっくり（.is-show で効く） */
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+/* text1 をフェードイン（少し下から持ち上げる） */
+#prologue .k-text2.is-text {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+#prologue .k-text2.is-text.is-show {
+    opacity: 1;
+    transform: none;
+}
+
+
+
+
+
+
+
+
 
 /* text2 を赤くする */
-#prologue .k-text2.is-text {
+#prologue .k-text4.is-text {
     color: #e53935;
     /* 好みで色は変更OK */
 }
