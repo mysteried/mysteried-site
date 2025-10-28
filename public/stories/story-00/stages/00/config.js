@@ -1,24 +1,24 @@
 // 各ステージ固有の設定だけを編集してください
 export const STAGE = {
     // ===== 基本 =====
-    id: "story01_stage02",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
+    id: "story01_stage01",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
     title: "胡椒を挽く男",
-    mode: "ar",                 // "ar" or "geo"
+    mode: "geo",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
-    nextUrl: "../03/stage.html?intro=1",
+    nextUrl: "../01/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
+    target: { lat: 35.94397, lng: 139.87031, radius_m: 200 },
 
     // intro: {
     //     onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
     //     skippable: true,
     //     steps: [
-    //         // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
+    //         { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
     //         // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
     //         // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-    //         { type: "text", key: "text2", text: "2枚目のメモ", dur: 2000 }
+    //         { type: "text", key: "text2", text: "1枚目のメモ", dur: 2000 }
     //     ]
     // },
 
@@ -26,9 +26,9 @@ export const STAGE = {
 
     /*背景画像を指定　※開発時は木目 */
     background: {
-        // image: "../../../../assets/images/story-background/room.webp",
+        image: "../../../../assets/images/story-background/開発.webp",
         // // 🔥汎用背景
-        image: "../../assets/images/background/main-background-2.webp",
+        // image: "../../assets/images/background/main-background-2.webp",
         // 🔥エピソード指定背景
         size: "cover",       // 任意: contain, auto など
         position: "center",  // 任意: 50% 35% など
@@ -36,7 +36,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note-1-2.webp",
+        background: "../../assets/images/notes/note-1-1-a.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
@@ -69,20 +69,19 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "hina", face: "smile", text: "マスオさん！\n快晴です！\n旅行日和、東松山を楽しみましょう" },
-            { who: "masu", face: "normal", text: "まぁ、\n探偵にも息抜きが必要か・・・" },
-            { who: "hina", face: "grumpy", text: "・・・\nそんなに仕事してます？" },
-            { who: "masu", face: "sweat", text: "まぁとにかく\nここで正解だったんだよね？" },
-            { who: "hina", face: "smile", text: "はい！\n次のメモのページに行けました" },
+            { who: "hina", face: "normal", text: "マスオさん！\nメジャーリーガーで有名な街で、\nレンガ貼りの駅ってどこですか？" },
+            { who: "masu", face: "confused", text: "と、突然どうしたんだい？" },
+            { who: "hina", face: "normal", text: "それから・・・\n小さな時計台があって、\n花の名前の通りがあるらしいです！" },
+            { who: "masu", face: "sweat", text: "ヒナタくん\nとにかく、まず君が何をしているか教えてくれないかい？" },
+            { who: "hina", face: "smile", text: "これです！" },
+            { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
+            { who: "masu", face: "sweat", text: "ミステリード？？\nなんだいこの怪しいサイトは？" },
+            { who: "hina", face: "smile", text: "この謎を解いて現地に行けばいいらしいですよ！" },
             { type: "note" },
-            { who: "masu", face: "thinking", text: "なるほど…\nまた謎解きだね\n・野球で有名\n・縁起がいい\n・門\n・キツネの像\nうん、これは簡単そうだね" },
-            { who: "hina", face: "thinking", text: "それよりマスオさん！\nせっかくここまで来たんですから観光です！\nそんなにストイックに謎解きをしてどうするんですか？" },
-            { who: "masu", face: "confused", text: "おいおい、ヒナタくん\n謎解きを始めたのは君の方だよ" },
-            { who: "hina", face: "excited", text: "じゃあ、まずは、名物の焼き鳥から！" },
-            { who: "masu", face: "confused", text: "・・・まあ、そうしようか" },
-            { type: "image", src: "../../assets/images/parts/parts-5.webp", alt: "ミステリード画面" },
-
-
+            { who: "hina", face: "thinking", text: "レンガの建物で、小さな時計台があって、\nホテルやカレー屋がある駅か・・・" },
+            { who: "masu", face: "sweat", text: "そんな沢山あってしぼれるわけないじゃないか・・・\nchatGPTにでも聞いてみればいいんじゃないかい？" },
+            { who: "hina", face: "grumpy", text: "マスオさん！\nそれでも探偵ですか！！" },
+            { who: "masu", face: "normal", text: "探偵ってのは解決することが仕事だからね。\n手段を選ぶことはしないんだよ" },
             { who: "hina", face: "grumpy", text: "じゃあ解決してください！\nどうせ仕事の依頼なんてないんだし" },
             { who: "masu", face: "sweat", text: "わかった、わかったよ\nじゃあ、もう一度その謎を見せてくれるかい？" },
             { type: "note" },
@@ -129,7 +128,6 @@ export const STAGE = {
             { who: "masu", face: "sweat", text: "分かったよ…\n今週末、その駅に行ってみようか" },
             { who: "hina", face: "excited", text: "!!\n気晴らし小旅行ですね！" },
             { who: "masu", face: "sweat", text: "おいおい…" },
-            { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
 
             { type: "note" }
         ]
