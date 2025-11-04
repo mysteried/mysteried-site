@@ -69,6 +69,7 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
+            { type: "image", src: "../../assets/images/parts/houshuu-test.webp", alt: "ミステリード画面" },
             { who: "masu", face: "normal", text: "また例のサイトが\n更新されて新しい謎が\n配信されているよ。" },
             { who: "hina", face: "smile", text: "マスオさん！\nまたやりましょうよ！どうせ暇でしょ！" },
             { who: "masu", face: "sweat", text: "おいおい、ヒナタくん……\nまあ、いいか。どんな謎か見せてくれるかい？" },

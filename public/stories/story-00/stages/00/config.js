@@ -69,6 +69,7 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
+            { type: "image", src: "../../assets/images/parts/houshuu-test.webp", alt: "ミステリード画面" },
             { who: "hina", face: "normal", text: "マスオさん！\nメジャーリーガーで有名な街で、\nレンガ貼りの駅ってどこですか？" },
             { who: "masu", face: "confused", text: "と、突然どうしたんだい？" },
             { who: "hina", face: "normal", text: "それから・・・\n小さな時計台があって、\n花の名前の通りがあるらしいです！" },

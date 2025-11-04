@@ -1,7 +1,7 @@
 // 各ステージ固有の設定だけを編集してください
 export const STAGE = {
     // ===== 基本 =====
-    id: "story01_stage02",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
+    id: "story01_stage03",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
     title: "胡椒を挽く男",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
@@ -36,7 +36,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note-1-2.webp",
+        background: "../../assets/images/notes/note-1-3.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
@@ -69,7 +69,8 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "hina", face: "smile", text: "マスオさん！\n快晴です！\n旅行日和、東松山を楽しみましょう" },
+            { type: "note" },
+            { who: "hina", face: "smile", text: "マスオさん！\n第三話です！" },
             { who: "masu", face: "normal", text: "まぁ、\n探偵にも息抜きが必要か・・・" },
             { who: "hina", face: "grumpy", text: "・・・\nそんなに仕事してます？" },
             { who: "masu", face: "sweat", text: "まぁとにかく\nここで正解だったんだよね？" },
