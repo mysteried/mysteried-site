@@ -83,7 +83,7 @@ export const STAGE = {
             { who: "hina", face: "thinking", text: "「キオクの素粒子」の部分です\n「キオク」だけでも問題ないように思えます" },
             { who: "masu", face: "thinking", text: "うん、僕もそう思う。\nそして、これがおそらく「街のどこかで見た言葉」なんじゃないだろうか？" },
             { who: "hina", face: "surprised", text: "ちょっとAIに聞いてみましょう！" },
-            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-12.webp", alt: "ミステリード画面" },
             { who: "hina", face: "surprised", text: "この人だ！\nそして、この記念碑が駅前にあるらしいです！" },
             { who: "masu", face: "normal", text: "どうやら、\nそこに探している「言葉」があるかもしれないね" },
             { type: "note" },
