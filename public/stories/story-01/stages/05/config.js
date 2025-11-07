@@ -15,7 +15,7 @@ export const STAGE = {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
-            // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
+            { type: "text", key: "text1", text: "『胡椒を挽く男』\nクリア！", dur: 3000 },
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
             // { type: "text", key: "text2", text: "クリア", dur: 2000 }
@@ -71,6 +71,14 @@ export const STAGE = {
         script: [
             { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "ミステリード画面" },
             { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "ミステリード画面" },
+            { who: "hina", face: "surprised", text: "マスオさん！\n無事に謎解き完了ですね" },
+            { who: "masu", face: "smile", text: "正直、ちょっと簡単だったね" },
+            { who: "hina", face: "normal", text: "いい息抜きになりましたね" },
+            { who: "masu", face: "normal", text: "東松山とか、\n遠くなくてもなかなか行く機会がないから\nちょうどよかったね" },
+            { who: "hina", face: "normal", text: "この写真を記念に送ってみますね！\n名前はイナミ探偵事務所で\n採用されれば表示されるらしいですよ" },
+            { who: "masu", face: "normal", text: "よし、\nせっかく来たわけだから、\nもうちょっと街を散策してから帰ろうか！" },
+            { who: "hina", face: "smile", text: "はい！" },
+            { type: "image", src: "../../assets/images/parts/parts-13.webp", alt: "ミステリード画面" },
         ]
     }
 };

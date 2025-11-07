@@ -11,16 +11,16 @@ export const STAGE = {
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
 
-    // intro: {
-    //     onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
-    //     skippable: true,
-    //     steps: [
-    //         // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
-    //         // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
-    //         // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-    //         { type: "text", key: "text2", text: "3枚目のメモ", dur: 2000 }
-    //     ]
-    // },
+    intro: {
+        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        skippable: true,
+        steps: [
+            // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
+            // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
+            // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
+            { type: "text", key: "text2", text: "3枚目のメモ", dur: 2000 }
+        ]
+    },
 
 
 
@@ -83,34 +83,34 @@ export const STAGE = {
             { who: "hina", face: "normal", text: "はい！" },
             { type: "note" },
             { who: "hina", face: "thinking", text: "探すべきは「大谷の伝説コース」ですね" },
-            { who: "masu", face: "thinking", text: "うん。\nまず目指すべきは大きな池のある二つの公園だね" },
+            { who: "masu", face: "thinking", text: "うん。\nそして、まず目指すべきは大きな池のある二つの公園だ" },
             { who: "hina", face: "normal", text: "地図で調べました\nきっとこのどちらかですよ" },
             { type: "image", src: "../../assets/images/parts/parts-7.webp", alt: "ミステリード画面" },
             { who: "masu", face: "thinking", text: "あえて「二つ」と書いてあるからそうだろうね\n問題は上沼公園か、下沼公園か。" },
             { who: "hina", face: "smile", text: "街歩きもかねて、\nまずはちょっと遠い上沼公園へ向かいましょう！\n違ったら下沼公園へ" },
             { who: "masu", face: "normal", text: "探偵は足で稼ぐ。\n分かってるじゃないか" },
-            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-8.webp", alt: "ミステリード画面" },
 
             { who: "hina", face: "normal", text: "着きました！\nここに「大谷の伝説コース」があるんですね！\n大谷選手が特訓してた場所とかですかね？" },
             { who: "masu", face: "thinking", text: "それにしてはこの場所はちょっと寂しいね…\n「池の上をわたり、ぐるりと一周」\nここから考えてみようか" },
             { who: "hina", face: "surprised", text: "あれじゃないですか？\n池の上に屋根のある休憩所があります！" },
             { who: "masu", face: "thinking", text: "あの東屋の中に看板や記念碑でもあるのかな？" },
             { who: "hina", face: "normal", text: "さっそく、探してみましょう！\n" },
-            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-9.webp", alt: "ミステリード画面" },
 
             { who: "masu", face: "thinking", text: "何もない…\n一周まわって歩いてみても見当たらない…" },
             { who: "hina", face: "thinking", text: "マスオさん\n「池の上をわたり」って表現が気になりませんか？" },
             { who: "masu", face: "thinking", text: "ん？\nどういうことだい？" },
             { who: "hina", face: "thinking", text: "「橋を渡って」とかなら分かるんですが…\n下沼公園を調べてみると\nこんな画像が出てきます" },
-            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-11.webp", alt: "ミステリード画面" },
             { who: "masu", face: "thinking", text: "つまり…" },
             { who: "hina", face: "thinking", text: "ここでちょっとだけ休憩して、\n下沼公園へ向かいましょう！" },
 
-            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-10.webp", alt: "ミステリード画面" },
             { who: "hina", face: "smile", text: "着いた！\nここですね！" },
             { who: "masu", face: "normal", text: "今日は晴れてて良かったね！\n歩くにはちょうどいい距離だったかも" },
             { who: "hina", face: "normal", text: "はい！\nでは、メモの通りにやってみましょう" },
-            { who: "masu", face: "normal", text: "あの飛び石を渡って、\n公園をぐるっと一周歩くんだね" },
+            { who: "masu", face: "normal", text: "あの石を渡って、\n公園をぐるっと一周歩くんだね" },
             { who: "hina", face: "thinking", text: "もしかして、\nこれ自体が「大谷の伝説コース」だったりして…" },
             { type: "note" },
         ]

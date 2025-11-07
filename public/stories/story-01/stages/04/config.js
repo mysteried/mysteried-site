@@ -18,7 +18,7 @@ export const STAGE = {
             // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            // { type: "text", key: "text2", text: "最後のメモ", dur: 2000 }
+            { type: "text", key: "text2", text: "最後のメモ", dur: 2000 }
         ]
     },
 
@@ -71,7 +71,7 @@ export const STAGE = {
         script: [
             { who: "hina", face: "thinking", text: "ここが「大谷の伝説コース」…" },
             { who: "masu", face: "normal", text: "さすがに、\n野球選手の大谷じゃなかったね" },
-            { who: "hina", face: "thinking", text: "しかもこれ、\n「おおや」って読むらしいです\nでも、見つけたんでOKです！\n最後のメモにいきましょう！" },
+            { who: "hina", face: "thinking", text: "しかもこれ、\n「おおや」って読むらしいです\nでも、見つけたんでOKです！\n次が最後のメモです！" },
             { type: "note" },
             { who: "masu", face: "confused", text: "彼が街のどこかで見た言葉…\nヒントが少ないなぁ" },
             { who: "hina", face: "confused", text: "そうですね…\n街のどこかって、\nしらみ潰しに探さないといけないですよね…" },

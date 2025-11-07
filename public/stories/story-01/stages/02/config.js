@@ -11,16 +11,16 @@ export const STAGE = {
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
 
-    // intro: {
-    //     onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
-    //     skippable: true,
-    //     steps: [
-    //         // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
-    //         // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
-    //         // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-    //         { type: "text", key: "text2", text: "2枚目のメモ", dur: 2000 }
-    //     ]
-    // },
+    intro: {
+        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        skippable: true,
+        steps: [
+            // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
+            // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
+            // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
+            { type: "text", key: "text2", text: "2枚目のメモ", dur: 2000 }
+        ]
+    },
 
 
 
@@ -69,31 +69,31 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "hina", face: "smile", text: "マスオさん！\n快晴です！\n旅行日和、東松山を楽しみましょう" },
-            { who: "masu", face: "normal", text: "まぁ、\n探偵にも息抜きが必要か・・・" },
+            { who: "hina", face: "smile", text: "マスオさん！\n快晴です！\n東松山を楽しみましょう" },
+            { who: "masu", face: "normal", text: "そうだね、\n日頃のハードな日々をリフレッシュだ" },
             { who: "hina", face: "grumpy", text: "・・・\nそんなに仕事してます？" },
             { who: "masu", face: "sweat", text: "まぁとにかく\nここで正解だったんだよね？" },
-            { who: "hina", face: "smile", text: "はい！\n次のメモのページに行けました" },
+            { who: "hina", face: "smile", text: "はい！\n次のメモを見れました" },
             { type: "note" },
             { who: "masu", face: "thinking", text: "なるほど…\nまた謎解きだね\n・野球で有名\n・縁起がいい\n・門\n・キツネの像\nうん、これは簡単そうだね\nちょっと調べてみよう" },
-            { who: "hina", face: "thinking", text: "それよりマスオさん！\nせっかくここまで来たんですから観光です！\nそんなにストイックに謎解きをしてどうするんですか？" },
+            { who: "hina", face: "thinking", text: "マスオさん！\n謎解きよりも今は観光です" },
             { who: "masu", face: "confused", text: "おいおい、ヒナタくん\n謎解きを始めたのは君の方だよ" },
-            { who: "hina", face: "excited", text: "じゃあ、まずは、名物の焼き鳥から！" },
+            { who: "hina", face: "excited", text: "まずは、名物の焼き鳥から！" },
             { who: "masu", face: "confused", text: "・・・まあ、そうしようか" },
             { type: "image", src: "../../assets/images/parts/parts-5.webp", alt: "ミステリード画面" },
             { who: "hina", face: "smile", text: "豚の焼き鳥おいしかったですね！" },
             { who: "masu", face: "normal", text: "焼き鳥…\nビール飲みたかったな" },
-            { who: "hina", face: "grumpy", text: "車なんですからダメですよ！\nそんなことより次の場所を探しましょう" },
-            { who: "masu", face: "sweat", text: "わかった、わかったよ\nじゃあ、もう一度その謎を見せてくれるかい？" },
+            { who: "hina", face: "grumpy", text: "車なんですからダメですよ！\n探偵モードに切り替えて、\n次のポイントを探しましょう" },
+            { who: "masu", face: "sweat", text: "・・・わかったよ\nじゃあ、もう一度そのナゾを見せてくれるかい？" },
             { type: "note" },
-            { who: "hina", face: "normal", text: "これは分かりました\n門は鳥居、つまりこれは神社です！\n調べたら近くに野球と縁のある神社もあるみたいです" },
+            { who: "hina", face: "normal", text: "これは分かりました\n門は鳥居、つまりこれは神社です！\n近くに野球と縁のある神社もあるみたいです" },
             { who: "masu", face: "normal", text: "うん、\nそれにキツネの像ってのは稲荷神社のことだろうね" },
             { who: "hina", face: "thinking", text: "この人、\n記憶を失くしたのに大谷選手は覚えているんですね" },
             { who: "masu", face: "thinking", text: "活躍して、沢山ニュースになるから\n記憶に残ってるんじゃないかい？\nまあ、とにかく行ってみよう" },
             { type: "image", src: "../../assets/images/parts/parts-6.webp", alt: "ミステリード画面" },
             { who: "hina", face: "surprised", text: "おお！\n厳かな神社ですね" },
             { who: "masu", face: "normal", text: "よし、さっそく探してみよう\n「小さくて可愛い二匹のキツネ」だね" },
-            { who: "hina", face: "thinking", text: "はい\nそれを見つけたらこのARカメラを向けるらしいです\n" },
+            { who: "hina", face: "thinking", text: "はい、\n見つけたらこのARカメラを\n向けるらしいです\n" },
             { who: "masu", face: "thinking", text: "ヒントらしいヒントはあまりないね\n「木の前に並ぶ」ってくらいかな" },
             { who: "hina", face: "thinking", text: "これは足で探すしかないですね\nとにかく探してみましょう" },
             { type: "note" }
