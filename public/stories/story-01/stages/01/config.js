@@ -7,15 +7,14 @@ export const STAGE = {
     variant: "plain",            // "plain" or "chat"
     // answer: "サンプル",　🔥本番では削除する
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
-    // nextUrl: "../02h/stage.html?intro=1",🔥本番では削除する
-    nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",  // Base64 of "../02h/stage.html?intro=1"
-
+    // nextUrl: "../02/stage.html?intro=1",🔥本番では削除する
+    nextUrlEncoded: "Li4vMDIvc3RhZ2UuaHRtbD9pbnRybz0x",  // Base64 of "../02/stage.html?intro=1"
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
     // target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
-    // 武蔵浦和　MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==
-    targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
+    // targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",　//東松山
+    targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // 武蔵浦和　
 
     intro: {
         onceKey: "prologue:story01:01", // 一度だけ再生したいなら有効化

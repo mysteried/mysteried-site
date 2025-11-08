@@ -13,8 +13,8 @@ export const STAGE = {
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
     // target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
-    // 武蔵浦和　MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==
-    targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
+    // targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",　//東松山
+    targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // 武蔵浦和　
 
     intro: {
         onceKey: "prologue:story01:01", // 一度だけ再生したいなら有効化

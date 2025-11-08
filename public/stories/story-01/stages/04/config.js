@@ -7,7 +7,8 @@ export const STAGE = {
     variant: "plain",            // "plain" or "chat"
     // answer: "サンプル",　🔥本番では削除する
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
-    nextUrl: "../05/stage.html?intro=1",
+    // nextUrl: "../05/stage.html?intro=1",
+    nextUrlEncoded: "Li4vMDUvc3RhZ2UuaHRtbD9pbnRybz0x",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
@@ -16,7 +17,7 @@ export const STAGE = {
     targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
 
     intro: {
-        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        onceKey: "prologue:story01:04", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
             // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
