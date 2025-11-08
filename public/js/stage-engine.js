@@ -195,6 +195,21 @@ if (hintOverlay && hintBtn && hintCloseBtn) {
 // (ARモードの答え判定ブロックは削除)
 
 // ====== 位置情報処理 ======
+
+// ====== ユーティリティ：SHA-256（Hex） ======
+async function sha256Hex(str) {
+    const enc = new TextEncoder();
+    const data = enc.encode(str);
+    const buf = await crypto.subtle.digest('SHA-256', data);
+    const bytes = new Uint8Array(buf);
+    let hex = '';
+    for (let i = 0; i < bytes.length; i++) {
+        const h = bytes[i].toString(16).padStart(2, '0');
+        hex += h;
+    }
+    return hex;
+}
+
 let geoOK = false;
 // クリア済みUI適用（GEO再開時に位置判定をスキップ）
 function applyClearedGeoState() {
@@ -301,19 +316,40 @@ function initArMode() {
             window.location.href = STAGE.nextUrl;
         });
     } else {
-        nextBtn.addEventListener('click', () => {
-            const val = (answerInput?.value || '').trim();
-            if (!val) {
+        nextBtn.addEventListener('click', async () => {
+            const valRaw = (answerInput?.value || '').trim();
+            if (!valRaw) {
                 setMsg('パスワードを入力してください', 'error');
                 return;
             }
-            if (val === STAGE.answer) {
-                // クリア記録
-                try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
-                setMsg('正解 次へ進みます…', 'success');
-                setTimeout(() => { window.location.href = STAGE.nextUrl; }, 3000);
-            } else {
-                setMsg('パスワードが違います 『❓』でヒントを確認できます', 'error');
+
+            try {
+                let isOk = false;
+
+                // 1) ハッシュ比較を優先（config に answerHash がある場合）
+                if (typeof STAGE.answerHash === 'string' && STAGE.answerHash.length > 0) {
+                    // 入力値を SHA-256 でハッシュ化して比較
+                    const hex = await sha256Hex(valRaw);
+                    isOk = (hex === STAGE.answerHash);
+                }
+
+                // 2) フォールバック：生比較（answer が残っている場合のみ）
+                if (!isOk && typeof STAGE.answer === 'string' && STAGE.answer.length > 0) {
+                    isOk = (valRaw === STAGE.answer);
+                }
+
+                if (isOk) {
+                    try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
+                    setMsg('正解 次へ進みます…', 'success');
+                    nextBtn.disabled = true;
+                    setTimeout(() => { window.location.href = STAGE.nextUrl; }, 2000);
+                } else {
+                    setMsg('パスワードが違います 『❓』でヒントを確認できます', 'error');
+                }
+            } catch (e) {
+                // 予期せぬ失敗時は安全側でエラー表示
+                setMsg('判定に失敗しました。入力を確認してください。', 'error');
+                console.error('answer check failed:', e);
             }
         });
     }
