@@ -4,21 +4,34 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!--🔥変更 -->
     <title>ミステリード – 謎解きの旅</title>
-    <link rel="icon" href="./favicon.ico" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="./css/base.css" />
     <link rel="stylesheet" href="./css/home.css" />
 
     <!-- Primary SEO -->
-    <meta name="description" content="ミステリードは、好きな週末に自分のペースで楽しめる“旅の謎解き”。街へ出て、手がかりを集め、現地で答えを見つけよう。">
+    <!--🔥変更 -->
+    <meta name="description" content="決まった時間も、集合場所もない。気軽に自由に参加できる謎解きの旅、ミステリード。">
+    <!-- 以下は正式にドメインを取ったら修正 -->
+    <!--🔥変更 -->
     <link rel="canonical" href="https://mysteried.jp/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="ミステリード">
     <meta property="og:type" content="website">
+    <!--🔥変更 -->
     <meta property="og:title" content="ミステリード – 謎解きの旅">
-    <meta property="og:description" content="好きな週末に、自分のペースで楽しむ“旅の謎解き”。街へ出て、手がかりを集め、現地で答えを見つけよう。">
+    <meta property="og:description" content="決まった時間も、集合場所もない。気軽に自由に参加できる謎解きの旅、ミステリード。">
     <meta property="og:url" content="https://mysteried.jp/">
+    <!-- 公開する時までに、WEBP＋JPGの2枚を用意し、OGは複数記述、TwitterはJPG/PNGを指す。 5mb以内で-->
+    <!-- 先に WEBP、次に JPG を並べる（順序重要） -->
+    <meta property="og:image" content="https://mysteried.jp/assets/ogp/ogp_main.webp">
     <meta property="og:image" content="https://mysteried.jp/assets/ogp/ogp_main.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -26,41 +39,43 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ミステリード – 街で解く物語">
-    <meta name="twitter:description" content="好きな週末に、自分のペースで楽しむ“旅の謎解き”。街へ出て、手がかりを集め、現地で答えを見つけよう。">
-    <meta name="twitter:image" content="https://mysteried.jp/assets/ogp/ogp_main.jpg">
+    <!--🔥変更 -->
+    <meta name="twitter:title" content="ミステリード – 謎解きの旅">
+    <meta name="twitter:description" content="決まった時間も、集合場所もない。気軽に自由に参加できる謎解きの旅、ミステリード。">
+    <meta name="twitter:image" content="https://mysteried.jp/assets/ogp/ogp_main.jpg">　　<!-- ← JPG/PNG推奨 -->
     <meta name="twitter:image:alt" content="ミステリードのキービジュアル">
     <meta name="twitter:site" content="@mysteried_hq">
 
-    <!-- PWA / Icons (必要に応じてパスを調整) -->
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-    <!-- 既存の favicon.ico はそのままでもOK -->
+    <!-- 入れておくメリット: 置いても害がなく、将来 PWA 化するときの下地になる。iOS/Android のホーム画面追加でアイコンや表示名を拾ってくれる。 -->
+    <!-- <link rel="manifest" href="/site.webmanifest"> -->
 
     <!-- Mobile polish -->
     <meta name="format-detection" content="telephone=no">
+    <!-- safariでの見え方を調整してくれる -->
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!-- Preconnect (もし外部CDNを使う場合は有効化) -->
-    <!-- <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin> -->
-
-    <!-- JSON-LD: Website (構造化データ) -->
+    <!-- 「このサイトはこういうサイトですよ」「サイト内検索もありますよ」を機械に伝える“名刺” -->
+    <!--🔥他のページでは不要 -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ミステリード",
-      "url": "https://mysteried.jp/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://mysteried.jp/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "ミステリード",
+  "alternateName": "Mysteried",
+  "url": "https://mysteried.jp/",
+  "inLanguage": "ja",
+  "sameAs": [
+    "https://x.com/mysteried_hq",
+    "https://www.youtube.com/@ミステリード"
+  ],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://mysteried.jp/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
 </head>
 
 <body class="page-home">
