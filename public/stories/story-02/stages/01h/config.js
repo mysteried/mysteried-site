@@ -5,11 +5,15 @@ export const STAGE = {
     title: "思い出のアルバム",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
-    answer: "蓮田駅",
+    // 蓮田駅
+    answerHash: "2e3c77ff0e651576cd263df196850c3962445e5476e71dc45972cdb553eeceec",
     nextUrl: "../02h/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
+    // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
+    // target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
+    // 武蔵浦和　MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==
+    targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
 
     intro: {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化

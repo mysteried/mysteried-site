@@ -17,7 +17,7 @@ export const STAGE = {
     targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
 
     intro: {
-        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        onceKey: "prologue:story01:01", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
             { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
