@@ -277,7 +277,7 @@ function initGeoMode() {
         const delay = isFirst ? 3000 : 0; // 初回は3秒見せる／再開は即
 
         if (isFirst) {
-            setMsg('到着を確認 次へ進みます…', 'success', delay);
+            setMsg('到着を確認 次へ進みます…', 'success');
             try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
         } else {
             setMsg('クリア済み 次へ進めます', 'success', 0);
