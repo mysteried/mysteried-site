@@ -38,10 +38,10 @@ body.page-story {
     min-height: 100vh;
     /* ← 重要 */
 
-    /* この以下3行をいれるとリサイズのブレが防げる */
-    background-position: center top;
+    /* この以下3行をいれるとリサイズのブレが防げる　これはスマホのレスポンシブル対応で追加済み */
+    /* background-position: center top;
     background-size: auto 100vh;
-    background-size: auto 100svh;
+    background-size: auto 100svh; */
 }
 
 /* わずかなビネットで紙とUIを浮かせる */
@@ -497,6 +497,14 @@ footer {
 /* === モバイル幅は従来通り（縦積み＋「次へ進む」は全幅） === */
 /* ==== スマホ最適化（高さ・余白をコンパクトに／セーフエリア対応） ==== */
 @media (max-width: 480px) {
+
+
+    body.page-story {
+        /* この以下3行をいれるとリサイズのブレが防げる */
+        background-position: center top;
+        background-size: auto 100vh;
+        background-size: auto 100svh;
+    }
 
     /* フッター全体の調整 */
     #ops-footer {
