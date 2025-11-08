@@ -1,26 +1,47 @@
 // 各ステージ固有の設定だけを編集してください
 export const STAGE = {
     // ===== 基本 =====
-    id: "story00_stage01",
-    title: "辿り着いた先",
+    id: "story01_stage02",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
+    title: "胡椒を挽く男",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
-    nextUrl: "../02h/stage.html?intro=1",
+    nextUrl: "../03h/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 35.85706, lng: 139.61060, radius_m: 200 },
+    target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
 
-    // ===== タイトル演出 =====
-    introDuration: 2500,
-    introOnceKey: "introPlayed_story00",
+    intro: {
+        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        skippable: true,
+        steps: [
+            // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
+            // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
+            // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
+            { type: "text", key: "text2", text: "2枚目のメモ", dur: 2000 }
+        ]
+    },
 
-    // 次へ進むのメッセージをここでも管理できる
-    geoSuccessText: "到着だ！この先に向かおう…",
-    geoSuccessDelayMs: 800,
 
-    // ===== 会話UI（variant: "chat" の時だけ使用）=====
+
+    /*背景画像を指定　※開発時は木目 */
+    background: {
+        // image: "../../../../assets/images/story-background/room.webp",
+        // // 🔥汎用背景
+        image: "../../assets/images/background/main-background-2.webp",
+        // 🔥エピソード指定背景
+        size: "cover",       // 任意: contain, auto など
+        position: "center",  // 任意: 50% 35% など
+    },
+
+    // notepaperを指定
+    note: {
+        background: "../../assets/images/notes/note-1-2.webp",
+    },
+
+    // ===== 会話UI（variant: "chat" の時だけ使用　=====
     chat: {
+        avatarBg: "../../../../assets/images/avatars/bg-blue.webp",
         avatars: {
             // 画像パスは /public からの相対…ではなく、stage.html から見た相対でもOK
             // ここでは stage.html からの相対で書いています
@@ -48,14 +69,34 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "masu", face: "normal", text: "また例のサイトが\n更新されて新しい謎が\n配信されているよ。" },
-            { who: "hina", face: "smile", text: "マスオさん！\nまたやりましょうよ！どうせ暇でしょ！" },
-            { who: "masu", face: "sweat", text: "おいおい、ヒナタくん……\nまあ、いいか。どんな謎か見せてくれるかい？" },
+            { who: "hina", face: "smile", text: "マスオさん！\n快晴です！\n東松山を楽しみましょう" },
+            { who: "masu", face: "normal", text: "そうだね、\n日頃のハードな日々をリフレッシュだ" },
+            { who: "hina", face: "grumpy", text: "・・・\nそんなに仕事してます？" },
+            { who: "masu", face: "sweat", text: "まぁとにかく\nここで正解だったんだよね？" },
+            { who: "hina", face: "smile", text: "はい！\n次のメモを見れました" },
             { type: "note" },
-            { who: "hina", face: "normal", text: "“フランスの1800年。世界を変えた一冊。”…本のことを指してそうですね。" },
-            { who: "masu", face: "normal", text: "現地で本を探して、ARで手がかりを確認してみよう。" },
-            { who: "masu", face: "normal", text: "部屋から脱出・・・" },
-            { who: "hina", face: "smile", text: "何か分かりました？？" }
+            { who: "masu", face: "thinking", text: "なるほど…\nまた謎解きだね\n・野球で有名\n・縁起がいい\n・門\n・キツネの像\nうん、これは簡単そうだね\nちょっと調べてみよう" },
+            { who: "hina", face: "thinking", text: "マスオさん！\n謎解きよりも今は観光です" },
+            { who: "masu", face: "confused", text: "おいおい、ヒナタくん\n謎解きを始めたのは君の方だよ" },
+            { who: "hina", face: "excited", text: "まずは、名物の焼き鳥から！" },
+            { who: "masu", face: "confused", text: "・・・まあ、そうしようか" },
+            { type: "image", src: "../../assets/images/parts/parts-5.webp", alt: "ミステリード画面" },
+            { who: "hina", face: "smile", text: "豚の焼き鳥おいしかったですね！" },
+            { who: "masu", face: "normal", text: "焼き鳥…\nビール飲みたかったな" },
+            { who: "hina", face: "grumpy", text: "車なんですからダメですよ！\n探偵モードに切り替えて、\n次のポイントを探しましょう" },
+            { who: "masu", face: "sweat", text: "・・・わかったよ\nじゃあ、もう一度そのナゾを見せてくれるかい？" },
+            { type: "note" },
+            { who: "hina", face: "normal", text: "これは分かりました\n門は鳥居、つまりこれは神社です！\n近くに野球と縁のある神社もあるみたいです" },
+            { who: "masu", face: "normal", text: "うん、\nそれにキツネの像ってのは稲荷神社のことだろうね" },
+            { who: "hina", face: "thinking", text: "この人、\n記憶を失くしたのに大谷選手は覚えているんですね" },
+            { who: "masu", face: "thinking", text: "活躍して、沢山ニュースになるから\n記憶に残ってるんじゃないかい？\nまあ、とにかく行ってみよう" },
+            { type: "image", src: "../../assets/images/parts/parts-6.webp", alt: "ミステリード画面" },
+            { who: "hina", face: "surprised", text: "おお！\n厳かな神社ですね" },
+            { who: "masu", face: "normal", text: "よし、さっそく探してみよう\n「小さくて可愛い二匹のキツネ」だね" },
+            { who: "hina", face: "thinking", text: "はい、\n見つけたらこのARカメラを\n向けるらしいです\n" },
+            { who: "masu", face: "thinking", text: "ヒントらしいヒントはあまりないね\n「木の前に並ぶ」ってくらいかな" },
+            { who: "hina", face: "thinking", text: "これは足で探すしかないですね\nとにかく探してみましょう" },
+            { type: "note" }
         ]
     }
 };

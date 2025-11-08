@@ -24,12 +24,9 @@
         <div id="notePaper" class="note-paper">
             <div class="note-bg"></div>
             <!-- 画像は作る方式にしたためコメントアウト　以下を活かせば文字をこっちで打ち込める -->
-            <!-- <div class="note-text">
-                <p class="note-line">私はゴジラ</p>
-                <p class="note-line">東、南、西、北、中、無、美、園・・・
-                </p>
-                <p class="note-line">ではない駅だ。</p>
-            </div> -->
+            <div class="note-text">
+                <p class="note-line"></p>
+            </div>
         </div>
     </main>
 
@@ -38,8 +35,8 @@
         <!-- ① 指令（説明のみ ＋ ステータスメッセージ統合） -->
         <div class="ops-desc-row">
             <p id="opsMsg" class="ops-desc" role="status" aria-live="polite">
-                彼が降りた駅はどこでしょうか?<br>
-                その駅に辿り着き到着確認を押してください。
+                彼が街のどこかで見た言葉。<br>
+                その言葉を探し出し、ARカメラを向けてください。
             </p>
         </div>
 
@@ -73,7 +70,7 @@
         <div class="hint-dialog" role="dialog" aria-modal="true" aria-labelledby="hintTitle"
             aria-describedby="hintBody">
             <h2 id="hintTitle" class="hint-title">ヒント</h2>
-            <p id="hintBody" class="hint-body">日本人ではないメジャーリーガーで話題になった街。<br>牡丹の名前がつく通りがある街。</p>
+            <p id="hintBody" class="hint-body">キオクの素粒子。<br>素粒子と東松山に関連はあるのだろうか？<br>ノーベル物理学賞の記念碑が駅前に・・・</p>
             <button id="hintCloseBtn" class="btn close" type="button" aria-label="ヒントを閉じる">閉じる</button>
         </div>
     </div>

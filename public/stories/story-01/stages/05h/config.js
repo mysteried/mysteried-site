@@ -71,13 +71,13 @@ export const STAGE = {
         script: [
             { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "ミステリード画面" },
             { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "ミステリード画面" },
-            // { who: "hina", face: "surprised", text: "マスオさん！\n無事に謎解き完了ですね" },
-            // { who: "masu", face: "smile", text: "正直、ちょっと簡単だったね" },
-            // { who: "hina", face: "normal", text: "いい息抜きになりましたね" },
-            // { who: "masu", face: "normal", text: "東松山とか、\n遠くなくてもなかなか行く機会がないから\nちょうどよかったね" },
-            // { who: "hina", face: "normal", text: "この写真を記念に送ってみますね！\n名前はイナミ探偵事務所で\n採用されれば表示されるらしいですよ" },
-            // { who: "masu", face: "normal", text: "よし、\nせっかく来たわけだから、\nもうちょっと街を散策してから帰ろうか！" },
-            // { who: "hina", face: "smile", text: "はい！" },
+            { who: "hina", face: "surprised", text: "マスオさん！\n無事に謎解き完了ですね" },
+            { who: "masu", face: "smile", text: "正直、ちょっと簡単だったね" },
+            { who: "hina", face: "normal", text: "いい息抜きになりましたね" },
+            { who: "masu", face: "normal", text: "東松山とか、\n遠くなくてもなかなか行く機会がないから\nちょうどよかったね" },
+            { who: "hina", face: "normal", text: "この写真を記念に送ってみますね！\n名前はイナミ探偵事務所で\n採用されれば表示されるらしいですよ" },
+            { who: "masu", face: "normal", text: "よし、\nせっかく来たわけだから、\nもうちょっと街を散策してから帰ろうか！" },
+            { who: "hina", face: "smile", text: "はい！" },
             { type: "image", src: "../../assets/images/parts/parts-13.webp", alt: "ミステリード画面" },
         ]
     }

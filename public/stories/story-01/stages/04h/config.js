@@ -1,12 +1,12 @@
 // 各ステージ固有の設定だけを編集してください
 export const STAGE = {
     // ===== 基本 =====
-    id: "story01_stage05",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
+    id: "story01_stage04",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
     title: "胡椒を挽く男",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answer: "サンプル",
-    nextUrl: "../05/stage.html?intro=1",
+    nextUrl: "../05h/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
@@ -15,10 +15,10 @@ export const STAGE = {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
         skippable: true,
         steps: [
-            { type: "text", key: "text1", text: "『胡椒を挽く男』\nクリア！", dur: 3000 },
+            // { type: "text", key: "text1", text: "胡椒を挽く男", dur: 3000 },
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            // { type: "text", key: "text2", text: "クリア", dur: 2000 }
+            { type: "text", key: "text2", text: "最後のメモ", dur: 2000 }
         ]
     },
 
@@ -69,16 +69,24 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "ミステリード画面" },
-            { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "ミステリード画面" },
-            // { who: "hina", face: "surprised", text: "マスオさん！\n無事に謎解き完了ですね" },
-            // { who: "masu", face: "smile", text: "正直、ちょっと簡単だったね" },
-            // { who: "hina", face: "normal", text: "いい息抜きになりましたね" },
-            // { who: "masu", face: "normal", text: "東松山とか、\n遠くなくてもなかなか行く機会がないから\nちょうどよかったね" },
-            // { who: "hina", face: "normal", text: "この写真を記念に送ってみますね！\n名前はイナミ探偵事務所で\n採用されれば表示されるらしいですよ" },
-            // { who: "masu", face: "normal", text: "よし、\nせっかく来たわけだから、\nもうちょっと街を散策してから帰ろうか！" },
-            // { who: "hina", face: "smile", text: "はい！" },
-            { type: "image", src: "../../assets/images/parts/parts-13.webp", alt: "ミステリード画面" },
+            { who: "hina", face: "thinking", text: "ここが「大谷の伝説コース」…" },
+            { who: "masu", face: "normal", text: "さすがに、\n野球選手の大谷じゃなかったね" },
+            { who: "hina", face: "thinking", text: "しかもこれ、\n「おおや」って読むらしいです\nでも、見つけたんでOKです！\n次が最後のメモです！" },
+            { type: "note" },
+            { who: "masu", face: "confused", text: "彼が街のどこかで見た言葉…\nヒントが少ないなぁ" },
+            { who: "hina", face: "confused", text: "そうですね…\n街のどこかって、\nしらみ潰しに探さないといけないですよね…" },
+            { who: "masu", face: "thinking", text: "彼の足取りを追うなら、\nこのまま駅に向かって焼き鳥を食べて、\n電車に乗ったんだよね？" },
+            { who: "hina", face: "thinking", text: "はい。\nそれに、他のルートも私たちとほとんど一緒ですよ\n公園も２つ行きました" },
+            { who: "masu", face: "thinking", text: "「街歩きや旅はキオクの素粒子と私を結ぶかけ橋」\nこれ、気にならないかい？" },
+            { who: "hina", face: "thinking", text: "確かに…\n気になります。" },
+            { who: "masu", face: "thinking", text: "どこがおかしいかな？" },
+            { who: "hina", face: "thinking", text: "「キオクの素粒子」の部分です\n「キオク」だけでも問題ないように思えます" },
+            { who: "masu", face: "thinking", text: "うん、僕もそう思う。\nそして、これがおそらく「街のどこかで見た言葉」なんじゃないだろうか？" },
+            { who: "hina", face: "surprised", text: "ちょっとAIに聞いてみましょう！" },
+            { type: "image", src: "../../assets/images/parts/parts-12.webp", alt: "ミステリード画面" },
+            { who: "hina", face: "surprised", text: "この人だ！\nそして、この記念碑が駅前にあるらしいです！" },
+            { who: "masu", face: "normal", text: "どうやら、\nそこに探している「言葉」があるかもしれないね" },
+            { type: "note" },
         ]
     }
 };

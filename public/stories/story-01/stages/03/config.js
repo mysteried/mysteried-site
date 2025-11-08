@@ -4,7 +4,7 @@ export const STAGE = {
     id: "story01_stage03",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
     title: "胡椒を挽く男",
     mode: "ar",                 // "ar" or "geo"
-    variant: "chat",            // "plain" or "chat"
+    variant: "plain",            // "plain" or "chat"
     answer: "サンプル",
     nextUrl: "../04/stage.html?intro=1",
 
