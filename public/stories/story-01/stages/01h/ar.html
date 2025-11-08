@@ -234,7 +234,7 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ../../assets/targets/targets-1.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ../../assets/targets/targets-yakyu-b.mind; filterMinCF:0.001; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
@@ -266,6 +266,9 @@
             const resumeBtn = document.getElementById('resumeBtn');
             const copyBtn = document.getElementById('copyBtn');
 
+            // 🔥ここも毎回設定　　ターミナルで変換してから
+            const encodedReward = "44K144Oz44OX44Or"; // "REWARD-0416"
+
             // title,message,codeをまとめてオブジェクトで渡せるようにしている　= {} は「何も渡されなかったときは空オブジェクト」とする保険。
             function showOverlay({ title = 'ヒント', message = '', code = '' } = {}) {
                 // タイトル部分を書き換える　ここによりtitleに中身がはいる　JSは、要素が存在しなければ null になる　
@@ -284,6 +287,16 @@
             // オーバーレイ全体を隠す
             function hideOverlay() {
                 overlayEl && overlayEl.classList.add('hidden');
+            }
+
+            // Base64 → UTF-8対応デコード
+            function decodeBase64UTF8(str) {
+                try {
+                    return decodeURIComponent(escape(atob(str)));
+                } catch (e) {
+                    console.error('Base64 decode failed:', e);
+                    return '(デコード失敗)';
+                }
             }
 
             if (resumeBtn) {
@@ -339,12 +352,12 @@
                     console.log('[MindAR] targetFound');
 
                     if (hint) hint.textContent = 'ターゲット検出！';
-                    // // 🔥ここは毎回変更をする
+                    // // 🔥ここのmessageを変更する
                     setTimeout(() => {
                         showOverlay({
                             title: 'ターゲットを発見',
                             message: 'メモの対象を発見。\n彼は野球が好きなのだろうか？',
-                            code: 'REWARD-0416'
+                            code: decodeBase64UTF8(encodedReward)
                         });
                     }, 1000); // 1秒後に表示
                 });
