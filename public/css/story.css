@@ -37,6 +37,11 @@ body.page-story {
     /* iOS Safari 対応 */
     min-height: 100vh;
     /* ← 重要 */
+
+    /* この以下3行をいれるとリサイズのブレが防げる */
+    background-position: center top;
+    background-size: auto 100vh;
+    background-size: auto 100svh;
 }
 
 /* わずかなビネットで紙とUIを浮かせる */
@@ -128,8 +133,8 @@ footer {
     display: grid;
     grid-template-rows: auto auto auto;
     gap: 10px;
-    backdrop-filter: blur(14px) brightness(0.9) saturate(160%);
-    background: rgba(255, 255, 255, .40);
+    backdrop-filter: blur(28px) brightness(0.9) saturate(160%);
+    background: rgba(255, 255, 255, .65);
     border-top: 1px solid rgba(255, 255, 255, .3);
     box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.15);
 }
