@@ -3,7 +3,7 @@ export const STAGE = {
     // ===== 基本 =====
     id: "story01_stage01",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
     title: "胡椒を挽く男",
-    mode: "ar",                 // "ar" or "geo"
+    mode: "geo",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     // answer: "サンプル",　🔥本番では削除する
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
@@ -11,7 +11,10 @@ export const STAGE = {
     nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",  // Base64 of "../02h/stage.html?intro=1"
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
+    // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
+    // target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
+    // 武蔵浦和　MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==
+    targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
 
     intro: {
         onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化

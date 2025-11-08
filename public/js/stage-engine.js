@@ -32,6 +32,26 @@ function getNextUrl() {
     return STAGE.nextUrl || '';
 }
 
+// ===== 目的地（Base64対応）ユーティリティ =====
+function getTarget() {
+    // Base64文字列から復号（"lat,lng,radius"）
+    if (typeof STAGE.targetEncoded === 'string' && STAGE.targetEncoded) {
+        const s = decodeBase64Utf8(STAGE.targetEncoded);
+        if (s) {
+            const [latS, lngS, radS] = s.split(',');
+            const lat = parseFloat(latS);
+            const lng = parseFloat(lngS);
+            const radius = parseFloat(radS);
+            if (Number.isFinite(lat) && Number.isFinite(lng) && Number.isFinite(radius)) {
+                return { lat, lng, radius_m: radius };
+            }
+        }
+    }
+    // フォールバック（万一 Base64 が無い/壊れている場合は従来の平文）
+    return STAGE.target || null;
+}
+const TARGET = getTarget();
+
 
 // ===== 進捗キー（このステージをクリア済みか判定）   🔥本番運用系　こっちをオンに切り替える、こっちにしないと、ジャンプの足切りもうまく行かない可能性がある
 // const CLEARED_KEY = `cleared:${STAGE.id}`;
@@ -284,6 +304,7 @@ function distanceMeters(a, b) {
 
 
 function readMock() {
+    // NOTE: 本番想定のため readMock は機能停止中（常に null を返す）
     // 🔥ここをオンにすると位置情報をurlに入れて開発テストができる、本番時はコメントアウト必須
     // const q = new URLSearchParams(location.search);
     // const m = q.get('mock'); if (!m) return null;
@@ -313,8 +334,9 @@ async function checkGeoOnce() {
 }
 function handlePos(p, isMock) {
     const { latitude, longitude, accuracy } = p.coords;
-    const d = distanceMeters({ lat: latitude, lng: longitude }, { lat: STAGE.target.lat, lng: STAGE.target.lng });
-    const inRange = d <= STAGE.target.radius_m; geoOK = inRange;
+    if (!TARGET) { geoResult.textContent = '目的地の設定に問題があります'; geoResult.style.color = '#c62828'; return; }
+    const d = distanceMeters({ lat: latitude, lng: longitude }, { lat: TARGET.lat, lng: TARGET.lng });
+    const inRange = d <= TARGET.radius_m; geoOK = inRange;
     if (inRange) {
         geoResult.style.color = '#107c10';
         geoResult.textContent = `OK（距離 ${meters(d)} / 精度 ±${Math.round(accuracy)}m${isMock ? ' / mock' : ''}）`;
