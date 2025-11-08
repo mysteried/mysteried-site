@@ -7,7 +7,8 @@ export const STAGE = {
     variant: "chat",            // "plain" or "chat"
     // answer: "サンプル",　🔥本番では削除する
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
-    nextUrl: "../02h/stage.html?intro=1",
+    // nextUrl: "../02h/stage.html?intro=1",
+    nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",  // Base64 of "../02h/stage.html?intro=1"
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },

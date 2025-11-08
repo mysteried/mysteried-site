@@ -12,6 +12,27 @@ const { STAGE } = await import(configPath);
         STAGE.variant === "chat" ? "variant-chat" : "variant-plain"
     );
 })();
+
+// ===== 次URL（Base64対応）ユーティリティ =====
+function decodeBase64Utf8(b64) {
+    try {
+        const bin = atob(b64);
+        const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+        return new TextDecoder().decode(bytes);
+    } catch (_) {
+        return null;
+    }
+}
+function getNextUrl() {
+    if (typeof STAGE.nextUrlEncoded === 'string' && STAGE.nextUrlEncoded) {
+        const s = decodeBase64Utf8(STAGE.nextUrlEncoded);
+        if (s) return s;
+    }
+    // フォールバック：従来の平文 nextUrl があればそれを使う
+    return STAGE.nextUrl || '';
+}
+
+
 // ===== 進捗キー（このステージをクリア済みか判定）   🔥本番運用系　こっちをオンに切り替える
 // const CLEARED_KEY = `cleared:${STAGE.id}`;
 
@@ -299,7 +320,7 @@ function initGeoMode() {
         }
 
         nextBtn.disabled = true; // 二度押し防止
-        setTimeout(() => { window.location.href = STAGE.nextUrl; }, delay);
+        setTimeout(() => { window.location.href = getNextUrl(); }, delay);
     });
 }
 
@@ -313,7 +334,7 @@ function initArMode() {
         // ARはゲート解放のみ（geoOKは触らない）
         setMsg('クリア済み 次へ進めます', 'success', 0);
         nextBtn.addEventListener('click', () => {
-            window.location.href = STAGE.nextUrl;
+            window.location.href = getNextUrl();
         });
     } else {
         nextBtn.addEventListener('click', async () => {
@@ -342,7 +363,7 @@ function initArMode() {
                     try { localStorage.setItem(CLEARED_KEY, '1'); } catch (_) { }
                     setMsg('正解 次へ進みます…', 'success');
                     nextBtn.disabled = true;
-                    setTimeout(() => { window.location.href = STAGE.nextUrl; }, 2000);
+                    setTimeout(() => { window.location.href = getNextUrl(); }, 2000);
                 } else {
                     setMsg('パスワードが違います 『❓』でヒントを確認できます', 'error');
                 }
