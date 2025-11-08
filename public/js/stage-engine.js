@@ -33,7 +33,7 @@ function getNextUrl() {
 }
 
 
-// ===== 進捗キー（このステージをクリア済みか判定）   🔥本番運用系　こっちをオンに切り替える
+// ===== 進捗キー（このステージをクリア済みか判定）   🔥本番運用系　こっちをオンに切り替える、こっちにしないと、ジャンプの足切りもうまく行かない可能性がある
 // const CLEARED_KEY = `cleared:${STAGE.id}`;
 
 // 開発中：毎回違うキーにして読まれない＆残らない（= 進捗保存オフ）　　🔥開発系　クリアのユーザー端末保存、本番はこっちをオフにする
@@ -41,7 +41,41 @@ const CLEARED_KEY = `dev:${STAGE.id}:${Date.now()}`;
 
 // ルート（/public）を推定して共通アセットにアクセス
 
+
 const siteRoot = currentDir.split('/stories/')[0] || "";
+
+// ===== 直アクセス足切り（前ステージのクリアキー確認） =====
+(function guardDirectAccess() {
+    // bypass: ローカル or ?nocheck=1 のときはチェックしない 🔥これの以下3行をコメントオフにすれば、ジャンプアクセスがしっかりと禁止できているかみることができる
+    const isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    const nocheck = new URLSearchParams(location.search).get('nocheck') === '1';
+    if (isLocal || nocheck) return;
+
+    // STAGE.id から前ステージの id を推定（例: story01_stage01 -> story01_stage00）
+    function getPrevStageId(id) {
+        const m = String(id).match(/^(.*_stage)(\d+)$/);
+        if (!m) return null;
+        const n = parseInt(m[2], 10);
+        if (!Number.isFinite(n) || n <= 1) return null; // 01 は前段なし
+        const prev = String(n - 1).padStart(2, '0');
+        return m[1] + prev;
+    }
+
+    const prevId = getPrevStageId(STAGE.id);
+    if (!prevId) return; // 先頭ステージは足切りしない
+
+    const prevKey = `cleared:${prevId}`;
+    try {
+        const ok = localStorage.getItem(prevKey) === '1';
+        if (!ok) {
+            // 前段を経ていないのでホームへ戻す（必要なら案内ページに変更可）
+            window.location.replace(`${siteRoot}/index.html`);
+        }
+    } catch (_) {
+        // localStorage にアクセスできない環境でも安全側で戻す
+        window.location.replace(`${siteRoot}/index.html`);
+    }
+})();
 
 // ===== ステージごとの背景指定（config & CSS変数連携） =====
 (function applyStageBackground() {
