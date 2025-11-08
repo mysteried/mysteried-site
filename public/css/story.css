@@ -419,16 +419,30 @@ footer {
     color: #fff;
     border: none;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 18px;
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
-/* hover時の軽い演出 */
-#prologue .prologue-skip:hover {
-    background: rgba(255, 255, 255, 0.3);
+
+#prologue .prologue-skip {
+    border: 2px solid #fff;
+    /* 白枠をつける */
+    background: rgba(0, 0, 0, 0.6);
+    /* 背景少し濃く */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    /* 光る感じを追加 */
+    transition: all 0.3s ease;
 }
+
+#prologue .prologue-skip:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
 
 
 
