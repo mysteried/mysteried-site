@@ -9,8 +9,8 @@ export const STAGE = {
     nextUrl: "../01/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    // target: { lat: 34.67730, lng: 137.49852, radius_m: 200 },
-    targetEncoded: "MzQuNjc3MzAsMTM3LjQ5ODUyLDIwMA==",　//コードバージョン
+    target: { lat: 35.04351, lng: 136.14526, radius_m: 200 },
+    // targetEncoded: "MzQuNjg5NDcsMTM3LjU1NzQwLDIwMA==",　//コードバージョン
 
     // intro: {
     //     onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
