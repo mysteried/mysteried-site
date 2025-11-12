@@ -234,7 +234,7 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ../../assets/targets/targets-boushi.mind; filterMinCF:0.0005; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ../../assets/targets/targets-chiyamarin.mind; filterMinCF:0.0005; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
@@ -343,7 +343,7 @@
                     setTimeout(() => {
                         showOverlay({
                             title: 'ターゲットを発見',
-                            message: 'メモの対象を発見。\n彼は野球が好きなのだろうか？',
+                            message: 'パスワードを入力して、次へ進もう',
                             code: 'REWARD-0416'
                         });
                     }, 1000); // 1秒後に表示
