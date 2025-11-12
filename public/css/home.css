@@ -239,11 +239,6 @@ body.page-home {
     background-size: cover;
     padding-top: 64px;
     /* ヘッダー分 */
-
-    /* この以下3行をいれるとリサイズのブレが防げる */
-    background-position: center top;
-    background-size: auto 100vh;
-    background-size: auto 100svh;
 }
 
 
@@ -818,6 +813,11 @@ body.page-about {
     }
 }
 
+
+
+
+
+
 /* ===== Responsive: header/nav ===== */
 @media (max-width: 720px) {
     .site-header {
@@ -881,6 +881,14 @@ body.page-about {
 
 /* Very narrow screens: avoid overflow */
 @media (max-width: 480px) {
+
+    body.page-home {
+        /* この以下3行をいれるとリサイズのブレが防げる */
+        background-position: center top;
+        background-size: auto 100vh;
+        background-size: auto 100svh;
+    }
+
     .header-inner {
         padding: 0 8px;
     }
@@ -917,6 +925,15 @@ body.page-about {
 }
 
 @media (max-width: 380px) {
+
+    body.page-home {
+        /* この以下3行をいれるとリサイズのブレが防げる */
+        background-position: center top;
+        background-size: auto 100vh;
+        background-size: auto 100svh;
+    }
+
+
     .site-header {
         height: 52px;
     }
