@@ -9,7 +9,7 @@ export const STAGE = {
     nextUrl: "../01/stage.html?intro=1",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    target: { lat: 36.05631, lng: 136.49123, radius_m: 200 },
+    target: { lat: 37.11514, lng: 138.24231, radius_m: 200 },
     // targetEncoded: "MzQuNjg5NDcsMTM3LjU1NzQwLDIwMA==",　//コードバージョン
 
     // intro: {
