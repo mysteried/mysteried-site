@@ -11,7 +11,6 @@ export const STAGE = {
     nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",  // Base64 of "../02h/stage.html?intro=1"
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
     // target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
     targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // 武蔵浦和　
