@@ -68,8 +68,9 @@ const siteRoot = currentDir.split('/stories/')[0] || "";
 (function guardDirectAccess() {
     // bypass: ローカル or ?nocheck=1 のときはチェックしない 🔥これの以下3行をコメントオフにすれば、ジャンプアクセスがしっかりと禁止できる 今はローカルは生かしている
     const isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-    // const nocheck = new URLSearchParams(location.search).get('nocheck') === '1';
-    if (isLocal || nocheck) return;
+    if (isLocal) return;
+    // const nocheck = new URLSearchParams(location.search).get('nocheck') === '1';　🔥これを生かすときはifは以下の方使用し、上のifはアウトする
+    // if (isLocal || nocheck) return;
 
     // STAGE.id から前ステージの id を推定（例: story01_stage01 -> story01_stage00）
     function getPrevStageId(id) {
