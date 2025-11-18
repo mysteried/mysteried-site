@@ -468,7 +468,7 @@ body.page-about::before {
 
 /* 背景の上下ぼかし（両ページ共通） */
 .page-news::before,
-.page-about::before {
+.page-about::after {
     content: "";
     position: fixed;
     inset: 0;
