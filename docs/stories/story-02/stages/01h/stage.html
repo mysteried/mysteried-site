@@ -23,13 +23,6 @@
     <main>
         <div id="notePaper" class="note-paper">
             <div class="note-bg"></div>
-            <!-- 画像は作る方式にしたためコメントアウト　以下を活かせば文字をこっちで打ち込める -->
-            <!-- <div class="note-text">
-                <p class="note-line">私はゴジラ</p>
-                <p class="note-line">東、南、西、北、中、無、美、園・・・
-                </p>
-                <p class="note-line">ではない駅だ。</p>
-            </div> -->
         </div>
     </main>
 
@@ -38,7 +31,7 @@
         <!-- ① 指令（説明のみ ＋ ステータスメッセージ統合） -->
         <div class="ops-desc-row">
             <p id="opsMsg" class="ops-desc" role="status" aria-live="polite">
-                この写真が示している駅はどこでしょうか？<br>駅名をパスワード欄に入力してください。
+                この写真が示している駅はどこでしょうか？<br>駅名を入力してください。
             </p>
         </div>
 
@@ -46,7 +39,7 @@
         <div class="ops-field-row">
             <!-- AR用：パスワード -->
             <div class="field-ar" data-mode="ar">
-                <input id="answerInput" type="text" placeholder="パスワード">
+                <input id="answerInput" type="text" placeholder="〇〇駅">
             </div>
 
             <!-- Geo用：結果表示 -->

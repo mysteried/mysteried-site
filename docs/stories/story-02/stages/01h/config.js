@@ -1,22 +1,16 @@
-// 各ステージ固有の設定だけを編集してください
 export const STAGE = {
-    // ===== 基本 =====
-    id: "story02_stage01",    //クリア判定に使用　毎回ちゃんと設定　探偵モードはhをつける　これで、繰り替えしを解除している
+    id: "story02_stage01",
     title: "思い出のアルバム",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
-    // 蓮田駅
     answerHash: "2e3c77ff0e651576cd263df196850c3962445e5476e71dc45972cdb553eeceec",
-    nextUrl: "../02h/stage.html?intro=1",
+    nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",
 
     // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
-    // target は難読化（Base64文字列）で保持し、復号は stage-engine.js 側で行う
-    // target: { lat: 35.83701, lng: 139.64096, radius_m: 200 },
-    // 武蔵浦和　MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==
     targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
 
     intro: {
-        onceKey: "prologue:story00:01", // 一度だけ再生したいなら有効化
+        onceKey: "prologue:story02:01",
         skippable: true,
         steps: [
             { type: "text", key: "text1", text: "思い出のアルバム", dur: 3000 },
@@ -26,29 +20,19 @@ export const STAGE = {
         ]
     },
 
-
-
-    /*背景画像を指定　※開発時は木目 */
     background: {
         image: "../../../../assets/images/story-background/room.webp",
-        // // 🔥汎用背景
-        // image: "../../assets/images/background/main-background-2.webp",
-        // 🔥エピソード指定背景
-        size: "cover",       // 任意: contain, auto など
-        position: "center",  // 任意: 50% 35% など
+        size: "cover",
+        position: "center",
     },
 
-    // notepaperを指定
     note: {
         background: "../../assets/images/notes/note-1-1-a.webp",
     },
 
-    // ===== 会話UI（variant: "chat" の時だけ使用　=====
     chat: {
         avatarBg: "../../../../assets/images/avatars/bg-blue.webp",
         avatars: {
-            // 画像パスは /public からの相対…ではなく、stage.html から見た相対でもOK
-            // ここでは stage.html からの相対で書いています
             masu: {
                 normal: "../../../../assets/images/avatars/masuo_normal.webp",       // 通常
                 grumpy: "../../../../assets/images/avatars/masuo_grumpy.webp",       // ムスッと
@@ -71,79 +55,42 @@ export const STAGE = {
                 grumpy: "../../../../assets/images/avatars/hinata_grumpy.webp"    // ムスッと
             }
         },
-        // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
             { who: "hina", face: "normal", text: "マスオさん！\n画像から駅名を当てるゲームをやりましょう！" },
             { who: "masu", face: "confused", text: "・・・\nまた例の謎解きサイトかい？" },
-            { who: "hina", face: "smile", text: "正解です！\nさすが名探偵！" },
-            { who: "masu", face: "confused", text: "実際にその駅まで行かないと\n正解か分からないんだよね？" },
-            { who: "hina", face: "normal", text: "今回は違うみたいです\nナゾを解いて駅名を入力すればOKです！" },
-            { who: "masu", face: "normal", text: "それならいいね\nその画像を見せてくれるかい？" },
+            { who: "hina", face: "smile", text: "さすが名探偵！" },
+            { who: "masu", face: "confused", text: "また現地に行くのか…" },
+            { who: "hina", face: "normal", text: "今回は答えの駅名を入力すればOKです！" },
+            { who: "masu", face: "normal", text: "それならいいね！\nさっそく画像を見せてくれるかい？" },
             { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
-
-
-
-            { who: "hina", face: "normal", text: "マスオさん！\nメジャーリーガーで有名で、\nレンガ貼りの駅がある街ってどこですか？" },
-            { who: "masu", face: "confused", text: "と、突然どうしたんだい？" },
-            { who: "hina", face: "normal", text: "それから・・・\n小さな時計台があって、\n花の名前の通りがあるらしいです！" },
-            { who: "masu", face: "sweat", text: "ヒナタくん\nまず君が何をしているか教えてくれないかい？" },
-            { who: "hina", face: "smile", text: "これです！" },
+            { who: "hina", face: "thinking", text: "この画像が何駅を示しているか…\nう〜ん…" },
+            { who: "masu", face: "thinking", text: "これがどんな画像が、\nポイントを整理してみよう" },
+            { who: "hina", face: "thinking", text: "はい、やってみます\n・どこかの田舎のカラー写真\n・頭が機械の人間\n・田んぼに立っている\n・8番目の思い出という本\n" },
+            { who: "masu", face: "smile", text: "！！" },
+            { who: "hina", face: "surprised", text: "マスオさん\nもしかして、もう分かったんですか？" },
+            { who: "masu", face: "smile", text: "僕の灰色の脳細胞は、\n今日も優秀みたいだね" },
+            { who: "hina", face: "grumpy", text: "・・・" },
+            { who: "masu", face: "sweat", text: "と、とにかく整理して考えてみよう\n8番目の思い出ってどんな類の本だろうか？" },
+            { who: "hina", face: "thinking", text: "これはアルバムです。\n表紙に写真もありますし、\nタイトルも「思い出」ですからね" },
+            { who: "masu", face: "normal", text: "そうだね\nこれは「8thアルバム」だね" },
+            { who: "hina", face: "thinking", text: "・・・" },
+            { who: "masu", face: "normal", text: "じゃあ、次を考えてみよう。\n彼は一体誰だろう？\n彼の頭は？" },
             { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
-            { who: "masu", face: "sweat", text: "ミステリード？？\nなんだいこの怪しいサイトは？" },
-            { who: "hina", face: "normal", text: "この謎を解いて\n現地に行けばいいらしいですよ！" },
-            { type: "note" },
-            { who: "hina", face: "thinking", text: "レンガの建物…小さな時計台…\nホテルやカレー屋がある駅か…" },
-            { who: "masu", face: "sweat", text: "沢山あって絞れるわけないじゃないか…\nAIにでも聞いてみればいいんじゃないかい？" },
-            { who: "hina", face: "grumpy", text: "マスオさん！\nそれでも探偵ですか！！" },
-            { who: "masu", face: "normal", text: "探偵は解決することが仕事だからね。\nそのためには手段を選ばないよ" },
-            { who: "hina", face: "grumpy", text: "じゃあ解決してください！\nどうせ仕事の依頼なんてないんだし" },
-            { who: "masu", face: "sweat", text: "わかった、わかったよ\nじゃあ、もう一度そのナゾを見せてくれるかい？" },
-            { type: "note" },
-            { who: "masu", face: "thinking", text: "これだけのヒントで\n日本中から探すのは難しいな…" },
-            { who: "hina", face: "normal", text: "関東のどこかの駅らしいです。\nこのナゾを選択する時に\n『関東』って書いてありました" },
-            { type: "image", src: "../../assets/images/parts/parts-2.webp", alt: "ミステリード画面" },
-            { who: "masu", face: "thinking", text: "なるほど…\nちなみに、AIの答えは？" },
-            { who: "hina", face: "thinking", text: "ちょっと待っててください……" },
-            { type: "image", src: "../../assets/images/parts/parts-3.webp", alt: "ミステリード画面" },
-            { who: "hina", face: "thinking", text: "出ました\n群馬県の館林駅らしいです。\n確かに関東ですね" },
-            { who: "masu", face: "thinking", text: "正解かな？" },
-            { who: "hina", face: "thinking", text: "う〜ん…\n調べてみるとあんまり駅舎もレンガ感はないです\nそれに田澤選手の出身地も全然違う…" },
-            { who: "masu", face: "normal", text: "まぁAIのよくあるパターンだね\nまだ人間が勝てる要素はありそうだ\nじゃあ、考えてみようか" },
-            { who: "hina", face: "smile", text: "はい！" },
-            { who: "masu", face: "normal", text: "まずヒントにならない部分から。\n・レンガ貼りの建物\n・時計台\n・街の看板\nこれらで絞るのは難しい。\nつまりこれらはどんな情報だろうか？" },
-            { who: "hina", face: "thinking", text: "えっと…\n確認する部分ですか？\n答えの候補をあげてそれと照らし合わせる" },
-            { who: "masu", face: "normal", text: "うん、素晴らしい。\nつまり他の情報から答えに辿り着く必要がある。\n一番絞れるヒントはどれだと思う？" },
-            { who: "hina", face: "thinking", text: "野球選手でしょうか？\n人数もぐっと限られるし。\n例えば大谷選手なら花巻市？\nでも、関東じゃないか…" },
-            { who: "masu", face: "normal", text: "うん、そこから考えるのが一番の近道だと思う。\nでも気になるポイントもあるよ\nメジャーリーガーに「海外の」ってつける必要はあるかな？" },
-            { who: "hina", face: "thinking", text: "確かに…\nつまり大谷選手やイチロー選手ではない…\n海外の選手…\nマスオさんは分かってるんですか？" },
-            { who: "masu", face: "smile", text: "僕はもうこの駅がどこか分かったよ。\n探偵助手はまだまだみたいだね" },
-            { who: "hina", face: "confused", text: "・・・" },
-            { who: "masu", face: "sweat", text: "冗談だよ、冗談。\n次は別のヒントから見ていこう。\n花の名前を冠した通り、\nこれはどうだろうか？" },
-            { who: "hina", face: "thinking", text: "はい。\nこれはAIの回答がヒントになりました\n駅舎にあった牡丹の絵。\nつまり牡丹ストリートとか、牡丹通りだと思います" },
-            { who: "masu", face: "normal", text: "それで検索して\n出てくる関東の街はあるかい？" },
-            { who: "hina", face: "normal", text: "3つくらい出てきました!" },
-            { who: "masu", face: "normal", text: "そしたら、\nそれらと「メジャーリーガー」で組み合わせて検索すれば…" },
-            { who: "hina", face: "surprised", text: "！！" },
-            { who: "masu", face: "smile", text: "どうやら絞れたみたいだね\nそしたら\n・豚の焼き鳥\n・レンガ貼りや時計台\n・街の景色\nと照らし合わせを行っていこう" },
-            { who: "hina", face: "surprised", text: "間違いなさそうです！\nこの駅で合ってると思います！" },
-            { who: "masu", face: "normal", text: "解けたら駅名を入力するのかい？" },
-            { who: "hina", face: "smile", text: "いえ、\nその場所に行って\nこの『到着確認』を押すんです" },
-            { who: "masu", face: "sweat", text: "実際に行くのかい…\nちなみに今そのボタンを押すとどうなるんだい？" },
-            { type: "image", src: "../../assets/images/parts/parts-4.webp", alt: "ミステリード画面" },
-            { who: "hina", face: "surprised", text: "こんな画面が出ました！\nここから43km離れてるらしいです！" },
-            { who: "masu", face: "thinking", text: "つまり、これもヒントに使えるわけだね\n君が推理した駅とここからの距離はどれくらいだい？" },
-            { who: "hina", face: "thinking", text: "google mapで調べますね\nえっと…\n大体43km離れてます！" },
-            { who: "masu", face: "smile", text: "つまり\n正解みたいだね！\nよかった、解決だ！" },
-            { who: "hina", face: "thinking", text: "これ…\n正解するとどうなるんでしょうか？" },
-            { who: "masu", face: "confused", text: "・・・" },
-            { who: "hina", face: "thinking", text: "それに\n豚の焼き鳥…" },
-            { who: "masu", face: "confused", text: "・・・" },
-            { who: "hina", face: "thinking", text: "マスオさん\nこの前、仕事の依頼が来ないって嘆いてましたよね？" },
-            { who: "masu", face: "sweat", text: "分かったよ…\n今週末、その駅に行ってみようか。" },
-            { who: "hina", face: "excited", text: "!!\n気晴らし小旅行ですね！" },
-            { who: "masu", face: "sweat", text: "おいおい…" },
-
-            { type: "note" }
+            { who: "hina", face: "thinking", text: "・・・\n機械・・・\nこれは、ラジオですか？" },
+            { who: "masu", face: "normal", text: "そう！\nつまり彼はラジオ頭だ\nそんなアーティストはいないかな？" },
+            { who: "hina", face: "surprised", text: "調べたら出てきました！\nRadiohead\nイギリスのバンドです\nアルバムは音楽のアルバムってことですね！" },
+            { who: "masu", face: "smile", text: "ヒナタくんも、\n順調に探偵への道を歩んでいるね" },
+            { who: "hina", face: "thinking", text: "「The King of Limbs」\nこれが彼らの8thアルバムです\n四肢の王…" },
+            { who: "masu", face: "normal", text: "次のヒントはおそらく曲名。\n何曲目だろうか？" },
+            { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
+            { who: "hina", face: "thinking", text: "・・・５？" },
+            { who: "masu", face: "smile", text: "Go!" },
+            { who: "hina", face: "grumpy", text: "・・・" },
+            { who: "hina", face: "thinking", text: "タイトルは「Lotus Flower」\n蓮？" },
+            { who: "masu", face: "normal", text: "その花はどこで咲いているのかな？" },
+            { who: "hina", face: "surprised", text: "・・・！\n田んぼだ！" },
+            { who: "masu", face: "smile", text: "ふふふ、\nつまり、この写真が示す駅は？" },
+            { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" }
         ]
     }
 };
