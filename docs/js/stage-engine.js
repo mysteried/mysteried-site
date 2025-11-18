@@ -292,7 +292,7 @@ function applyClearedGeoState() {
     // geoモードのゲートを解放
     geoOK = true;
     // メッセージを成功表示で固定（自動クリア表示）
-    setMsg('クリア済み（再開）。「次へ進む」で続きへ。', 'success', 0);
+    setMsg('クリア済み 次へ進めます', 'success', 0);
 }
 function meters(n) { return `${Math.round(n)}m`; }
 function distanceMeters(a, b) {
