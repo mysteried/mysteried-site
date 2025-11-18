@@ -65,12 +65,6 @@ export const STAGE = {
         script: [
             { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "ミステリード画面" },
             { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "ミステリード画面" },
-            { who: "hina", face: "normal", text: "マスオさん！\n無事に謎解き完了です！" },
-            { who: "masu", face: "smile", text: "今回も簡単だったね" },
-            { who: "hina", face: "normal", text: "次は現地で謎解きしたいですね" },
-            { who: "masu", face: "sweat", text: "おいおい、\n勘弁してくれよ" },
-            { who: "hina", face: "smile", text: "次は西日本とか行ってみたいです" },
-            { who: "masu", face: "confused", text: "おいおい・・・" },
         ]
     }
 };

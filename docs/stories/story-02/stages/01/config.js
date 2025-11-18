@@ -1,41 +1,35 @@
 export const STAGE = {
-    // ===== 基本 =====
-    id: "story02_stage02",
+    id: "story02_stage01",
     title: "思い出のアルバム",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
-    answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
-    nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",
+    answerHash: "2e3c77ff0e651576cd263df196850c3962445e5476e71dc45972cdb553eeceec",
+    nextUrlEncoded: "Li4vMDIvc3RhZ2UuaHRtbD9pbnRybz0x",
 
-    //MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==
+    // ===== 位置ゲート（mode: "geo" の時だけ使用）=====
     targetEncoded: "MzYuMDM0OTksMTM5LjQwMTYyLDIwMA==",
 
     intro: {
-        onceKey: "prologue:story02:02",
+        onceKey: "prologue:story02:01",
         skippable: true,
         steps: [
-            { type: "text", key: "text1", text: "『思い出のアルバム』\nクリア！", dur: 3000 },
+            { type: "text", key: "text1", text: "思い出のアルバム", dur: 3000 },
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            // { type: "text", key: "text2", text: "クリア", dur: 2000 }
+            // { type: "text", key: "text2", text: "1枚目のメモ", dur: 2000 }
         ]
     },
 
-
-
-    /*背景画像を指定　※開発時は木目 */
     background: {
         image: "../../../../assets/images/story-background/room.webp",
         size: "cover",
         position: "center",
     },
 
-    // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note-1-4.webp",
+        background: "../../assets/images/parts/parts-1.webp",
     },
 
-    // ===== 会話UI（variant: "chat" の時だけ使用　=====
     chat: {
         avatarBg: "../../../../assets/images/avatars/bg-blue.webp",
         avatars: {
@@ -61,16 +55,9 @@ export const STAGE = {
                 grumpy: "../../../../assets/images/avatars/hinata_grumpy.webp"    // ムスッと
             }
         },
-        // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "ミステリード画面" },
-            { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "ミステリード画面" },
-            { who: "hina", face: "normal", text: "マスオさん！\n無事に謎解き完了です！" },
-            { who: "masu", face: "smile", text: "今回も簡単だったね" },
-            { who: "hina", face: "normal", text: "次は現地で謎解きしたいですね" },
-            { who: "masu", face: "sweat", text: "おいおい、\n勘弁してくれよ" },
-            { who: "hina", face: "smile", text: "次は西日本とか行ってみたいです" },
-            { who: "masu", face: "confused", text: "おいおい・・・" },
+            { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
+
         ]
     }
 };
