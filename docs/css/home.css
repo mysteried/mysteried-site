@@ -235,24 +235,41 @@
    HOMEPAGE ONLY: Background & advanced hero
    ===================== */
 body.page-home {
-    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center fixed;
-    background-size: cover;
+    /* 背景画像は ::before で固定レイヤーとして扱う */
+    background: #000;
     padding-top: 64px;
     /* ヘッダー分 */
+}
+
+body.page-home::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center;
+    background-size: cover;
+    pointer-events: none;
 }
 
 
 /* body の背景とヘッダー分のオフセット（about） */
 body.page-about {
-    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center fixed;
-    background-size: cover;
+    /* 背景画像は ::before で固定レイヤーとして扱う */
+    background: #000;
     padding-top: 64px;
     /* 固定ヘッダー分 */
+}
 
-    /* この以下3行をいれるとリサイズのブレが防げる */
-    background-position: center top;
+body.page-about::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center top;
+    /* この以下の指定でリサイズ時のブレを防ぐ */
     background-size: auto 100vh;
     background-size: auto 100svh;
+    pointer-events: none;
 }
 
 /* about 固有：ヒーロー見出しの上に少しだけ余白。
@@ -882,7 +899,7 @@ body.page-about {
 /* Very narrow screens: avoid overflow */
 @media (max-width: 480px) {
 
-    body.page-home {
+    body.page-home::before {
         /* この以下3行をいれるとリサイズのブレが防げる */
         background-position: center top;
         background-size: auto 100vh;
@@ -926,7 +943,7 @@ body.page-about {
 
 @media (max-width: 380px) {
 
-    body.page-home {
+    body.page-home::before {
         /* この以下3行をいれるとリサイズのブレが防げる */
         background-position: center top;
         background-size: auto 100vh;
