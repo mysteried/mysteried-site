@@ -6,7 +6,7 @@ export const STAGE = {
     mode: "ar",                 // "ar" or "geo"
     variant: "plain",            // "plain" or "chat"
     // answer: "サンプル",　🔥本番では削除する
-    answerHash: "9a7a7bbdb7baccc1c32640c8281d02b8881c9a30ebcfc0077a77146f5c67bc32",
+    answerHash: "c215b65e7586b043e08aead16037a9b8c51908bd80631a077ffa41d5fa01e057",
     // nextUrl: "../03/stage.html?intro=1",
     nextUrlEncoded: "Li4vMDMvc3RhZ2UuaHRtbD9pbnRybz0x",
 
