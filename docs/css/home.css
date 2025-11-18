@@ -282,6 +282,8 @@ body.page-about::before {
     margin-bottom: 0;
     /* ← ここ重要：以前の calc(...) を打ち消す */
     padding-top: 0;
+    padding-bottom: calc(var(--footer-h, 96px) + 40px);
+    /* ↑ 96px はデスクトップ時のフッター高さのデフォルト。必要なら調整OK */
 }
 
 /* --- Hero (overlay + fade) --- */
@@ -466,10 +468,9 @@ body.page-about::before {
    News & About (shared)  ← ここから置き換え
    ===================== */
 
-/* 背景の上下ぼかし（両ページ共通） */
-.page-news::before,
-.page-about::after {
-    content: "";
+/* 背景の上下ぼかし（news / about 共通：専用レイヤー要素 .page-overlay） */
+.page-news .page-overlay,
+.page-about .page-overlay {
     position: fixed;
     inset: 0;
     background: linear-gradient(to bottom,
@@ -532,21 +533,9 @@ body.page-about::before {
 }
 
 
-/* 既存の “.page-about main.about-wrap” の行をこれに差し替え。 */
-.page-about main.about-wrap {
-    padding-bottom: calc(var(--footer-h, 96px) + 40px);
-}
-
-/* ↑ 96px はデスクトップ時のフッター高さのデフォルト。必要なら調整OK */
-
-
-
-
 /* =====================
    News (including background overlays)
    ===================== */
-/* Overlay for pages without hero (news/about) */
-
 /* Make news list scrollable within a fixed height */
 .page-news .news-list {
     max-height: 40vh;
@@ -648,7 +637,6 @@ body.page-about::before {
    About page (fix header/footer layout to match news)
    ===================== */
 
-/* About page: show hero heading above images */
 .page-about .hero {
     position: relative;
     z-index: 5;
