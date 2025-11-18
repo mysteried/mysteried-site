@@ -265,10 +265,9 @@ body.page-about::before {
     position: fixed;
     inset: 0;
     z-index: -1;
-    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center top;
-    /* この以下の指定でリサイズ時のブレを防ぐ */
-    background-size: auto 100vh;
-    background-size: auto 100svh;
+    background: url('../assets/images/main-background/main-background-05.webp') no-repeat center center;
+    /* PCなどの横幅が広い画面でも黒帯が出ないように、基本は cover にする */
+    background-size: cover;
     pointer-events: none;
 }
 
@@ -894,6 +893,13 @@ body.page-about::before {
         background-size: auto 100svh;
     }
 
+    body.page-about::before {
+        /* about もスマホでは高さ基準でフィットさせてブレを防ぐ */
+        background-position: center top;
+        background-size: auto 100vh;
+        background-size: auto 100svh;
+    }
+
     .header-inner {
         padding: 0 8px;
     }
@@ -933,6 +939,13 @@ body.page-about::before {
 
     body.page-home::before {
         /* この以下3行をいれるとリサイズのブレが防げる */
+        background-position: center top;
+        background-size: auto 100vh;
+        background-size: auto 100svh;
+    }
+
+    body.page-about::before {
+        /* about もスマホ最小幅では高さ基準でフィット */
         background-position: center top;
         background-size: auto 100vh;
         background-size: auto 100svh;
