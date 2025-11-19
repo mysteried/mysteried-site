@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>人道と海鳴りのムゼオ – ミステリード</title>
+    <link rel="icon" href="../../../../favicon.ico" />
+    <link rel="stylesheet" href="../../../../css/base.css" />
+    <link rel="stylesheet" href="../../../../css/story.css" />
+    <link rel="stylesheet" href="../../../../css/chat.css" />
+    <!-- エピソード専用（上書き用） -->
+    <link rel="stylesheet" href="./epi.css" />
+</head>
+
+<body class="page-story">
+
+    <div id="prologue" hidden>
+        <div class="viewport"></div>
+    </div>
+
+    <main>
+        <div id="notePaper" class="note-paper">
+            <div class="note-bg"></div>
+        </div>
+    </main>
+
+
+    <footer id="ops-footer">
+        <!-- ① 指令（説明のみ ＋ ステータスメッセージ統合） -->
+        <div class="ops-desc-row">
+            <p id="opsMsg" class="ops-desc" role="status" aria-live="polite">
+                彼が降りた駅はどこでしょうか?<br>
+                その駅に向かい、到着確認を押してください。
+            </p>
+        </div>
+
+        <!-- ② 入力/計測フィールド（モードで出し分け） -->
+        <div class="ops-field-row">
+            <!-- AR用：パスワード -->
+            <div class="field-ar" data-mode="ar">
+                <input id="answerInput" type="text" placeholder="パスワード">
+            </div>
+
+            <!-- Geo用：結果表示 -->
+            <div class="field-geo" data-mode="geo" style="display:none">
+                <p id="geoResult" class="card-desc" style="margin:0;">目的地未到着</p>
+            </div>
+        </div>
+
+        <!-- ③ アクション行（5ボタン） -->
+        <div class="ops-actions-row">
+            <a href="../../../../index.html" class="btn icon" aria-label="ホーム">🏠</a>
+            <button id="backBtn" class="btn icon" aria-label="前へ戻る">↩︎</button>
+
+            <!-- モードボタンは AR/Geo で出し分け（どちらか一方だけ表示） -->
+            <a id="arLink" href="./ar.html?p=p1" class="btn cam" data-mode="ar">ARカメラ</a>
+            <button id="geoBtn" class="btn cam" data-mode="geo" style="display:none">到着確認</button>
+
+            <button id="hintBtn" class="btn icon" aria-label="ヒントを見る" type="button">❓</button>
+            <button id="nextBtn" class="btn next">次へ</button>
+        </div>
+    </footer>
+    <div id="hintOverlay" class="hint-overlay" hidden>
+        <div class="hint-dialog" role="dialog" aria-modal="true" aria-labelledby="hintTitle"
+            aria-describedby="hintBody">
+            <h2 id="hintTitle" class="hint-title">ヒント</h2>
+            <p id="hintBody" class="hint-body">日本人ではないメジャーリーガーで話題になった街。<br>牡丹の名前がつく通りがある街。</p>
+            <button id="hintCloseBtn" class="btn close" type="button" aria-label="ヒントを閉じる">閉じる</button>
+        </div>
+    </div>
+    <script type="module" src="../../../../js/stage-engine.js"></script>
+</body>
+
+</html>
