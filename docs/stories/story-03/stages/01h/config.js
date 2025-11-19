@@ -8,7 +8,8 @@ export const STAGE = {
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
     nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",
 
-    targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
+    targetEncoded: "MzUuNjIyNjIsMTM2LjAxOTI3LDIwMA==",
+    // targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // musasi
 
     intro: {
@@ -52,6 +53,7 @@ export const STAGE = {
             },
             hina: {
                 normal: "../../../../assets/images/avatars/hinata_normal.webp",       // 通常
+                sleepy: "../../../../assets/images/avatars/hinata_sleepy.webp",     // 眠い
                 excited: "../../../../assets/images/avatars/hinata_excited.webp",     // ワクワク
                 smile: "../../../../assets/images/avatars/hinata_smile.webp",         // 笑顔
                 surprised: "../../../../assets/images/avatars/hinata_surprised.webp", // 驚き
@@ -83,10 +85,10 @@ export const STAGE = {
             { who: "masu", face: "normal", text: "どれくらい離れているんだい？" },
 
             // 距離が表示されるゲーム画面のスクショ
-            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-1.webp", alt: "ミステリード画面" },
 
-            { who: "hina", face: "surprised", text: "約330kmです！" },
-            { who: "masu", face: "normal", text: "・・・" },
+            { who: "hina", face: "surprised", text: "約327kmです！" },
+            { who: "masu", face: "confused", text: "・・・" },
             { who: "hina", face: "excited", text: "3連休あたりに行ってみましょう！" },
             { who: "masu", face: "sweat", text: "いや、だから\n「行くか行かないかは置いておいて」って言ったよね？" },
 

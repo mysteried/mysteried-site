@@ -53,6 +53,7 @@ export const STAGE = {
             hina: {
                 normal: "../../../../assets/images/avatars/hinata_normal.webp",       // 通常
                 excited: "../../../../assets/images/avatars/hinata_excited.webp",     // ワクワク
+                sleepy: "../../../../assets/images/avatars/hinata_sleepy.webp",     // 眠い
                 smile: "../../../../assets/images/avatars/hinata_smile.webp",         // 笑顔
                 surprised: "../../../../assets/images/avatars/hinata_surprised.webp", // 驚き
                 confused: "../../../../assets/images/avatars/hinata_confused.webp",   // 困り顔
@@ -64,7 +65,7 @@ export const STAGE = {
         },
         // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "hina", face: "normal", text: "……zzzz…" },
+            { who: "hina", face: "sleepy", text: "……zzzz…" },
             { who: "masu", face: "sweat", text: "ほら、ヒナタくん。\n敦賀駅に着いたよ。\nシャキッとして" },
             { who: "hina", face: "surprised", text: "……はい。\nわぁ、大きな駅ですね！\nワクワクしますね" },
             { who: "masu", face: "normal", text: "答えはもちろん正解だったんだよね？" },

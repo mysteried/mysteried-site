@@ -52,6 +52,7 @@ export const STAGE = {
             hina: {
                 normal: "../../../../assets/images/avatars/hinata_normal.webp",       // 通常
                 excited: "../../../../assets/images/avatars/hinata_excited.webp",     // ワクワク
+                sleepy: "../../../../assets/images/avatars/hinata_sleepy.webp",     // 眠い
                 smile: "../../../../assets/images/avatars/hinata_smile.webp",         // 笑顔
                 surprised: "../../../../assets/images/avatars/hinata_surprised.webp", // 驚き
                 confused: "../../../../assets/images/avatars/hinata_confused.webp",   // 困り顔
@@ -85,17 +86,17 @@ export const STAGE = {
             { who: "masu", face: "normal", text: "じゃあ、海辺を歩きながら行ってみようか" },
             { who: "hina", face: "smile", text: "はい！" },
 
-            { type: "image", src: "../../assets/images/parts/tsuruga-warehouse.webp", alt: "赤レンガ倉庫" },
+            { type: "image", src: "../../assets/images/parts/parts-3.webp", alt: "赤レンガ倉庫" },
 
             { who: "masu", face: "normal", text: "お、ここだね" },
             { who: "hina", face: "normal", text: "これが「自由への扉」です！" },
 
-            { type: "image", src: "../../assets/images/parts/tsuruga-door.webp", alt: "自由への扉" },
+            { type: "image", src: "../../assets/images/parts/parts-4.webp", alt: "自由への扉" },
 
             { who: "masu", face: "thinking", text: "『トビラを抜けると異国のようだった』か…\nもっと奥かな？" },
             { who: "hina", face: "normal", text: "進んでみましょう！" },
 
-            { type: "image", src: "../../assets/images/parts/tsuruga-museo.webp", alt: "ムゼウム周辺" },
+            { type: "image", src: "../../assets/images/parts/parts-5.webp", alt: "ムゼウム周辺" },
 
             { who: "hina", face: "surprised", text: "おお、ここですね！" },
             { who: "masu", face: "normal", text: "ここが人道の港か" },

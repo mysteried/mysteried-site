@@ -1,23 +1,22 @@
 export const STAGE = {
     // ===== 基本 =====
-    id: "story03_stage03",
+    id: "story03_stage05",
     title: "人道と海鳴りのムゼオ",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
-    nextUrlEncoded: "Li4vMDRoL3N0YWdlLmh0bWw/aW50cm89MQ==",
-
+    nextUrlEncoded: "Li4vMDVoL3N0YWdlLmh0bWw/aW50cm89MQ==",
     targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // musasi
 
     intro: {
-        onceKey: "prologue:story03:03",
+        onceKey: "prologue:story03:05",
         skippable: true,
         steps: [
-            // { type: "text", key: "text1", text: "人道と海鳴りのムゼオ", dur: 3000 },
+            { type: "text", key: "text1", text: "『人道と海鳴りのムゼオ』\nクリア！", dur: 3000 }
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            { type: "text", key: "text2", text: "3枚目のメモ", dur: 2000 }
+            // { type: "text", key: "text2", text: "最後のメモ", dur: 2000 }
         ]
     },
 
@@ -32,7 +31,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note-3-3.webp",
+        background: "../../assets/images/notes/note-3-4.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
@@ -63,32 +62,26 @@ export const STAGE = {
             }
         },
         script: [
-            { who: "hina", face: "normal", text: "これだけのモニュメントがあると、\nなかなか大変でしたね" },
-            { who: "masu", face: "normal", text: "どれも見応えがあったね。\nさぁ、次へ進もうか" },
+            { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "クリア画面" },
+            { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "クリアメッセージ" },
 
-            { type: "note" }, // ← 3枚目のメモ
+            { who: "hina", face: "normal", text: "マスオさん！\n無事にクリアです！" },
+            { who: "masu", face: "smile", text: "今回も謎自体はシンプルだったね" },
 
-            { who: "hina", face: "thinking", text: "また大谷ですね…" },
-            { who: "masu", face: "thinking", text: "彼は大谷に取り憑かれているみたいだね。\n記憶を失っているのは分かるけど、大谷選手くらいならすぐに認知しそうだけどなぁ" },
+            { who: "hina", face: "smile", text: "マスオさんも\n探偵としての腕が上がってきましたね" },
+            { who: "masu", face: "sweat", text: "おいおい…" },
 
-            { who: "hina", face: "thinking", text: "もしかして、\nテレビとかネットから隔絶された環境にいるとか…？" },
+            { who: "hina", face: "smile", text: "じゃあ、謎も解いたことですし\n観光しましょう！" },
+            { who: "masu", face: "normal", text: "僕はてっきり、\n気比神宮が謎解きの答えになると思ってたけど\n出なかったね" },
 
-            { who: "masu", face: "thinking", text: "一体どうしてそんなことに…" },
-            { who: "hina", face: "thinking", text: "そもそも、どうして彼は記憶を失ったんでしょうか？" },
+            { who: "hina", face: "smile", text: "行きましょう行きましょう！\n神宮も、赤レンガ倉庫も！" },
 
-            { who: "masu", face: "thinking", text: "・・・\nまあ、本題に戻ろうか" },
+            { who: "masu", face: "thinking", text: "で、食事はどうするんだい？" },
+            { who: "hina", face: "excited", text: "それはもちろん\n海鮮丼です！" },
 
-            { who: "hina", face: "normal", text: "はい、そうですね。\n武将の大谷。\n敦賀と関連する大谷さんがいるかもです" },
-            { who: "masu", face: "normal", text: "AIに調べてもらおうか" },
-
-            { type: "image", src: "../../assets/images/parts/parts-2.webp", alt: "検索結果" },
-
-            { who: "hina", face: "surprised", text: "出ました！ 大谷吉継。\n敦賀で有名な武将らしいです" },
-            { who: "masu", face: "normal", text: "つまり、彼がこの地を収めていた場所は…" },
-            { who: "hina", face: "thinking", text: "お城…ですかね？" },
-
-            { who: "masu", face: "normal", text: "きっとそうだね。\nそこへ向かってみよう" },
-            { type: "note" }
+            { type: "image", src: "../../assets/images/parts/parts-6.webp", alt: "クリア画面" }
         ]
+
+
     }
 };
