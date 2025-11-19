@@ -1,24 +1,23 @@
 export const STAGE = {
     // ===== 基本 =====
-    id: "story03_stage02",
+    id: "story03_stage03",
     title: "人道と海鳴りのムゼオ",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
-    nextUrlEncoded: "Li4vMDNoL3N0YWdlLmh0bWw/aW50cm89MQ==",
     nextUrlEncoded: "Li4vMDRoL3N0YWdlLmh0bWw/aW50cm89MQ==",
 
     targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // musasi
 
     intro: {
-        onceKey: "prologue:story03:02",
+        onceKey: "prologue:story03:03",
         skippable: true,
         steps: [
             // { type: "text", key: "text1", text: "人道と海鳴りのムゼオ", dur: 3000 },
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            { type: "text", key: "text2", text: "2枚目のメモ", dur: 2000 }
+            { type: "text", key: "text2", text: "3枚目のメモ", dur: 2000 }
         ]
     },
 
@@ -33,7 +32,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note-3-2.webp",
+        background: "../../assets/images/notes/note-3-3.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
@@ -56,28 +55,38 @@ export const STAGE = {
                 smile: "../../../../assets/images/avatars/hinata_smile.webp",         // 笑顔
                 surprised: "../../../../assets/images/avatars/hinata_surprised.webp", // 驚き
                 confused: "../../../../assets/images/avatars/hinata_confused.webp",   // 困り顔
-                sweat: "../../../../assets/images/avatars/hinata_nervous.webp",     // 焦り顔
+                sweat: "../../../../assets/images/avatars/hinata_sweat.webp",     // 焦り顔
                 thinking: "../../../../assets/images/avatars/hinata_thinking.webp",   // 推理・考え込み
                 angry: "../../../../assets/images/avatars/hinata_angry.webp",         // 怒る
                 grumpy: "../../../../assets/images/avatars/hinata_grumpy.webp"    // ムスッと
             }
         },
-        // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "hina", face: "normal", text: "……zzzz…" },
-            { who: "masu", face: "sweat", text: "ほら、ヒナタくん。\n敦賀駅に着いたよ。\nシャキッとして" },
-            { who: "hina", face: "surprised", text: "……はい。\nわぁ、大きな駅ですね！\nワクワクしますね" },
-            { who: "masu", face: "normal", text: "答えはもちろん正解だったんだよね？" },
-            { who: "hina", face: "smile", text: "はい、ばっちりこの敦賀駅で合ってました！\nそして、これが次のメモです！" },
+            { who: "hina", face: "normal", text: "これだけのモニュメントがあると、\nなかなか大変でしたね" },
+            { who: "masu", face: "normal", text: "どれも見応えがあったね。\nさぁ、次へ進もうか" },
 
-            // 2枚目のメモ
-            { type: "note" },
+            { type: "note" }, // ← 3枚目のメモ
 
-            { who: "masu", face: "thinking", text: "なるほど……\n駅前の様子やアーケードの雰囲気がそのまま書かれているね" },
-            { who: "hina", face: "thinking", text: "これは謎解きというより、\nモニュメントを探して総当たりですね。\n足で稼ぐやつです！" },
-            { who: "masu", face: "normal", text: "商店街の散策も兼ねて、\n一つずつモニュメントを見ていこう" },
-            { who: "hina", face: "normal", text: "はい！" },
+            { who: "hina", face: "thinking", text: "また大谷ですね…" },
+            { who: "masu", face: "thinking", text: "彼は大谷に取り憑かれているみたいだね。\n記憶を失っているのは分かるけど、大谷選手くらいならすぐに認知しそうだけどなぁ" },
 
+            { who: "hina", face: "thinking", text: "もしかして、\nテレビとかネットから隔絶された環境にいるとか…？" },
+
+            { who: "masu", face: "thinking", text: "一体どうしてそんなことに…" },
+            { who: "hina", face: "thinking", text: "そもそも、どうして彼は記憶を失ったんでしょうか？" },
+
+            { who: "masu", face: "thinking", text: "・・・\nまあ、本題に戻ろうか" },
+
+            { who: "hina", face: "normal", text: "はい、そうですね。\n武将の大谷。\n敦賀と関連する大谷さんがいるかもです" },
+            { who: "masu", face: "normal", text: "AIに調べてもらおうか" },
+
+            { type: "image", src: "../../../../assets/images/parts/画像.webp", alt: "検索結果" },
+
+            { who: "hina", face: "surprised", text: "出ました！ 大谷吉継。\nここの武将らしいです" },
+            { who: "masu", face: "normal", text: "つまり、彼がこの地を収めていた場所は…" },
+            { who: "hina", face: "thinking", text: "お城…ですかね？" },
+
+            { who: "masu", face: "normal", text: "きっとそうだね。\nそこへ向かってみよう" },
             { type: "note" }
         ]
     }
