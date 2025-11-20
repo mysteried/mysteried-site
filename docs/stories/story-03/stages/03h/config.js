@@ -4,7 +4,7 @@ export const STAGE = {
     title: "人道と海鳴りのムゼオ",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
-    answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
+    answerHash: "cb0a499c8039f9ce815fbc69b7d3462f8e96f82d1c446d2c4a5d89cb3fb9650a",
     nextUrlEncoded: "Li4vMDRoL3N0YWdlLmh0bWw/aW50cm89MQ==",
 
     targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",

@@ -8,8 +8,7 @@ export const STAGE = {
     answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
     nextUrlEncoded: "Li4vMDJoL3N0YWdlLmh0bWw/aW50cm89MQ==",
 
-    targetEncoded: "MzUuNjIyNjIsMTM2LjAxOTI3LDIwMA==",
-    // targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
+    targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // musasi
 
     intro: {

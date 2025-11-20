@@ -235,7 +235,7 @@
     <!-- idはただのhtmlの機能としてのid これによりjsからその要素にアクセスができるようになり、実行時にjsで動的制御や属性変更をかけるための参照 -->
     <!-- 🔥 ターゲットマインドストーリーごとにファイルを指定 -->
     <a-scene
-        mindar-image="imageTargetSrc: ../../assets/targets/targets-yakyu-b.mind; filterMinCF:0.0005; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
+        mindar-image="imageTargetSrc: ../../assets/targets/targets-tsurugajou.mind; filterMinCF:0.0005; filterBeta: 0.001; warmupTolerance: 5; autoStart: true"
         embedded color-space="sRGB"
         renderer="colorManagement: true, physicallyCorrectLights: true, antialias: true, alpha: true"
         vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene">
@@ -268,7 +268,7 @@
             const copyBtn = document.getElementById('copyBtn');
 
             // 🔥ここも毎回設定　　ターミナルで変換してから
-            const encodedReward = "5Yeb44CF44GX44GE44Kt44OE44ON"; // "REWARD-0416"
+            const encodedReward = "44OH44Kz44OU44Oz"; // "REWARD-0416"
 
             // title,message,codeをまとめてオブジェクトで渡せるようにしている　= {} は「何も渡されなかったときは空オブジェクト」とする保険。
             function showOverlay({ title = 'ヒント', message = '', code = '' } = {}) {
