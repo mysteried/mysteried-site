@@ -3,9 +3,9 @@ export const STAGE = {
     id: "story03_stage02",
     title: "人道と海鳴りのムゼオ",
     mode: "ar",                 // "ar" or "geo"
-    variant: "chat",            // "plain" or "chat"
+    variant: "plain",            // "plain" or "chat"
     answerHash: "26ed14fc9f19881dc3e1d558c78b0a3599f8fcc1947fe6274545b5b84558b0e9",
-    nextUrlEncoded: "Li4vMDNoL3N0YWdlLmh0bWw/aW50cm89MQ==",
+    nextUrlEncoded: "Li4vMDMvc3RhZ2UuaHRtbD9pbnRybz0x",
 
     targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // musasi

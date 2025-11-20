@@ -1,23 +1,22 @@
 export const STAGE = {
     // ===== 基本 =====
-    id: "story03_stage02",
+    id: "story03_stage05",
     title: "人道と海鳴りのムゼオ",
     mode: "ar",                 // "ar" or "geo"
     variant: "chat",            // "plain" or "chat"
-    answerHash: "26ed14fc9f19881dc3e1d558c78b0a3599f8fcc1947fe6274545b5b84558b0e9",
-    nextUrlEncoded: "Li4vMDNoL3N0YWdlLmh0bWw/aW50cm89MQ==",
-
+    answerHash: "bde3e4b27228cb1c21b605524103ee10b8e7f9974bb1b12bf010dec179dff958",
+    nextUrlEncoded: "Li4vMDVoL3N0YWdlLmh0bWw/aW50cm89MQ==",
     targetEncoded: "MzUuNjQ1MjksMTM2LjA3NTg5LDIwMA==",
     // targetEncoded: "MzUuODM3MDEsMTM5LjY0MDk2LDIwMA==",　 // musasi
 
     intro: {
-        onceKey: "prologue:story03:02",
+        onceKey: "prologue:story03:05",
         skippable: true,
         steps: [
-            // { type: "text", key: "text1", text: "人道と海鳴りのムゼオ", dur: 3000 },
+            { type: "text", key: "text1", text: "『人道と海鳴りのムゼオ』\nクリア！", dur: 3000 }
             // { type: "image", key: "image1", src: "../../assets/images/parts/sample-pictures.jpeg", alt: "説明画像", dur: 1500 },3600は3.6秒
             // { type: "video", key: "video1", src: "../../assets/videos/sample.mp4", dur: 3600 },
-            { type: "text", key: "text2", text: "2枚目のメモ", dur: 2000 }
+            // { type: "text", key: "text2", text: "最後のメモ", dur: 2000 }
         ]
     },
 
@@ -32,7 +31,7 @@ export const STAGE = {
 
     // notepaperを指定
     note: {
-        background: "../../assets/images/notes/note-3-2.webp",
+        background: "../../assets/images/notes/note-3-4.webp",
     },
 
     // ===== 会話UI（variant: "chat" の時だけ使用　=====
@@ -51,34 +50,24 @@ export const STAGE = {
             },
             hina: {
                 normal: "../../../../assets/images/avatars/hinata_normal.webp",       // 通常
-                excited: "../../../../assets/images/avatars/hinata_excited.webp",     // ワクワク
                 sleepy: "../../../../assets/images/avatars/hinata_sleepy.webp",     // 眠い
+                excited: "../../../../assets/images/avatars/hinata_excited.webp",     // ワクワク
                 smile: "../../../../assets/images/avatars/hinata_smile.webp",         // 笑顔
                 surprised: "../../../../assets/images/avatars/hinata_surprised.webp", // 驚き
                 confused: "../../../../assets/images/avatars/hinata_confused.webp",   // 困り顔
-                sweat: "../../../../assets/images/avatars/hinata_nervous.webp",     // 焦り顔
+                sweat: "../../../../assets/images/avatars/hinata_sweat.webp",     // 焦り顔
                 thinking: "../../../../assets/images/avatars/hinata_thinking.webp",   // 推理・考え込み
                 angry: "../../../../assets/images/avatars/hinata_angry.webp",         // 怒る
                 grumpy: "../../../../assets/images/avatars/hinata_grumpy.webp"    // ムスッと
             }
         },
-        // note-paper を会話途中に差し込みたい時は {type:"note"} を入れる
         script: [
-            { who: "hina", face: "sleepy", text: "……zzzz…" },
-            { who: "masu", face: "sweat", text: "ほら、ヒナタくん。\n敦賀駅に着いたよ。\nシャキッとして" },
-            { who: "hina", face: "surprised", text: "……はい。\nわぁ、大きな駅ですね！\nワクワクしますね" },
-            { who: "masu", face: "normal", text: "答えはもちろん正解だったんだよね？" },
-            { who: "hina", face: "smile", text: "はい、ばっちりこの敦賀駅で合ってました！\nそして、これが次のメモです！" },
+            { type: "image", src: "../../assets/images/parts/parts-clear.webp", alt: "クリア画面" },
+            { type: "image", src: "../../assets/images/parts/parts-clear-message.webp", alt: "クリアメッセージ" },
 
-            // 2枚目のメモ
-            { type: "note" },
-
-            { who: "masu", face: "thinking", text: "なるほど……\n駅前の様子やアーケードの雰囲気がそのまま書かれているね" },
-            { who: "hina", face: "thinking", text: "これは謎解きというより、\nモニュメントを探して総当たりですね。\n足で稼ぐやつです！" },
-            { who: "masu", face: "normal", text: "商店街の散策も兼ねて、\n一つずつモニュメントを見ていこう" },
-            { who: "hina", face: "normal", text: "はい！" },
-
-            { type: "note" }
+            { type: "image", src: "../../assets/images/parts/parts-6.webp", alt: "クリア画面" }
         ]
+
+
     }
 };
