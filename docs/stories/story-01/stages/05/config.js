@@ -83,7 +83,7 @@ export const STAGE = {
             // { who: "hina", face: "normal", text: "この写真を記念に送ってみますね！\n名前はイナミ探偵事務所で\n採用されれば表示されるらしいですよ" },
             // { who: "masu", face: "normal", text: "よし、\nせっかく来たわけだから、\nもうちょっと街を散策してから帰ろうか！" },
             // { who: "hina", face: "smile", text: "はい！" },
-            { type: "image", src: "../../assets/images/parts/parts-13.webp", alt: "ミステリード画面" },
+            { type: "image", src: "../../assets/images/parts/parts-13.webp", alt: "ミステリード画面" }
         ]
     }
 };
